@@ -1,3 +1,16 @@
+buildscript {
+    repositories {
+	    mavenCentral()
+	    maven {
+	    	url "https://repo.u-team.info"
+	    }
+	}
+
+    dependencies {
+        classpath "net.hycrafthd:minecraft_downloader:1.0.0-SNAPSHOT"
+    }
+}
+
 plugins {
     id "java-library"
     id "eclipse"
