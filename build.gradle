@@ -1,0 +1,47 @@
+plugins {
+    id "java-library"
+    id "eclipse"
+    id "com.palantir.launch-config" version "1.2.0"
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+	implementation "com.google.code.gson:gson:2.8.6"
+	implementation "net.sf.jopt-simple:jopt-simple:5.0.4"
+	implementation "org.apache.logging.log4j:log4j-core:2.14.1"
+	implementation "org.apache.logging.log4j:log4j-iostreams:2.14.1"
+}
+
+
+group = "net.hycrafthd"
+archivesBaseName = "headless_minecraft"
+version = "1.0.0-SNAPSHOT"
+
+tasks.withType(JavaCompile) {
+    options.encoding = "UTF-8"
+}
+
+java {
+	toolchain {
+		languageVersion = JavaLanguageVersion.of(8)
+	}
+	withSourcesJar()
+	withJavadocJar()
+}
+
+tasks.named("jar") {
+	archiveClassifier = ""
+	
+	from "LICENSE"
+		
+	manifest {
+		attributes(
+			"Implementation-Version": project.version,
+			"Implementation-Vendor": "HyCraftHD, Luc_ZZ",
+	        "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
+        )
+	}
+}
