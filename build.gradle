@@ -8,7 +8,6 @@ buildscript {
 
     dependencies {
         classpath "net.minecraftforge:srgutils:0.4.1"
-        classpath "net.md-5:SpecialSource:1.9.0"
     }
 }
 
@@ -25,8 +24,13 @@ repositories {
     }
 }
 
+configurations {
+    specialSource
+}
+
 dependencies {
 	implementation "net.hycrafthd:minecraft_downloader:1.0.0-SNAPSHOT"
+	specialSource "net.md-5:SpecialSource:1.9.0"
 }
 
 def minecraft_version = "1.16.5"
@@ -70,17 +74,22 @@ import net.minecraftforge.srgutils.IMappingFile.Format
 def minecraft = file("$buildDir/minecraft")
 def minecraft_downloader = file("$buildDir/minecraft-downloader")
 def mappings = file("$buildDir/mappings")
+def mapped = file("$buildDir/mapped")
 
 // Files
 def official_mappings_file = project.file("${minecraft}/${minecraft_version}-client.txt")
 def obf_to_mapping = project.file("${mappings}/obf_to_mapping.srg")
 def mapping_to_obf = project.file("${mappings}/mapping_to_obf.srg")
+def minecraftJar = project.file("${minecraft}/${minecraft_version}-client.jar")
+def mappedMinecraftJar = project.file("${mapped}/mapped.jar")
+
 
 // Create directories
 task createDirectories() {
 	minecraft.mkdirs()
 	minecraft_downloader.mkdirs()
 	mappings.mkdirs()
+	mapped.mkdirs()
 }
 
 // Download minecraft
@@ -100,4 +109,12 @@ task generateTsrgFiles(dependsOn: downloadMinecraft) {
 		file.write(obf_to_mapping.toPath(), Format.TSRG, true)
 		file.write(mapping_to_obf.toPath(), Format.TSRG, false)
 	}
+}
+
+// Remap the minecraft jar
+task remapMinecraftJar(type: JavaExec, dependsOn: generateTsrgFiles) {
+	classpath configurations.specialSource
+	main "net.md_5.specialsource.SpecialSource"
+	args "--in-jar", minecraftJar, "--out-jar", mappedMinecraftJar, "--srg-in", obf_to_mapping
+	workingDir mapped
 }
