@@ -60,21 +60,44 @@ tasks.named("jar") {
 	}
 }
 
+// Setup project
+
+// Imports
+import net.minecraftforge.srgutils.IMappingFile
+import net.minecraftforge.srgutils.IMappingFile.Format
+
 // Directories
-def minecraft = project.file("$buildDir/minecraft")
-def minecraft_downloader = project.file("$buildDir/minecraft-downloader")
+def minecraft = file("$buildDir/minecraft")
+def minecraft_downloader = file("$buildDir/minecraft-downloader")
+def mappings = file("$buildDir/mappings")
+
+// Files
+def official_mappings_file = project.file("${minecraft}/${minecraft_version}-client.txt")
+def obf_to_mapping = project.file("${mappings}/obf_to_mapping.srg")
+def mapping_to_obf = project.file("${mappings}/mapping_to_obf.srg")
 
 // Create directories
 task createDirectories() {
 	minecraft.mkdirs()
 	minecraft_downloader.mkdirs()
+	mappings.mkdirs()
 }
 
-// Setup project
+// Download minecraft
 task downloadMinecraft(type: JavaExec, dependsOn: createDirectories) {
 	classpath sourceSets.main.runtimeClasspath
 	main "net.hycrafthd.minecraft_downloader.Main"
 	args "--version", minecraft_version, "--output", minecraft, "--skipAssets"
 
 	workingDir minecraft_downloader
+}
+
+// Generate tsrg files from official mappings
+task generateTsrgFiles(dependsOn: downloadMinecraft) {
+	doLast {
+		IMappingFile file = IMappingFile.load(official_mappings_file)
+		
+		file.write(obf_to_mapping.toPath(), Format.TSRG, true)
+		file.write(mapping_to_obf.toPath(), Format.TSRG, false)
+	}
 }
