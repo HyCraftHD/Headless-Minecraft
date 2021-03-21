@@ -1,3 +1,17 @@
+buildscript {
+    repositories {
+	    mavenCentral()
+	    maven {
+	    	url "https://files.minecraftforge.net/maven"
+	    }
+	}
+
+    dependencies {
+        classpath "net.minecraftforge:srgutils:0.4.1"
+        classpath "net.md-5:SpecialSource:1.9.0"
+    }
+}
+
 plugins {
     id "java-library"
     id "eclipse"
