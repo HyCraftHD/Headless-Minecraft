@@ -1,16 +1,3 @@
-buildscript {
-    repositories {
-	    mavenCentral()
-	    maven {
-	    	url "https://repo.u-team.info"
-	    }
-	}
-
-    dependencies {
-        classpath "net.hycrafthd:minecraft_downloader:1.0.0-SNAPSHOT"
-    }
-}
-
 plugins {
     id "java-library"
     id "eclipse"
@@ -28,9 +15,9 @@ dependencies {
 	implementation "net.hycrafthd:minecraft_downloader:1.0.0-SNAPSHOT"
 }
 
-
+def minecraft_version = "1.16.5"
 group = "net.hycrafthd"
-archivesBaseName = "headless_minecraft"
+archivesBaseName = "headless_minecraft-" + minecraft_version
 version = "1.0.0-SNAPSHOT"
 
 tasks.withType(JavaCompile) {
@@ -57,4 +44,23 @@ tasks.named("jar") {
 	        "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
         )
 	}
+}
+
+// Directories
+def minecraft = project.file("$buildDir/minecraft")
+def minecraft_downloader = project.file("$buildDir/minecraft-downloader")
+
+// Create directories
+task createDirectories() {
+	minecraft.mkdirs()
+	minecraft_downloader.mkdirs()
+}
+
+// Setup project
+task downloadMinecraft(type: JavaExec, dependsOn: createDirectories) {
+	classpath sourceSets.main.runtimeClasspath
+	main "net.hycrafthd.minecraft_downloader.Main"
+	args "--version", minecraft_version, "--output", minecraft, "--skipAssets"
+
+	workingDir minecraft_downloader
 }
