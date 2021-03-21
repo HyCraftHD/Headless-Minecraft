@@ -4,10 +4,15 @@ buildscript {
 	    maven {
 	    	url "https://files.minecraftforge.net/maven"
 	    }
+		maven {
+			url "https://repo.u-team.info"
+    	}
 	}
 
     dependencies {
+    	classpath "net.hycrafthd:minecraft_downloader:1.0.0-SNAPSHOT"
         classpath "net.minecraftforge:srgutils:0.4.1"
+        classpath "net.md-5:SpecialSource:1.9.0"
     }
 }
 
@@ -17,6 +22,62 @@ plugins {
     id "com.palantir.launch-config" version "1.2.0"
 }
 
+def minecraft_version = "1.16.5"
+
+// Setup project
+
+// Imports
+import net.minecraftforge.srgutils.IMappingFile
+import net.minecraftforge.srgutils.IMappingFile.Format
+
+// Directories
+def minecraft_files = file("$buildDir/minecraft_files")
+def minecraft_downloader = file("$buildDir/minecraft-downloader")
+def mappings = file("$buildDir/mappings")
+def mapped = file("$buildDir/mapped")
+
+// Files
+def official_mappings_file = project.file("${minecraft_files}/${minecraft_version}-client.txt")
+def obf_to_mapping = project.file("${mappings}/obf_to_mapping.srg")
+def mapping_to_obf = project.file("${mappings}/mapping_to_obf.srg")
+def minecraftJar = project.file("${minecraft_files}/${minecraft_version}-client.jar")
+def mappedMinecraftJar = project.file("${mapped}/mapped-minecraft.jar")
+
+
+// Create directories
+minecraft_files.mkdirs()
+minecraft_downloader.mkdirs()
+mappings.mkdirs()
+mapped.mkdirs()
+
+// Download minecraft
+task downloadMinecraft(type: JavaExec) {
+	classpath buildscript.configurations.classpath
+	main "net.hycrafthd.minecraft_downloader.Main"
+	args "--version", minecraft_version, "--output", minecraft_files, "--skipAssets"
+
+	workingDir minecraft_downloader
+}
+
+// Generate tsrg files from official mappings
+task generateTsrgFiles(dependsOn: downloadMinecraft) {
+	doLast {
+		IMappingFile file = IMappingFile.load(official_mappings_file)
+		
+		file.write(obf_to_mapping.toPath(), Format.TSRG, true)
+		file.write(mapping_to_obf.toPath(), Format.TSRG, false)
+	}
+}
+
+// Remap the minecraft jar
+task remapMinecraftJar(type: JavaExec, dependsOn: generateTsrgFiles) {
+	classpath buildscript.configurations.classpath
+	main "net.md_5.specialsource.SpecialSource"
+	args "--in-jar", minecraftJar, "--out-jar", mappedMinecraftJar, "--srg-in", obf_to_mapping
+	workingDir mapped
+}
+
+// Default Project
 repositories {
     mavenCentral()
     maven {
@@ -25,15 +86,15 @@ repositories {
 }
 
 configurations {
-    specialSource
+    minecraft.extendsFrom implementation
 }
 
 dependencies {
-	implementation "net.hycrafthd:minecraft_downloader:1.0.0-SNAPSHOT"
-	specialSource "net.md-5:SpecialSource:1.9.0"
+	minecraft files(mappedMinecraftJar) {
+		builtBy "remapMinecraftJar"
+	}
 }
 
-def minecraft_version = "1.16.5"
 group = "net.hycrafthd"
 archivesBaseName = "headless_minecraft-" + minecraft_version
 version = "1.0.0-SNAPSHOT"
@@ -62,59 +123,4 @@ tasks.named("jar") {
 	        "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
         )
 	}
-}
-
-// Setup project
-
-// Imports
-import net.minecraftforge.srgutils.IMappingFile
-import net.minecraftforge.srgutils.IMappingFile.Format
-
-// Directories
-def minecraft = file("$buildDir/minecraft")
-def minecraft_downloader = file("$buildDir/minecraft-downloader")
-def mappings = file("$buildDir/mappings")
-def mapped = file("$buildDir/mapped")
-
-// Files
-def official_mappings_file = project.file("${minecraft}/${minecraft_version}-client.txt")
-def obf_to_mapping = project.file("${mappings}/obf_to_mapping.srg")
-def mapping_to_obf = project.file("${mappings}/mapping_to_obf.srg")
-def minecraftJar = project.file("${minecraft}/${minecraft_version}-client.jar")
-def mappedMinecraftJar = project.file("${mapped}/mapped.jar")
-
-
-// Create directories
-task createDirectories() {
-	minecraft.mkdirs()
-	minecraft_downloader.mkdirs()
-	mappings.mkdirs()
-	mapped.mkdirs()
-}
-
-// Download minecraft
-task downloadMinecraft(type: JavaExec, dependsOn: createDirectories) {
-	classpath sourceSets.main.runtimeClasspath
-	main "net.hycrafthd.minecraft_downloader.Main"
-	args "--version", minecraft_version, "--output", minecraft, "--skipAssets"
-
-	workingDir minecraft_downloader
-}
-
-// Generate tsrg files from official mappings
-task generateTsrgFiles(dependsOn: downloadMinecraft) {
-	doLast {
-		IMappingFile file = IMappingFile.load(official_mappings_file)
-		
-		file.write(obf_to_mapping.toPath(), Format.TSRG, true)
-		file.write(mapping_to_obf.toPath(), Format.TSRG, false)
-	}
-}
-
-// Remap the minecraft jar
-task remapMinecraftJar(type: JavaExec, dependsOn: generateTsrgFiles) {
-	classpath configurations.specialSource
-	main "net.md_5.specialsource.SpecialSource"
-	args "--in-jar", minecraftJar, "--out-jar", mappedMinecraftJar, "--srg-in", obf_to_mapping
-	workingDir mapped
 }
