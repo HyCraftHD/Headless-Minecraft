@@ -86,7 +86,8 @@ repositories {
 }
 
 configurations {
-    minecraft.extendsFrom implementation
+    minecraft
+    implementation.extendsFrom minecraft
 }
 
 dependencies {
