@@ -53,6 +53,7 @@ def mapping_to_obf = project.file("${mappings}/mapping_to_obf.srg")
 def minecraftJar = project.file("${minecraft_files}/${minecraft_version}-client.jar")
 def mappedMinecraftJar = project.file("${mapped}/mapped-minecraft.jar")
 def libraryList = project.file("${minecraft_files}/libraries.txt")
+def accessChange = project.file("$projectDir/src/main/resources/access_change.at")
 
 // Create directories
 minecraft_files.mkdirs()
@@ -78,7 +79,7 @@ mappingFile.write(mapping_to_obf.toPath(), Format.TSRG, false)
 javaexec { java ->
 	classpath buildscript.configurations.classpath
 	main "net.md_5.specialsource.SpecialSource"
-	args "--in-jar", minecraftJar, "--out-jar", mappedMinecraftJar, "--srg-in", obf_to_mapping
+	args "--in-jar", minecraftJar, "--out-jar", mappedMinecraftJar, "--srg-in", obf_to_mapping, "--access-transformer", accessChange
 	workingDir mapped
 }.rethrowFailure().assertNormalExitValue()
 

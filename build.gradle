@@ -8,15 +8,8 @@ ext {
 	minecraft_version = "1.16.5"
 }
 
-repositories {
-    mavenCentral()
-    maven {
-    	url "https://repo.u-team.info"
-    }
-}
-
 dependencies {
-	implementation project(":minecraft")
+	compileOnly project(":minecraft")
 }
 
 group = "net.hycrafthd"
