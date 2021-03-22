@@ -8,8 +8,17 @@ ext {
 	minecraft_version = "1.16.5"
 }
 
+repositories {
+	mavenCentral()
+	maven {
+		url "https://files.minecraftforge.net/maven"
+	}
+}
+
 dependencies {
 	compileOnly project(":minecraft")
+	annotationProcessor "org.spongepowered:mixin:0.8.2:processor"
+	implementation "org.spongepowered:mixin:0.8.2"
 }
 
 group = "net.hycrafthd"
