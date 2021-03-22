@@ -29,15 +29,9 @@ java {
 jar {
 }
 
-repositories {
-    mavenCentral()
-    maven {
-    	url "https://repo.u-team.info"
-    }
-}
-
-dependencies {
-	implementation "net.md-5:SpecialSource:1.9.0"
+configurations {
+	minecraft
+	compile.extendsFrom(minecraft)
 }
 
 // Setup project
@@ -48,7 +42,7 @@ import net.minecraftforge.srgutils.IMappingFile.Format
 
 // Directories
 def minecraft_files = file("$buildDir/minecraft_files")
-def minecraft_downloader = file("$buildDir/minecraft-downloader")
+def minecraft_downloader = file("$buildDir/minecraft_downloader")
 def mappings = file("$buildDir/mappings")
 def mapped = file("$buildDir/mapped")
 
@@ -60,7 +54,6 @@ def minecraftJar = project.file("${minecraft_files}/${minecraft_version}-client.
 def mappedMinecraftJar = project.file("${mapped}/mapped-minecraft.jar")
 def libraryList = project.file("${minecraft_files}/libraries.txt")
 
-
 // Create directories
 minecraft_files.mkdirs()
 minecraft_downloader.mkdirs()
@@ -68,30 +61,28 @@ mappings.mkdirs()
 mapped.mkdirs()
 
 // Download minecraft
-task downloadMinecraft(type: JavaExec) {
+javaexec { java ->
 	classpath buildscript.configurations.classpath
 	main "net.hycrafthd.minecraft_downloader.Main"
 	args "--version", minecraft_version, "--output", minecraft_files, "--skipAssets", "--extraInformation", "--libraryList", libraryList
 
 	workingDir minecraft_downloader
-}
+}.rethrowFailure().assertNormalExitValue()
 	
 // Generate tsrg files from official mappings
-task generateTsrgFiles(dependsOn: downloadMinecraft) {
-	doLast {
-		IMappingFile file = IMappingFile.load(official_mappings_file)
-		
-		file.write(obf_to_mapping.toPath(), Format.TSRG, true)
-		file.write(mapping_to_obf.toPath(), Format.TSRG, false)
-	}
-}
+def mappingFile = IMappingFile.load(official_mappings_file)
+mappingFile.write(obf_to_mapping.toPath(), Format.TSRG, true)
+mappingFile.write(mapping_to_obf.toPath(), Format.TSRG, false)
 	
 // Remap the minecraft jar
-task remapMinecraftJar(type: JavaExec, dependsOn: generateTsrgFiles) {
+javaexec { java ->
 	classpath buildscript.configurations.classpath
 	main "net.md_5.specialsource.SpecialSource"
 	args "--in-jar", minecraftJar, "--out-jar", mappedMinecraftJar, "--srg-in", obf_to_mapping
 	workingDir mapped
-}
+}.rethrowFailure().assertNormalExitValue()
 
-remapMinecraftJar
+dependencies {
+	minecraft files(mappedMinecraftJar)
+	minecraft files(libraryList.readLines())
+}
