@@ -1,4 +1,44 @@
-apply plugin: "java-library"
+buildscript {
+    repositories {
+	    mavenCentral()
+	    maven {
+	    	url "https://files.minecraftforge.net/maven"
+	    }
+		maven {
+			url "https://repo.u-team.info"
+    	}
+	}
+
+    dependencies {
+    	classpath "net.hycrafthd:minecraft_downloader:1.0.0-SNAPSHOT"
+        classpath "net.minecraftforge:srgutils:0.4.1"
+        classpath "net.md-5:SpecialSource:1.9.0"
+    }
+}
+
+plugins {
+   id "java-library"
+}
+
+java {
+	toolchain {
+		languageVersion = JavaLanguageVersion.of(8)
+	}
+}
+
+jar {
+}
+
+repositories {
+    mavenCentral()
+    maven {
+    	url "https://repo.u-team.info"
+    }
+}
+
+dependencies {
+	implementation "net.md-5:SpecialSource:1.9.0"
+}
 
 // Setup project
 
@@ -53,3 +93,5 @@ task remapMinecraftJar(type: JavaExec, dependsOn: generateTsrgFiles) {
 	args "--in-jar", minecraftJar, "--out-jar", mappedMinecraftJar, "--srg-in", obf_to_mapping
 	workingDir mapped
 }
+
+remapMinecraftJar
