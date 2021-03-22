@@ -78,6 +78,87 @@ task remapMinecraftJar(type: JavaExec, dependsOn: generateTsrgFiles) {
 	workingDir mapped
 }
 
+// Add library dependencies
+/*task libraryDependencies(dependsOn: remapMinecraftJar) {
+	doLast {
+		libraryList.eachLine { line ->
+			println line
+			
+			dependencies.add("minecraft", files(line))
+		}
+	}
+}*/
+
+class MappedMinecraftDependency implements FileCollectionDependency, org.gradle.api.internal.artifacts.dependencies.SelfResolvingDependencyInternal {
+	
+	private FileCollection minecraftFiles
+	
+	MappedMinecraftDependency(minecraftFiles) {
+		this.minecraftFiles = minecraftFiles
+	}
+	
+	@Override
+	ComponentIdentifier getTargetComponentId() {
+		println "component target id sdfkdfjk"
+		return null
+	}
+	
+	@Override
+	public FileCollection getFiles() {
+		return minecraftFiles
+	}
+	
+	@Override
+	public Set<File> resolve() {
+		println "RESOLVE FIL LESDFKJSDLZHF KLHDJSF LHSDFHSJKLDFHJKSD;JHDFKH"
+		return minecraftFiles
+	}
+	
+	@Override
+	public Set<File> resolve(boolean transitive) {
+		return resolve()
+	}
+
+	@Override
+	public TaskDependency getBuildDependencies() {
+		return minecraftFiles.getBuildDependencies()
+	}
+
+	@Override
+	public String getGroup() {
+		return "net.minecraft"
+	}
+
+	@Override
+	public String getName() {
+		return "mapped_minecraft_with_libraries"
+	}
+
+	@Override
+	public String getVersion() {
+		return "1.0.0"
+	}
+	
+	@Override
+	public boolean contentEquals(Dependency dependency) {
+		return false
+	}
+
+	@Override
+	public Dependency copy() {
+		return new MappedMinecraftDependency()
+	}
+
+	@Override
+	public String getReason() {
+		return null;
+	}
+
+	@Override
+	public void because(String reason) {
+	}
+}
+
 // Default Project
 repositories {
     mavenCentral()
@@ -92,9 +173,15 @@ configurations {
 }
 
 dependencies {
-	minecraft files(mappedMinecraftJar) {
+	//minecraft "com.mojang:minecraft:1.16.5"
+	//implementation new MappedMinecraftDependency()
+	
+	minecraft new MappedMinecraftDependency(files(mappedMinecraftJar) {
+	})
+	
+	/*minecraft files(mappedMinecraftJar) {
 		builtBy "remapMinecraftJar"
-	}
+	}*/	
 }
 
 group = "net.hycrafthd"
