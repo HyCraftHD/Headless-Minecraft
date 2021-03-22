@@ -41,3 +41,13 @@ tasks.named("jar") {
         )
 	}
 }
+
+task runHeadlessMinecraft(type: JavaExec) {
+	main "net.hycrafthd.headless_minecraft.Main"
+	args '--ip="localhost" --username="' + System.getenv("minecraft.email") +'" --password="' +  System.getenv("minecraft.password") +'"'
+	def run = new File("$rootDir/run")
+	if(!run.exists() ) {
+		run.mkdirs()
+	}
+	workingDir run
+}
