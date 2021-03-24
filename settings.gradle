@@ -1,6 +1,6 @@
 include "minecraft"
-include "launcher"
+include "headless-minecraft"
 
 rootProject.name = "Headless-Minecraft"
 project(":minecraft").name = "Mapped-Minecraft"
-project(":launcher").name = "Launcher"
+project(":headless-minecraft").name = "Headless-Minecraft-Implementation"
