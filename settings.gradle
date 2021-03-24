@@ -1,1 +1,6 @@
 include "minecraft"
+include "launcher"
+
+rootProject.name = "Headless-Minecraft"
+project(":minecraft").name = "Mapped-Minecraft"
+project(":launcher").name = "Launcher"
