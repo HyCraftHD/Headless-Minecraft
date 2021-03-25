@@ -8,8 +8,30 @@ java {
 	}
 }
 
-jar {
+repositories {
+	mavenCentral()
+	maven {
+		url "https://files.minecraftforge.net/maven"
+	}
 }
 
 dependencies {
+	compileOnly project(":Mapped-Minecraft")
+	
+	implementation ("org.spongepowered:mixin:0.8.2") {
+		transitive = false
+	}
+	implementation ("cpw.mods:modlauncher:8.0.9") {
+		transitive = false
+	}
+	implementation "org.ow2.asm:asm:9.0"
+    implementation "org.ow2.asm:asm-commons:9.0"
+    implementation "org.ow2.asm:asm-tree:9.0"
+    implementation "org.ow2.asm:asm-util:9.0"
+    implementation "org.ow2.asm:asm-analysis:9.0"
+    
+	annotationProcessor "org.spongepowered:mixin:0.8.2:processor"
+}
+
+jar {
 }
