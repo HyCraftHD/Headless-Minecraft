@@ -96,6 +96,7 @@ task runHeadlessMinecraft(type: JavaExec) {
 		"headless-minecraft.development": "true",
 		"headless-minecraft.development.download": "\"$minecraft_files\"",
 		"headless-minecraft.development.mapped-minecraft": "\"$mappedMinecraftJar\"",
+		"headless-minecraft.development.implementation-build": "\"" + file(project(":Headless-Minecraft-Implementation").projectDir.toString() + "/bin/main") +"\"",
 	]
 	workingDir run
 }
