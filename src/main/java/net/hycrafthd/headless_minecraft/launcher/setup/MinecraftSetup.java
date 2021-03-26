@@ -1,7 +1,8 @@
-package net.hycrafthd.headless_minecraft.launcher;
+package net.hycrafthd.headless_minecraft.launcher.setup;
 
 import java.io.File;
 
+import net.hycrafthd.headless_minecraft.launcher.Constants;
 import net.hycrafthd.minecraft_downloader.MinecraftAuthenticator;
 import net.hycrafthd.minecraft_downloader.MinecraftClasspathBuilder;
 import net.hycrafthd.minecraft_downloader.MinecraftDownloader;
@@ -12,7 +13,7 @@ public class MinecraftSetup {
 	
 	private static MinecraftSetup INSTANCE;
 	
-	static MinecraftSetup launch(File run, String username, String password) {
+	public static MinecraftSetup launch(File run, String username, String password) {
 		return INSTANCE = new MinecraftSetup(run, username, password);
 	}
 	
