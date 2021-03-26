@@ -88,8 +88,8 @@ task runHeadlessMinecraft(type: JavaExec) {
 	args '--ip="localhost" --username="' + System.getenv("minecraft.email") +'" --password="' +  System.getenv("minecraft.password") +'"'
 	systemProperties = [
 		"headless-minecraft.development": "true",
-		"headless-minecraft.development.download": "false",
-		"headless-minecraft.development.mapped-minecraft": "C:\\uis",
+		"headless-minecraft.development.download": minecraft_files,
+		"headless-minecraft.development.mapped-minecraft": mappedMinecraftJar,
 	]
 	def run = new File("$rootDir/run")
 	if(!run.exists() ) {
