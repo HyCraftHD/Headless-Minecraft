@@ -27,8 +27,15 @@ public class MinecraftSetup {
 	private final ProvidedSettings settings;
 	
 	public MinecraftSetup(File run, String username, String password) {
+		final File outputDirectory;
+		if (Constants.DEVELOPMENT_MODE) {
+			outputDirectory = new File(Constants.DEVELOPMENT_DOWNLOAD_DIRECTORY);
+		} else {
+			outputDirectory = new File(run, "minecraft_files");
+		}
+		
 		// Create provided settings
-		settings = new ProvidedSettings(Constants.MCVERSION, run, null);
+		settings = new ProvidedSettings(Constants.MCVERSION, outputDirectory, null);
 		
 		// Download minecraft
 		MinecraftParser.launch(settings);
