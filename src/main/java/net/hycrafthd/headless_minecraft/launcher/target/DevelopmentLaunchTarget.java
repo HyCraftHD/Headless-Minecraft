@@ -42,7 +42,14 @@ public class DevelopmentLaunchTarget implements ILaunchHandlerService {
 	@Override
 	public Callable<Void> launchService(String[] arguments, ITransformingClassLoader launchClassLoader) {
 		MinecraftSetup.destroy();
+		
+		launchClassLoader.addTargetPackageFilter(filter -> !filter.startsWith("net.hycrafthd.headless_minecraft.mixin"));
+		
 		return () -> {
+			
+			final Class<?> entryClass = Class.forName("net.hycrafthd.headless_minecraft.Main", true, launchClassLoader.getInstance());
+			entryClass.getMethod("main", String[].class).invoke(null, (Object) arguments);
+			
 			return null;
 		};
 	}
