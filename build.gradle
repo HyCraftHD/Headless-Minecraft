@@ -72,6 +72,7 @@ tasks.named("jar") {
 task runHeadlessMinecraft(type: JavaExec) {
 	main "net.hycrafthd.headless_minecraft.launcher.Main"
 	args '--ip="localhost" --username="' + System.getenv("minecraft.email") +'" --password="' +  System.getenv("minecraft.password") +'"'
+	systemProperty "myvariable=x5555", "xasdsd"
 	def run = new File("$rootDir/run")
 	if(!run.exists() ) {
 		run.mkdirs()
