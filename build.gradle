@@ -93,8 +93,8 @@ task runHeadlessMinecraft(type: JavaExec) {
 	args "--run", run, "--username", "xyz", "--password", "xyz"
 	systemProperties = [
 		"headless-minecraft.development": "true",
-		"headless-minecraft.development.download": minecraft_files,
-		"headless-minecraft.development.mapped-minecraft": mappedMinecraftJar,
+		"headless-minecraft.development.download": "\"$minecraft_files\"",
+		"headless-minecraft.development.mapped-minecraft": "\"$mappedMinecraftJar\"",
 	]
 	workingDir run
 }
