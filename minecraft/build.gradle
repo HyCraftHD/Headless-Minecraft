@@ -47,12 +47,12 @@ def mappings = file("$buildDir/mappings")
 def mapped = file("$buildDir/mapped")
 
 // Files
-def official_mappings_file = project.file("${minecraft_files}/${minecraft_version}-client.txt")
-def obf_to_mapping = project.file("${mappings}/obf_to_mapping.srg")
-def mapping_to_obf = project.file("${mappings}/mapping_to_obf.srg")
-def minecraftJar = project.file("${minecraft_files}/${minecraft_version}-client.jar")
-def mappedMinecraftJar = project.file("${mapped}/mapped-minecraft.jar")
-def libraryList = project.file("${minecraft_files}/libraries.txt")
+def official_mappings_file = file("${minecraft_files}/${minecraft_version}-client.txt")
+def obf_to_mapping = file("${mappings}/obf_to_mapping.srg")
+def mapping_to_obf = file("${mappings}/mapping_to_obf.srg")
+def minecraftJar = file("${minecraft_files}/${minecraft_version}-client.jar")
+def mappedMinecraftJar = file("${mapped}/mapped-minecraft.jar")
+def libraryList = file("${minecraft_files}/libraries.txt")
 
 // Create directories
 minecraft_files.mkdirs()
