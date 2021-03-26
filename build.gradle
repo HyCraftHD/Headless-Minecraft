@@ -84,16 +84,17 @@ tasks.named("jar") {
 }
 
 task runHeadlessMinecraft(type: JavaExec) {
+	def run = new File("$rootDir/run")
+	if(!run.exists() ) {
+		run.mkdirs()
+	}
+
 	main "net.hycrafthd.headless_minecraft.launcher.Main"
-	args '--ip="localhost" --username="' + System.getenv("minecraft.email") +'" --password="' +  System.getenv("minecraft.password") +'"'
+	args "--run", run, "--username", "xyz", "--password", "xyz"
 	systemProperties = [
 		"headless-minecraft.development": "true",
 		"headless-minecraft.development.download": minecraft_files,
 		"headless-minecraft.development.mapped-minecraft": mappedMinecraftJar,
 	]
-	def run = new File("$rootDir/run")
-	if(!run.exists() ) {
-		run.mkdirs()
-	}
 	workingDir run
 }
