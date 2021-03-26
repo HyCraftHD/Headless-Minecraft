@@ -2,16 +2,21 @@ package net.hycrafthd.headless_minecraft.launcher;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.io.IoBuilder;
 
+import cpw.mods.modlauncher.Launcher;
 import joptsimple.OptionParser;
 import joptsimple.OptionSet;
 import joptsimple.OptionSpec;
 import net.hycrafthd.logging_util.LoggingUtil;
+import net.hycrafthd.minecraft_downloader.settings.LauncherVariables;
+import net.hycrafthd.minecraft_downloader.settings.ProvidedSettings;
 import net.hycrafthd.minecraft_downloader.util.FileUtil;
 
 public class Main {
@@ -57,9 +62,24 @@ public class Main {
 		}
 		
 		// Minecraft setup
-		MinecraftSetup.launch(run, username, password);
+		final MinecraftSetup setup = MinecraftSetup.launch(run, username, password);
 		
-		// Launcher.main(args);
+		// Setup args
+		final ProvidedSettings settings = setup.getSettings();
+		
+		final List<String> argList = new ArrayList<>();
+		argList.add("--launchTarget");
+		argList.add(Constants.DEVELOPMENT_MODE ? "development" : "production");
+		argList.add("--run");
+		argList.add(run.getPath());
+		argList.add("--auth-name");
+		argList.add(settings.getVariable(LauncherVariables.AUTH_PLAYER_NAME));
+		argList.add("--auth-uuid");
+		argList.add(settings.getVariable(LauncherVariables.AUTH_UUID));
+		argList.add("--auth-token");
+		argList.add(settings.getVariable(LauncherVariables.AUTH_ACCESS_TOKEN));
+		
+		Launcher.main(argList.stream().toArray(String[]::new));
 	}
 	
 }

@@ -12,8 +12,8 @@ public class MinecraftSetup {
 	
 	private static MinecraftSetup INSTANCE;
 	
-	static void launch(File run, String username, String password) {
-		INSTANCE = new MinecraftSetup(run, username, password);
+	static MinecraftSetup launch(File run, String username, String password) {
+		return INSTANCE = new MinecraftSetup(run, username, password);
 	}
 	
 	public static void destroy() {
