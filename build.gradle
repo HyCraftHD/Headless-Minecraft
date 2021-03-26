@@ -6,6 +6,20 @@ plugins {
 
 ext {
 	minecraft_version = "1.16.5"
+	
+	// Directories
+	minecraft_files = file("$buildDir/minecraft_files")
+	minecraft_downloader = file("$buildDir/minecraft_downloader")
+	mappings = file("$buildDir/mappings")
+	mapped = file("$buildDir/mapped")
+	
+	// Files
+	official_mappings_file = file("${minecraft_files}/${minecraft_version}-client.txt")
+	obf_to_mapping = file("${mappings}/obf_to_mapping.srg")
+	mapping_to_obf = file("${mappings}/mapping_to_obf.srg")
+	minecraftJar = file("${minecraft_files}/${minecraft_version}-client.jar")
+	mappedMinecraftJar = file("${mapped}/mapped-minecraft.jar")
+	libraryList = file("${minecraft_files}/libraries.txt")
 }
 
 repositories {
@@ -72,7 +86,11 @@ tasks.named("jar") {
 task runHeadlessMinecraft(type: JavaExec) {
 	main "net.hycrafthd.headless_minecraft.launcher.Main"
 	args '--ip="localhost" --username="' + System.getenv("minecraft.email") +'" --password="' +  System.getenv("minecraft.password") +'"'
-	systemProperty "myvariable=x5555", "xasdsd"
+	systemProperties = [
+		"headless-minecraft.development": "true",
+		"headless-minecraft.development.download": "false",
+		"headless-minecraft.development.mapped-minecraft": "C:\\uis",
+	]
 	def run = new File("$rootDir/run")
 	if(!run.exists() ) {
 		run.mkdirs()
