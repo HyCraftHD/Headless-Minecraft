@@ -34,6 +34,9 @@ public class DevelopmentLaunchTarget implements ILaunchHandlerService {
 		
 		// Add mapped minecraft jar
 		builder.addTransformationPath(Paths.get(Constants.DEVELOPMENT_MAPPED_MINECRAFT));
+		
+		// Add headless minecraft implementation
+		builder.addTransformationPath(Paths.get(Constants.DEVELOPMENT_IMPLEMENTATION_BUILD));
 	}
 	
 	@Override
