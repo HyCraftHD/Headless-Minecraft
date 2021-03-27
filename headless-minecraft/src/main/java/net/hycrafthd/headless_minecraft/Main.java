@@ -35,6 +35,20 @@ public class Main {
 			parser.printHelpOn(System.out);
 			return;
 		}
+		
+		LOGGER.info("Start headless minecraft");
+		
+		// Get arguments
+		final File run = set.valueOf(runSpec);
+		
+		final String authName = set.valueOf(authNameSpec);
+		final String authUuid = set.valueOf(authUuidSpec);
+		final String authToken = set.valueOf(authTokenSpec);
+		
+		// Validate that run, username and password are not null
+		if (run == null || authName == null || authUuid == null || authToken == null) {
+			throw new IllegalStateException("Run, auth name, auth uuid and auth token cannot be null values.");
+		}
 	}
 	
 }
