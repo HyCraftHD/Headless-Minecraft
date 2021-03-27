@@ -79,6 +79,8 @@ public class Main {
 		argList.add(settings.getVariable(LauncherVariables.AUTH_UUID));
 		argList.add("--auth-token");
 		argList.add(settings.getVariable(LauncherVariables.AUTH_ACCESS_TOKEN));
+		argList.add("--user-type");
+		argList.add(settings.getVariable(LauncherVariables.USER_TYPE));
 		
 		Launcher.main(argList.stream().toArray(String[]::new));
 	}

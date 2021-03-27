@@ -28,10 +28,11 @@ public class Main {
 		final OptionSpec<String> authNameSpec = parser.accepts("auth-name", "Player name").withRequiredArg();
 		final OptionSpec<String> authUuidSpec = parser.accepts("auth-uuid", "Player uuid").withRequiredArg();
 		final OptionSpec<String> authTokenSpec = parser.accepts("auth-token", "Auth / Access token").withRequiredArg();
+		final OptionSpec<String> userTypeSpec = parser.accepts("user-type", "User type").withRequiredArg();
 		
 		final OptionSet set = parser.parse(args);
 		
-		if (set.has(helpSpec) || set.specs().size() < 4) {
+		if (set.has(helpSpec) || set.specs().size() < 5) {
 			parser.printHelpOn(System.out);
 			return;
 		}
@@ -44,13 +45,14 @@ public class Main {
 		final String authName = set.valueOf(authNameSpec);
 		final String authUuid = set.valueOf(authUuidSpec);
 		final String authToken = set.valueOf(authTokenSpec);
+		final String userType = set.valueOf(userTypeSpec);
 		
 		// Validate that run, username and password are not null
-		if (run == null || authName == null || authUuid == null || authToken == null) {
-			throw new IllegalStateException("Run, auth name, auth uuid and auth token cannot be null values.");
+		if (run == null || authName == null || authUuid == null || authToken == null || userType == null) {
+			throw new IllegalStateException("Run, auth name, auth uuid, auth token and user type cannot be null values.");
 		}
 		
-		HeadlessMinecraft.launch(run, authName, authUuid, authToken);
+		HeadlessMinecraft.launch(run, authName, authUuid, authToken, userType);
 	}
 	
 }
