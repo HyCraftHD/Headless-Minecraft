@@ -49,6 +49,8 @@ public class Main {
 		if (run == null || authName == null || authUuid == null || authToken == null) {
 			throw new IllegalStateException("Run, auth name, auth uuid and auth token cannot be null values.");
 		}
+		
+		HeadlessMinecraft.launch(run, authName, authUuid, authToken);
 	}
 	
 }
