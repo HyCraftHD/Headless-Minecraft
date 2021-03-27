@@ -58,7 +58,7 @@ public class HeadlessMinecraft {
 			inetAddress = InetAddress.getByName(host);
 			final Connection connection = Connection.connectToServer(inetAddress, port, false); // true = Linux packet optimisation
 			Main.LOGGER.info("Connected");
-			connection.setListener(new ClientHandshakeListener(connection));
+			connection.setListener(new ClientHandshakeListener(connection, this));
 			connection.send(new ClientIntentionPacket(host, port, ConnectionProtocol.LOGIN));
 			connection.send(new ServerboundHelloPacket(user.getGameProfile()));
 			
@@ -71,5 +71,13 @@ public class HeadlessMinecraft {
 		} catch (UnknownHostException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public User getUser() {
+		return user;
+	}
+	
+	public MinecraftSessionService getSessionService() {
+		return sessionService;
 	}
 }
