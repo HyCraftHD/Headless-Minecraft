@@ -4,13 +4,15 @@ import java.io.File;
 import java.net.InetAddress;
 import java.net.Proxy;
 import java.net.UnknownHostException;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 import com.mojang.authlib.minecraft.MinecraftSessionService;
 import com.mojang.authlib.yggdrasil.YggdrasilAuthenticationService;
 
+import net.hycrafthd.headless_minecraft.network.ClientHandshakeListener;
 import net.minecraft.CrashReport;
 import net.minecraft.client.User;
-import net.minecraft.client.gui.screens.ConnectScreen;
 import net.minecraft.network.Connection;
 import net.minecraft.network.ConnectionProtocol;
 import net.minecraft.network.protocol.handshake.ClientIntentionPacket;
@@ -38,27 +40,50 @@ public class HeadlessMinecraft {
 		sessionService = new YggdrasilAuthenticationService(Proxy.NO_PROXY).createMinecraftSessionService();
 		
 		bootstrapMinecraft();
-		
+		connect("mc-project.hycrafthd.net", 25566);
 		// HotbarManager
 	}
 	
 	private void bootstrapMinecraft() {
+		Main.LOGGER.info("Start Bootstrap");
 		CrashReport.preload();
 		Bootstrap.bootStrap();
 		Bootstrap.validate();
+		Main.LOGGER.info("Finish Bootstrap");
 	}
 	
 	private void connect(String host, int port) {
 		InetAddress inetAddress = null;
-		Connection connection = null;
 		try {
 			inetAddress = InetAddress.getByName(host);
-			connection = Connection.connectToServer(inetAddress, port, true); // true = Linux packet optimisation
+			final Connection connection = Connection.connectToServer(inetAddress, port, false); // true = Linux packet optimisation
+			Main.LOGGER.info("Connected");
+			connection.setListener(new ClientHandshakeListener(connection));
 			connection.send(new ClientIntentionPacket(host, port, ConnectionProtocol.LOGIN));
 			connection.send(new ServerboundHelloPacket(user.getGameProfile()));
+			
+			System.out.println(connection.getRemoteAddress());
+			System.out.println(connection.getDisconnectedReason());
+			System.out.println(connection.getPacketListener());
+			System.out.println(connection.getAverageReceivedPackets());
+			System.out.println(connection.getAverageSentPackets());
+			
+			Executors.newScheduledThreadPool(2).scheduleAtFixedRate(() -> {
+				connection.tick();
+				//System.out.println("TICK: rec: " + connection.getAverageReceivedPackets() + " -> send: " + connection.getAverageSentPackets());
+				
+			}, 50, 50, TimeUnit.MILLISECONDS);
+			
+			// for (int i = 0; i < 400; i++) {
+			// connection.tick();
+			// try {
+			// Thread.sleep(50);
+			// } catch (InterruptedException e) {
+			// e.printStackTrace();
+			// }
+			// }
 		} catch (UnknownHostException e) {
 			e.printStackTrace();
 		}
 	}
-	
 }

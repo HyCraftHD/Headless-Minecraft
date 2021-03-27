@@ -11,46 +11,45 @@ import net.minecraft.network.protocol.login.ClientboundLoginDisconnectPacket;
 
 public class ClientHandshakeListener implements ClientLoginPacketListener {
 	
+	private Connection connection;
+	
+	public ClientHandshakeListener(Connection connection) {
+		this.connection = connection;
+	}
+	
 	@Override
 	public Connection getConnection() {
-		// TODO Auto-generated method stub
-		return null;
+		return connection;
 	}
 	
 	@Override
 	public void onDisconnect(Component var1) {
-		// TODO Auto-generated method stub
-		
+		System.out.println("onDisconnect");
 	}
 	
 	@Override
 	public void handleCompression(ClientboundLoginCompressionPacket var1) {
-		// TODO Auto-generated method stub
-		
+		System.out.println("handleCompression");
 	}
 	
 	@Override
 	public void handleCustomQuery(ClientboundCustomQueryPacket var1) {
-		// TODO Auto-generated method stub
-		
+		System.out.println("handleCustomQuery");
 	}
 	
 	@Override
 	public void handleDisconnect(ClientboundLoginDisconnectPacket var1) {
-		// TODO Auto-generated method stub
-		
+		System.out.println("handleDisconnect");
 	}
 	
 	@Override
 	public void handleGameProfile(ClientboundGameProfilePacket var1) {
-		// TODO Auto-generated method stub
-		
+		System.out.println("handleGameProfile");
 	}
 	
 	@Override
 	public void handleHello(ClientboundHelloPacket var1) {
-		// TODO Auto-generated method stub
-		
+		System.out.println("handleHello");
 	}
 	
 }
