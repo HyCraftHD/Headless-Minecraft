@@ -3,9 +3,7 @@
 	"minVersion": "0.8",
 	"compatibilityLevel": "JAVA_8",
 	"package": "net.hycrafthd.headless_minecraft.mixin",
-	"mixins": [
-		"Matrix3fAccessor"
-	],
+	"mixins": [],
 	"injectors": {
 		"defaultRequire": 1
 	}
