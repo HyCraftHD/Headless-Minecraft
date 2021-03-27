@@ -45,8 +45,9 @@ public class ClientHandshakeListener implements ClientLoginPacketListener {
 	}
 	
 	@Override
-	public void handleCompression(ClientboundLoginCompressionPacket var1) {
+	public void handleCompression(ClientboundLoginCompressionPacket packet) {
 		System.out.println("handleCompression");
+		connection.setupCompression(packet.getCompressionThreshold());
 	}
 	
 	@Override
@@ -60,8 +61,10 @@ public class ClientHandshakeListener implements ClientLoginPacketListener {
 	}
 	
 	@Override
-	public void handleGameProfile(ClientboundGameProfilePacket var1) {
+	public void handleGameProfile(ClientboundGameProfilePacket packet) {
 		System.out.println("handleGameProfile");
+		System.out.println(packet.getGameProfile());
+		System.out.println("WE SHOULD BE ABLE TO CONNECT");
 	}
 	
 	@Override
