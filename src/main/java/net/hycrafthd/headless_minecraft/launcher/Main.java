@@ -22,7 +22,7 @@ import net.hycrafthd.minecraft_downloader.util.FileUtil;
 
 public class Main {
 	
-	public static final Logger LOGGER = LogManager.getLogger("Headless Minecraft");
+	public static final Logger LOGGER = LogManager.getLogger("Headless Minecraft Launcher");
 	
 	public static void main(String[] args) throws IOException {
 		LoggingUtil.redirectPrintStreams(LOGGER);
