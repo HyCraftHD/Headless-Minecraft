@@ -62,26 +62,12 @@ public class HeadlessMinecraft {
 			connection.send(new ClientIntentionPacket(host, port, ConnectionProtocol.LOGIN));
 			connection.send(new ServerboundHelloPacket(user.getGameProfile()));
 			
-			System.out.println(connection.getRemoteAddress());
-			System.out.println(connection.getDisconnectedReason());
-			System.out.println(connection.getPacketListener());
-			System.out.println(connection.getAverageReceivedPackets());
-			System.out.println(connection.getAverageSentPackets());
-			
 			Executors.newScheduledThreadPool(2).scheduleAtFixedRate(() -> {
 				connection.tick();
-				//System.out.println("TICK: rec: " + connection.getAverageReceivedPackets() + " -> send: " + connection.getAverageSentPackets());
+				// System.out.println("TICK: rec: " + connection.getAverageReceivedPackets() + " -> send: " +
+				// connection.getAverageSentPackets());
 				
 			}, 50, 50, TimeUnit.MILLISECONDS);
-			
-			// for (int i = 0; i < 400; i++) {
-			// connection.tick();
-			// try {
-			// Thread.sleep(50);
-			// } catch (InterruptedException e) {
-			// e.printStackTrace();
-			// }
-			// }
 		} catch (UnknownHostException e) {
 			e.printStackTrace();
 		}
