@@ -20,7 +20,6 @@ public class HeadlessMinecraft {
 	
 	public HeadlessMinecraft(File run, User user) {
 		this.user = user;
-		System.out.println(user);
 	}
 	
 }
