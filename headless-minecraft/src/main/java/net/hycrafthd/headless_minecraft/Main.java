@@ -1,5 +1,7 @@
 package net.hycrafthd.headless_minecraft;
 
+import org.spongepowered.asm.mixin.Mixins;
+
 import com.mojang.math.Matrix3f;
 
 import net.hycrafthd.headless_minecraft.mixin.Matrix3fAccessor;
@@ -10,7 +12,7 @@ public class Main {
 		System.out.println("YES THIS IS MY MAIN");
 		System.out.println(Main.class.getClassLoader());
 		
-		// Mixins.addConfiguration("mixin.json");
+		Mixins.addConfiguration("mixin.json");
 		
 		System.out.println("Added mixin");
 		
