@@ -2,7 +2,9 @@ package net.hycrafthd.headless_minecraft;
 
 import java.io.File;
 
+import net.minecraft.CrashReport;
 import net.minecraft.client.User;
+import net.minecraft.server.Bootstrap;
 
 public class HeadlessMinecraft {
 	
@@ -20,6 +22,14 @@ public class HeadlessMinecraft {
 	
 	public HeadlessMinecraft(File run, User user) {
 		this.user = user;
+		
+		bootstrapMinecraft();
+	}
+	
+	private void bootstrapMinecraft() {
+		CrashReport.preload();
+		Bootstrap.bootStrap();
+		Bootstrap.validate();
 	}
 	
 }
