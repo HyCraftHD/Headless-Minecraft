@@ -10,6 +10,7 @@ import com.mojang.authlib.exceptions.AuthenticationException;
 
 import net.hycrafthd.headless_minecraft.HeadlessMinecraft;
 import net.minecraft.network.Connection;
+import net.minecraft.network.ConnectionProtocol;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.chat.TranslatableComponent;
@@ -26,8 +27,8 @@ import net.minecraft.util.HttpUtil;
 
 public class ClientHandshakeListener implements ClientLoginPacketListener {
 	
-	private Connection connection;
-	private HeadlessMinecraft headlessMinecraft;
+	private final Connection connection;
+	private final HeadlessMinecraft headlessMinecraft;
 	
 	public ClientHandshakeListener(Connection connection, HeadlessMinecraft headlessMinecraft) {
 		this.connection = connection;
@@ -63,8 +64,8 @@ public class ClientHandshakeListener implements ClientLoginPacketListener {
 	@Override
 	public void handleGameProfile(ClientboundGameProfilePacket packet) {
 		System.out.println("handleGameProfile");
-		System.out.println(packet.getGameProfile());
-		System.out.println("WE SHOULD BE ABLE TO CONNECT");
+		connection.setProtocol(ConnectionProtocol.PLAY);
+		connection.setListener(new ClientListener(connection, headlessMinecraft, packet.getGameProfile()));
 	}
 	
 	@Override
