@@ -68,7 +68,7 @@ public class HeadlessMinecraft {
 				// connection.getAverageSentPackets());
 				
 			}, 50, 50, TimeUnit.MILLISECONDS);
-		} catch (UnknownHostException e) {
+		} catch (final UnknownHostException e) {
 			e.printStackTrace();
 		}
 	}

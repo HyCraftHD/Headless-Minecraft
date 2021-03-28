@@ -13,7 +13,6 @@ import net.minecraft.network.Connection;
 import net.minecraft.network.ConnectionProtocol;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextComponent;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.network.protocol.login.ClientLoginPacketListener;
 import net.minecraft.network.protocol.login.ClientboundCustomQueryPacket;
 import net.minecraft.network.protocol.login.ClientboundGameProfilePacket;
@@ -87,14 +86,14 @@ public class ClientHandshakeListener implements ClientLoginPacketListener {
 			cipherDecrypt = Crypt.getCipher(Cipher.DECRYPT_MODE, secretKey);
 			cipherEncrypt = Crypt.getCipher(Cipher.ENCRYPT_MODE, secretKey);
 			serverboundKeyPacket = new ServerboundKeyPacket(secretKey, publicKey, packet.getNonce());
-		} catch (CryptException e) {
+		} catch (final CryptException e) {
 			throw new IllegalStateException("Protocol error", e);
 		}
 		
 		HttpUtil.DOWNLOAD_EXECUTOR.submit(() -> {
 			try {
 				headlessMinecraft.getSessionService().joinServer(headlessMinecraft.getUser().getGameProfile(), headlessMinecraft.getUser().getAccessToken(), serverId);
-			} catch (AuthenticationException e) {
+			} catch (final AuthenticationException e) {
 				connection.disconnect(new TextComponent(e.getMessage()));
 				throw new IllegalStateException(e);
 			}
