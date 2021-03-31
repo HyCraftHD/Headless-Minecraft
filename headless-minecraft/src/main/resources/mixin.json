@@ -4,7 +4,8 @@
 	"compatibilityLevel": "JAVA_8",
 	"package": "net.hycrafthd.headless_minecraft.mixin",
 	"mixins": [
-		"BootstrapMixin"
+		"BootstrapMixin",
+		"ClientChunkCacheMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1
