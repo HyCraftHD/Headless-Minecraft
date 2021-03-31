@@ -35,42 +35,7 @@ public class ClientHandshakeListener implements ClientLoginPacketListener {
 	}
 	
 	@Override
-	public Connection getConnection() {
-		return connection;
-	}
-	
-	@Override
-	public void onDisconnect(Component var1) {
-		System.out.println("onDisconnect");
-	}
-	
-	@Override
-	public void handleCompression(ClientboundLoginCompressionPacket packet) {
-		System.out.println("handleCompression");
-		connection.setupCompression(packet.getCompressionThreshold());
-	}
-	
-	@Override
-	public void handleCustomQuery(ClientboundCustomQueryPacket var1) {
-		System.out.println("handleCustomQuery");
-	}
-	
-	@Override
-	public void handleDisconnect(ClientboundLoginDisconnectPacket var1) {
-		System.out.println("handleDisconnect");
-	}
-	
-	@Override
-	public void handleGameProfile(ClientboundGameProfilePacket packet) {
-		System.out.println("handleGameProfile");
-		connection.setProtocol(ConnectionProtocol.PLAY);
-		connection.setListener(new ClientListener(connection, headlessMinecraft, packet.getGameProfile()));
-	}
-	
-	@Override
 	public void handleHello(ClientboundHelloPacket packet) {
-		System.out.println("handleHello");
-		
 		final SecretKey secretKey;
 		final PublicKey publicKey;
 		
@@ -102,6 +67,39 @@ public class ClientHandshakeListener implements ClientLoginPacketListener {
 				this.connection.setEncryptionKey(cipherDecrypt, cipherEncrypt);
 			});
 		});
+	}
+	
+	@Override
+	public Connection getConnection() {
+		return connection;
+	}
+	
+	@Override
+	public void onDisconnect(Component var1) {
+		System.out.println("onDisconnect");
+	}
+	
+	@Override
+	public void handleCompression(ClientboundLoginCompressionPacket packet) {
+		System.out.println("handleCompression");
+		connection.setupCompression(packet.getCompressionThreshold());
+	}
+	
+	@Override
+	public void handleCustomQuery(ClientboundCustomQueryPacket var1) {
+		System.out.println("handleCustomQuery");
+	}
+	
+	@Override
+	public void handleDisconnect(ClientboundLoginDisconnectPacket var1) {
+		System.out.println("handleDisconnect");
+	}
+	
+	@Override
+	public void handleGameProfile(ClientboundGameProfilePacket packet) {
+		System.out.println("handleGameProfile");
+		connection.setProtocol(ConnectionProtocol.PLAY);
+		connection.setListener(new ClientListener(connection, headlessMinecraft, packet.getGameProfile()));
 	}
 	
 }
