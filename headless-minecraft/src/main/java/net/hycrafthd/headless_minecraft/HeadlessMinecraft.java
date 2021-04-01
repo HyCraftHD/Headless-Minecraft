@@ -98,7 +98,11 @@ public class HeadlessMinecraft extends ReentrantBlockableEventLoop<Runnable> {
 		for (int index = 0; index < Math.min(10, ticksToDo); index++) {
 			tick();
 		}
-	    Thread.yield();
+		try {
+			Thread.sleep(1);
+		} catch (InterruptedException ex) {
+			throw new AssertionError("The main thread should never be interupted!", ex);
+		}
 	}
 	
 	private void tick() {
