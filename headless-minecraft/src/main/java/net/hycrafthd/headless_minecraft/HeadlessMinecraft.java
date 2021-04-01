@@ -40,7 +40,8 @@ public class HeadlessMinecraft {
 		sessionService = new YggdrasilAuthenticationService(Proxy.NO_PROXY).createMinecraftSessionService();
 		
 		bootstrapMinecraft();
-		connect("mc-project.hycrafthd.net", 25566);
+		
+		// connect("mc-project.hycrafthd.net", 25566);
 		// HotbarManager
 	}
 	
