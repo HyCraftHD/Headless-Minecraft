@@ -18,25 +18,32 @@ import net.minecraft.network.ConnectionProtocol;
 import net.minecraft.network.protocol.handshake.ClientIntentionPacket;
 import net.minecraft.network.protocol.login.ServerboundHelloPacket;
 import net.minecraft.server.Bootstrap;
+import net.minecraft.util.thread.ReentrantBlockableEventLoop;
 
-public class HeadlessMinecraft {
+public class HeadlessMinecraft extends ReentrantBlockableEventLoop<Runnable> {
 	
 	private static HeadlessMinecraft INSTANCE;
 	
 	static void launch(File run, String authName, String authUuid, String authToken, String authType) {
-		INSTANCE = new HeadlessMinecraft(run, new User(authName, authUuid, authToken, authType));
+		INSTANCE = new HeadlessMinecraft(run, authName, authUuid, authToken, authType);
 	}
 	
 	public static HeadlessMinecraft getInstance() {
 		return INSTANCE;
 	}
 	
+	private final Thread thread;
+	
 	private final User user;
 	private final MinecraftSessionService sessionService;
 	
-	public HeadlessMinecraft(File run, User user) {
-		this.user = user;
+	public HeadlessMinecraft(File run, String authName, String authUuid, String authToken, String authType) {
+		super(Constants.NAME);
 		
+		thread = Thread.currentThread();
+		thread.setName(Constants.NAME);
+		
+		user = new User(authName, authUuid, authToken, authType);
 		sessionService = new YggdrasilAuthenticationService(Proxy.NO_PROXY).createMinecraftSessionService();
 		
 		bootstrapMinecraft();
@@ -74,6 +81,21 @@ public class HeadlessMinecraft {
 		}
 	}
 	
+	@Override
+	protected Thread getRunningThread() {
+		return thread;
+	}
+	
+	@Override
+	protected boolean shouldRun(Runnable runnable) {
+		return true;
+	}
+	
+	@Override
+	protected Runnable wrapRunnable(Runnable runnable) {
+		return runnable;
+	}
+	
 	public User getUser() {
 		return user;
 	}
@@ -81,4 +103,5 @@ public class HeadlessMinecraft {
 	public MinecraftSessionService getSessionService() {
 		return sessionService;
 	}
+	
 }
