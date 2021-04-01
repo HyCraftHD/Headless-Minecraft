@@ -12,6 +12,8 @@ import com.mojang.authlib.yggdrasil.YggdrasilAuthenticationService;
 
 import net.hycrafthd.headless_minecraft.network.ClientHandshakeListener;
 import net.minecraft.CrashReport;
+import net.minecraft.Util;
+import net.minecraft.client.Timer;
 import net.minecraft.client.User;
 import net.minecraft.network.Connection;
 import net.minecraft.network.ConnectionProtocol;
@@ -26,6 +28,10 @@ public class HeadlessMinecraft extends ReentrantBlockableEventLoop<Runnable> {
 	
 	static void launch(File run, String authName, String authUuid, String authToken, String authType) {
 		INSTANCE = new HeadlessMinecraft(run, authName, authUuid, authToken, authType);
+		
+		while (INSTANCE.isRunning()) {
+			INSTANCE.run();
+		}
 	}
 	
 	public static HeadlessMinecraft getInstance() {
@@ -33,6 +39,9 @@ public class HeadlessMinecraft extends ReentrantBlockableEventLoop<Runnable> {
 	}
 	
 	private final Thread thread;
+	
+	private boolean running;
+	private Timer timer;
 	
 	private final User user;
 	private final MinecraftSessionService sessionService;
@@ -42,6 +51,9 @@ public class HeadlessMinecraft extends ReentrantBlockableEventLoop<Runnable> {
 		
 		thread = Thread.currentThread();
 		thread.setName(Constants.NAME);
+		
+		running = true;
+		timer = new Timer(20, 0);
 		
 		user = new User(authName, authUuid, authToken, authType);
 		sessionService = new YggdrasilAuthenticationService(Proxy.NO_PROXY).createMinecraftSessionService();
@@ -81,6 +93,17 @@ public class HeadlessMinecraft extends ReentrantBlockableEventLoop<Runnable> {
 		}
 	}
 	
+	private void run() {
+		final int ticksToDo = timer.advanceTime(Util.getMillis());
+		for (int index = 0; index < Math.min(10, ticksToDo); index++) {
+			tick();
+		}
+	}
+	
+	private void tick() {
+		System.out.println("SHOULD TICK EVERSY 50 MS");
+	}
+	
 	@Override
 	protected Thread getRunningThread() {
 		return thread;
@@ -94,6 +117,10 @@ public class HeadlessMinecraft extends ReentrantBlockableEventLoop<Runnable> {
 	@Override
 	protected Runnable wrapRunnable(Runnable runnable) {
 		return runnable;
+	}
+	
+	public boolean isRunning() {
+		return running;
 	}
 	
 	public User getUser() {
