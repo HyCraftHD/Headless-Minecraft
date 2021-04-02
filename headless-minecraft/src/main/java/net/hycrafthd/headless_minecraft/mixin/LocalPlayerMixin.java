@@ -2,6 +2,7 @@ package net.hycrafthd.headless_minecraft.mixin;
 
 import java.util.List;
 
+import org.objectweb.asm.Opcodes;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -36,6 +37,11 @@ public abstract class LocalPlayerMixin {
 	@ModifyConstant(method = "startRiding", constant = @Constant(classValue = AbstractMinecart.class, ordinal = 0))
 	public boolean removeRidingSound(Object entity, Class<?> constant) {
 		return false;
+	}
+	
+	@Inject(method = "sendPosition", cancellable = true, at = @At(value = "FIELD", opcode = Opcodes.GETFIELD, target = "minecraft"))
+	private void autoJumpDisabled(CallbackInfo callback) {
+		callback.cancel();
 	}
 	
 }
