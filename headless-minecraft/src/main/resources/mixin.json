@@ -5,7 +5,8 @@
 	"package": "net.hycrafthd.headless_minecraft.mixin",
 	"mixins": [
 		"BootstrapMixin",
-		"ClientLevelMixin"
+		"ClientLevelMixin",
+		"LocasPlayerMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1
