@@ -5,7 +5,9 @@ import java.util.List;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Constant;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.ModifyConstant;
 import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
@@ -13,6 +15,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.resources.sounds.AmbientSoundHandler;
 import net.minecraft.client.sounds.SoundManager;
+import net.minecraft.world.entity.vehicle.AbstractMinecart;
 
 @Mixin(LocalPlayer.class)
 public abstract class LocalPlayerMixin {
@@ -28,6 +31,11 @@ public abstract class LocalPlayerMixin {
 	@Inject(method = "<init>", at = @At(value = "RETURN"))
 	private void clearAmbientSoundManagers(CallbackInfo callback) {
 		ambientSoundHandlers.clear();
+	}
+	
+	@ModifyConstant(method = "startRiding", constant = @Constant(classValue = AbstractMinecart.class, ordinal = 0))
+	public boolean removeRidingSound(Object entity, Class<?> constant) {
+		return false;
 	}
 	
 }
