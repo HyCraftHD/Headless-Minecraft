@@ -24,11 +24,11 @@ import net.minecraft.world.level.dimension.DimensionType;
 
 public class HeadlessLevel extends ClientLevel {
 	
-	private final HeadlessPacketListener clientListener;
+	private final HeadlessPacketListener packetListener;
 	
-	public HeadlessLevel(HeadlessPacketListener clientListener, ClientLevelData levelData, ResourceKey<Level> dimension, DimensionType dimensionType, int viewDistance, Supplier<ProfilerFiller> profiler, boolean isDebug, long seed) {
-		super(null, levelData, dimension, dimensionType, viewDistance, profiler, null, isDebug, seed);
-		this.clientListener = clientListener;
+	public HeadlessLevel(HeadlessPacketListener packetListener, ClientLevelData levelData, ResourceKey<Level> dimension, DimensionType dimensionType, int viewDistance, Supplier<ProfilerFiller> profiler, boolean isDebug, long seed) {
+		super(packetListener, levelData, dimension, dimensionType, viewDistance, profiler, null, isDebug, seed);
+		this.packetListener = packetListener;
 	}
 	
 	@Override

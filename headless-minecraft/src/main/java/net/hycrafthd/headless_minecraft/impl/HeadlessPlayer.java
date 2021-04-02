@@ -7,11 +7,11 @@ import net.minecraft.stats.StatsCounter;
 
 public class HeadlessPlayer extends LocalPlayer {
 	
-	private final HeadlessPacketListener clientListener;
+	private final HeadlessPacketListener packetListener;
 	
-	public HeadlessPlayer(HeadlessPacketListener clientListener, HeadlessLevel level, StatsCounter stats, ClientRecipeBook recipeBook, boolean wasShiftKeyDown, boolean wasSprinting) {
-		super(null, level, null, stats, recipeBook, wasShiftKeyDown, wasSprinting);
-		this.clientListener = clientListener;
+	public HeadlessPlayer(HeadlessPacketListener packetListener, HeadlessLevel level, StatsCounter stats, ClientRecipeBook recipeBook, boolean wasShiftKeyDown, boolean wasSprinting) {
+		super(null, level, packetListener, stats, recipeBook, wasShiftKeyDown, wasSprinting);
+		this.packetListener = packetListener;
 	}
 	
 }
