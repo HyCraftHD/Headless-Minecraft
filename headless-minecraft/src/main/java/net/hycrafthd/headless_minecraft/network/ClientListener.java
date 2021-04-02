@@ -3,6 +3,9 @@ package net.hycrafthd.headless_minecraft.network;
 import com.mojang.authlib.GameProfile;
 
 import net.hycrafthd.headless_minecraft.HeadlessMinecraft;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.multiplayer.ClientPacketListener;
 import net.minecraft.network.Connection;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
@@ -97,30 +100,23 @@ import net.minecraft.network.protocol.game.ClientboundUpdateRecipesPacket;
 import net.minecraft.network.protocol.game.ClientboundUpdateTagsPacket;
 import net.minecraft.network.protocol.game.ServerboundKeepAlivePacket;
 
-public class ClientListener implements ClientGamePacketListener {
+public class ClientListener extends ClientPacketListener {
 	
-	private final Connection connection;
 	private final HeadlessMinecraft headlessMinecraft;
-	private final GameProfile gameProfile;
 	
-	public ClientListener(Connection connection, HeadlessMinecraft headlessMinecraft, GameProfile gameProfile) {
-		this.connection = connection;
+	public ClientListener(HeadlessMinecraft headlessMinecraft, Connection connection, GameProfile gameProfile) {
+		super(null, null, connection, gameProfile);
 		this.headlessMinecraft = headlessMinecraft;
-		this.gameProfile = gameProfile;
 	}
 	
+	// Implemented
 	@Override
 	public void handleKeepAlive(ClientboundKeepAlivePacket packet) {
-		connection.send(new ServerboundKeepAlivePacket(packet.getId()));
+		super.handleKeepAlive(packet);
 	}
 	
 	@Override
 	public void onDisconnect(Component packet) {
-	}
-	
-	@Override
-	public Connection getConnection() {
-		return connection;
 	}
 	
 	@Override
