@@ -3,7 +3,7 @@ package net.hycrafthd.headless_minecraft.impl;
 import java.util.Random;
 import java.util.function.Supplier;
 
-import net.hycrafthd.headless_minecraft.network.ClientListener;
+import net.hycrafthd.headless_minecraft.network.HeadlessPacketListener;
 import net.minecraft.CrashReport;
 import net.minecraft.CrashReportCategory;
 import net.minecraft.client.multiplayer.ClientLevel;
@@ -24,9 +24,9 @@ import net.minecraft.world.level.dimension.DimensionType;
 
 public class HeadlessLevel extends ClientLevel {
 	
-	private final ClientListener clientListener;
+	private final HeadlessPacketListener clientListener;
 	
-	public HeadlessLevel(ClientListener clientListener, ClientLevelData levelData, ResourceKey<Level> dimension, DimensionType dimensionType, int viewDistance, Supplier<ProfilerFiller> profiler, boolean isDebug, long seed) {
+	public HeadlessLevel(HeadlessPacketListener clientListener, ClientLevelData levelData, ResourceKey<Level> dimension, DimensionType dimensionType, int viewDistance, Supplier<ProfilerFiller> profiler, boolean isDebug, long seed) {
 		super(null, levelData, dimension, dimensionType, viewDistance, profiler, null, isDebug, seed);
 		this.clientListener = clientListener;
 	}

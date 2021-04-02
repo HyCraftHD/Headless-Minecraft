@@ -100,11 +100,11 @@ import net.minecraft.network.protocol.game.ClientboundUpdateRecipesPacket;
 import net.minecraft.network.protocol.game.ClientboundUpdateTagsPacket;
 import net.minecraft.network.protocol.game.ServerboundKeepAlivePacket;
 
-public class ClientListener extends ClientPacketListener {
+public class HeadlessPacketListener extends ClientPacketListener {
 	
 	private final HeadlessMinecraft headlessMinecraft;
 	
-	public ClientListener(HeadlessMinecraft headlessMinecraft, Connection connection, GameProfile gameProfile) {
+	public HeadlessPacketListener(HeadlessMinecraft headlessMinecraft, Connection connection, GameProfile gameProfile) {
 		super(null, null, connection, gameProfile);
 		this.headlessMinecraft = headlessMinecraft;
 	}

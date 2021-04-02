@@ -99,7 +99,7 @@ public class ClientHandshakeListener implements ClientLoginPacketListener {
 	public void handleGameProfile(ClientboundGameProfilePacket packet) {
 		System.out.println("handleGameProfile");
 		connection.setProtocol(ConnectionProtocol.PLAY);
-		connection.setListener(new ClientListener(connection, headlessMinecraft, packet.getGameProfile()));
+		connection.setListener(new HeadlessPacketListener(headlessMinecraft, connection, packet.getGameProfile()));
 	}
 	
 }
