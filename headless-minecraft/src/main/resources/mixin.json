@@ -6,7 +6,7 @@
 	"mixins": [
 		"BootstrapMixin",
 		"ClientLevelMixin",
-		"LocasPlayerMixin"
+		"LocalPlayerMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1
