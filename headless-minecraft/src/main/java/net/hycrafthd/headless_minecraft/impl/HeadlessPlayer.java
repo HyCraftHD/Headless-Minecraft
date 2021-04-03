@@ -36,7 +36,6 @@ public class HeadlessPlayer extends LocalPlayer {
 	}
 	
 	// TODO
-	// onSyncedDataUpdated
 	// aiStep INSANITY
 	// handleNetherPortalClient
 	
