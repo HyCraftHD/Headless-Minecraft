@@ -44,4 +44,9 @@ public abstract class LocalPlayerMixin {
 		callback.cancel();
 	}
 	
+	@Inject(method = "onSyncedDataUpdated", cancellable = true, at = @At(value = "FIELD", opcode = Opcodes.GETFIELD, target = "minecraft"))
+	private void replaceSoundManagerCallToNull(CallbackInfo callback) {
+		callback.cancel();
+	}
+	
 }
