@@ -38,7 +38,7 @@ configurations {
 
 dependencies {
 	headlessMinecraftImplementation project(":Headless-Minecraft-Implementation")
-	implementation "net.hycrafthd:minecraft_downloader:1.0.0-SNAPSHOT"
+	api "net.hycrafthd:minecraft_downloader:1.0.0-SNAPSHOT"
 	implementation ("org.spongepowered:mixin:0.8.2") {
 		transitive = false
 	}
