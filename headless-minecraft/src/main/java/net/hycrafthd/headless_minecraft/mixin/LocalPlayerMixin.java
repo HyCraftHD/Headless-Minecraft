@@ -40,11 +40,16 @@ public abstract class LocalPlayerMixin {
 	}
 	
 	@Inject(method = "sendPosition", cancellable = true, at = @At(value = "FIELD", opcode = Opcodes.GETFIELD, target = "minecraft"))
-	private void autoJumpDisabled(CallbackInfo callback) {
+	private void autoJumpDisable(CallbackInfo callback) {
 		callback.cancel();
 	}
 	
 	@Inject(method = "onSyncedDataUpdated", cancellable = true, at = @At(value = "FIELD", opcode = Opcodes.GETFIELD, target = "minecraft"))
+	private void elytraSoundDisable(CallbackInfo callback) {
+		callback.cancel();
+	}
+	
+	@Inject(method = "handleNetherPortalClient", cancellable = true, at = @At(value = "FIELD", opcode = Opcodes.GETFIELD, target = "minecraft"))
 	private void replaceSoundManagerCallToNull(CallbackInfo callback) {
 		callback.cancel();
 	}
