@@ -14,6 +14,7 @@ import net.hycrafthd.headless_minecraft.HeadlessMinecraft;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.User;
 import net.minecraft.client.multiplayer.ClientHandshakePacketListenerImpl;
+import net.minecraft.client.multiplayer.ServerData;
 import net.minecraft.network.chat.Component;
 
 @Mixin(ClientHandshakePacketListenerImpl.class)
@@ -32,4 +33,8 @@ public abstract class ClientHandshakePacketListenerImplMixin {
 		return HeadlessMinecraft.getInstance().getSessionService();
 	}
 	
+	@Redirect(method = "lambda$handleHello$1", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/Minecraft;getCurrentServer()Lnet/minecraft/client/multiplayer/ServerData;"))
+	public ServerData getCurrentServerData(Minecraft minecraft) {
+		return null; // TODO return current server data
+	}
 }
