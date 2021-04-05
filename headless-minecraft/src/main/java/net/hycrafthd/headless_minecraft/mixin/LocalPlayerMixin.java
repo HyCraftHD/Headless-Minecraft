@@ -14,9 +14,11 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.player.Input;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.resources.sounds.AmbientSoundHandler;
 import net.minecraft.client.sounds.SoundManager;
+import net.minecraft.client.tutorial.Tutorial;
 import net.minecraft.world.entity.vehicle.AbstractMinecart;
 
 @Mixin(LocalPlayer.class)
@@ -61,6 +63,15 @@ public abstract class LocalPlayerMixin {
 	@ModifyConstant(method = "handleNetherPortalClient", constant = @Constant(floatValue = 0.0F, ordinal = 0))
 	private float removePortalTriggerSound(float constant) {
 		return portalTime + 1;
+	}
+	
+	@Redirect(method = "aiStep", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/Minecraft;getTutorial()Lnet/minecraft/client/tutorial/Tutorial;", ordinal = 0))
+	private Tutorial removeMinecraftGetTutorialCall(Minecraft minecraft) {
+		return null;
+	}
+	
+	@Redirect(method = "aiStep", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/tutorial/Tutorial;onInput(Lnet/minecraft/client/player/Input;)V", ordinal = 0))
+	private void removeTutorialOnInputCall(Tutorial minecraft, Input input) {
 	}
 	
 }
