@@ -10,13 +10,14 @@ import java.util.concurrent.TimeUnit;
 import com.mojang.authlib.minecraft.MinecraftSessionService;
 import com.mojang.authlib.yggdrasil.YggdrasilAuthenticationService;
 
-import net.hycrafthd.headless_minecraft.network.ClientHandshakeListener;
+import net.hycrafthd.headless_minecraft.network.HeadlessLoginPacketListener;
 import net.minecraft.CrashReport;
 import net.minecraft.Util;
 import net.minecraft.client.Timer;
 import net.minecraft.client.User;
 import net.minecraft.network.Connection;
 import net.minecraft.network.ConnectionProtocol;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.network.protocol.handshake.ClientIntentionPacket;
 import net.minecraft.network.protocol.login.ServerboundHelloPacket;
 import net.minecraft.server.Bootstrap;
@@ -60,6 +61,9 @@ public class HeadlessMinecraft extends ReentrantBlockableEventLoop<Runnable> {
 		
 		bootstrapMinecraft();
 		
+		System.out.println(new TranslatableComponent("connect.negotiating"));
+		System.out.println(new TranslatableComponent("connect.negotiating").getString());
+		
 		// connect("mc-project.hycrafthd.net", 25566);
 		// HotbarManager
 	}
@@ -78,7 +82,9 @@ public class HeadlessMinecraft extends ReentrantBlockableEventLoop<Runnable> {
 			inetAddress = InetAddress.getByName(host);
 			final Connection connection = Connection.connectToServer(inetAddress, port, false); // true = Linux packet optimisation
 			Main.LOGGER.info("Connected");
-			connection.setListener(new ClientHandshakeListener(connection, this));
+			connection.setListener(new HeadlessLoginPacketListener(this, connection, component -> {
+				System.out.println(component.getString());
+			}));
 			connection.send(new ClientIntentionPacket(host, port, ConnectionProtocol.LOGIN));
 			connection.send(new ServerboundHelloPacket(user.getGameProfile()));
 			
