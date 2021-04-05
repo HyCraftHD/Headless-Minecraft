@@ -25,12 +25,17 @@ public class ConnectionManager {
 	
 	public ConnectionManager(HeadlessMinecraft headlessMinecraft) {
 		this.headlessMinecraft = headlessMinecraft;
+		updateServerData("localhost");
 	}
 	
 	public void tick() {
 		if (connection != null) {
 			connection.tick();
 		}
+	}
+	
+	public void updateServerData(String ip) {
+		serverData = new ServerData("Server with ip: " + ip, ip, false);
 	}
 	
 	public void connectToServer() {
