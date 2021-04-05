@@ -35,6 +35,6 @@ public abstract class ClientHandshakePacketListenerImplMixin {
 	
 	@Redirect(method = "lambda$handleHello$1", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/Minecraft;getCurrentServer()Lnet/minecraft/client/multiplayer/ServerData;"))
 	public ServerData getCurrentServerData(Minecraft minecraft) {
-		return null; // TODO return current server data
+		return HeadlessMinecraft.getInstance().getConnectionManager().getServerData();
 	}
 }
