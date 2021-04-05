@@ -31,7 +31,6 @@ public class HeadlessMinecraft extends ReentrantBlockableEventLoop<Runnable> {
 	}
 	
 	private final Thread thread;
-	
 	private boolean running;
 	private final Timer timer;
 	
@@ -44,8 +43,6 @@ public class HeadlessMinecraft extends ReentrantBlockableEventLoop<Runnable> {
 		super(Constants.NAME);
 		
 		thread = Thread.currentThread();
-		thread.setName(Constants.NAME);
-		
 		running = true;
 		timer = new Timer(20, 0);
 		

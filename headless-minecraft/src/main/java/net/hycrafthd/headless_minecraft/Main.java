@@ -52,7 +52,14 @@ public class Main {
 			throw new IllegalStateException("Run, auth name, auth uuid, auth token and user type cannot be null values.");
 		}
 		
-		HeadlessMinecraft.launch(run, authName, authUuid, authToken, userType);
+		final ThreadGroup group = new ThreadGroup(Constants.NAME);
+		final Thread clientThread = new Thread(group, () -> HeadlessMinecraft.launch(run, authName, authUuid, authToken, userType), Constants.NAME);
+		clientThread.start();
+		
+		joinAgain: try {
+			clientThread.join();
+		} catch (final InterruptedException ex) {
+			break joinAgain;
+		}
 	}
-	
 }
