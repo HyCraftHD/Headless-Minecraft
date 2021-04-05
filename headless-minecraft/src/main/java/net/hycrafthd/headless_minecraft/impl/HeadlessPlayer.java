@@ -4,21 +4,12 @@ import java.util.UUID;
 
 import net.hycrafthd.headless_minecraft.network.HeadlessPacketListener;
 import net.minecraft.client.ClientRecipeBook;
-import net.minecraft.client.gui.screens.inventory.BookEditScreen;
-import net.minecraft.client.gui.screens.inventory.CommandBlockEditScreen;
-import net.minecraft.client.gui.screens.inventory.JigsawBlockEditScreen;
-import net.minecraft.client.gui.screens.inventory.MinecartCommandBlockEditScreen;
-import net.minecraft.client.gui.screens.inventory.SignEditScreen;
-import net.minecraft.client.gui.screens.inventory.StructureBlockEditScreen;
 import net.minecraft.client.player.LocalPlayer;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
 import net.minecraft.stats.StatsCounter;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.level.BaseCommandBlock;
 import net.minecraft.world.level.block.entity.CommandBlockEntity;
 import net.minecraft.world.level.block.entity.JigsawBlockEntity;
@@ -34,9 +25,6 @@ public class HeadlessPlayer extends LocalPlayer {
 		super(null, level, packetListener, stats, recipeBook, wasShiftKeyDown, wasSprinting);
 		this.packetListener = packetListener;
 	}
-	
-	// TODO
-	// aiStep INSANITY
 	
 	@Override
 	public void clientSideCloseContainer() {
