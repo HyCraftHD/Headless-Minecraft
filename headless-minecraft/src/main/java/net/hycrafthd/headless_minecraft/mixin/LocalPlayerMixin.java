@@ -13,6 +13,7 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.resources.sounds.AmbientSoundHandler;
 import net.minecraft.client.sounds.SoundManager;
@@ -23,6 +24,9 @@ public abstract class LocalPlayerMixin {
 	
 	@Shadow(aliases = "ambientSoundHandlers")
 	private List<AmbientSoundHandler> ambientSoundHandlers;
+	
+	@Shadow(aliases = "portalTime")
+	private float portalTime;
 	
 	@Redirect(method = "<init>", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/Minecraft;getSoundManager()Lnet/minecraft/client/sounds/SoundManager;"))
 	private SoundManager replaceSoundManagerCallToNull(Minecraft minecraft) {
@@ -49,9 +53,14 @@ public abstract class LocalPlayerMixin {
 		callback.cancel();
 	}
 	
-	@Inject(method = "handleNetherPortalClient", cancellable = true, at = @At(value = "FIELD", opcode = Opcodes.GETFIELD, target = "minecraft"))
-	private void replaceSoundManagerCallToNull(CallbackInfo callback) {
-		callback.cancel();
+	@Redirect(method = "handleNetherPortalClient", at = @At(value = "FIELD", opcode = Opcodes.GETFIELD, target = "screen", ordinal = 0))
+	private Screen removeCloseScreenAndContainer(Minecraft minecraft) {
+		return null;
+	}
+	
+	@ModifyConstant(method = "handleNetherPortalClient", constant = @Constant(floatValue = 0.0F, ordinal = 0))
+	private float removePortalTriggerSound(float constant) {
+		return portalTime + 1;
 	}
 	
 }
