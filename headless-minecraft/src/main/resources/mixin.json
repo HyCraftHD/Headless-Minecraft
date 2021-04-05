@@ -6,7 +6,8 @@
 	"mixins": [
 		"BootstrapMixin",
 		"ClientLevelMixin",
-		"LocalPlayerMixin"
+		"LocalPlayerMixin",
+		"ClientHandshakePacketListenerImplMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1
