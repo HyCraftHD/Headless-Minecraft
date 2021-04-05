@@ -10,6 +10,7 @@ import java.util.concurrent.TimeUnit;
 import com.mojang.authlib.minecraft.MinecraftSessionService;
 import com.mojang.authlib.yggdrasil.YggdrasilAuthenticationService;
 
+import net.hycrafthd.headless_minecraft.network.ConnectionManager;
 import net.hycrafthd.headless_minecraft.network.HeadlessLoginPacketListener;
 import net.minecraft.CrashReport;
 import net.minecraft.Util;
@@ -17,7 +18,6 @@ import net.minecraft.client.Timer;
 import net.minecraft.client.User;
 import net.minecraft.network.Connection;
 import net.minecraft.network.ConnectionProtocol;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.network.protocol.handshake.ClientIntentionPacket;
 import net.minecraft.network.protocol.login.ServerboundHelloPacket;
 import net.minecraft.server.Bootstrap;
@@ -42,10 +42,12 @@ public class HeadlessMinecraft extends ReentrantBlockableEventLoop<Runnable> {
 	private final Thread thread;
 	
 	private boolean running;
-	private Timer timer;
+	private final Timer timer;
 	
 	private final User user;
 	private final MinecraftSessionService sessionService;
+	
+	private final ConnectionManager connectionManager;
 	
 	public HeadlessMinecraft(File run, String authName, String authUuid, String authToken, String authType) {
 		super(Constants.NAME);
@@ -59,10 +61,11 @@ public class HeadlessMinecraft extends ReentrantBlockableEventLoop<Runnable> {
 		user = new User(authName, authUuid, authToken, authType);
 		sessionService = new YggdrasilAuthenticationService(Proxy.NO_PROXY).createMinecraftSessionService();
 		
-		bootstrapMinecraft();
+		connectionManager = new ConnectionManager();
 		
-		System.out.println(new TranslatableComponent("connect.negotiating"));
-		System.out.println(new TranslatableComponent("connect.negotiating").getString());
+		new HeadlessLoginPacketListener(this, null, null);
+		
+		// bootstrapMinecraft();
 		
 		// connect("mc-project.hycrafthd.net", 25566);
 		// HotbarManager
@@ -113,6 +116,7 @@ public class HeadlessMinecraft extends ReentrantBlockableEventLoop<Runnable> {
 	
 	private void tick() {
 		System.out.println("SHOULD TICK EVERSY 50 MS");
+		connectionManager.tick();
 	}
 	
 	@Override
