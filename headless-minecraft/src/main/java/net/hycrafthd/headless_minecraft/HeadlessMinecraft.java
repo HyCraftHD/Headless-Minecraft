@@ -1,25 +1,16 @@
 package net.hycrafthd.headless_minecraft;
 
 import java.io.File;
-import java.net.InetAddress;
 import java.net.Proxy;
-import java.net.UnknownHostException;
-import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
 
 import com.mojang.authlib.minecraft.MinecraftSessionService;
 import com.mojang.authlib.yggdrasil.YggdrasilAuthenticationService;
 
 import net.hycrafthd.headless_minecraft.network.ConnectionManager;
-import net.hycrafthd.headless_minecraft.network.HeadlessLoginPacketListener;
 import net.minecraft.CrashReport;
 import net.minecraft.Util;
 import net.minecraft.client.Timer;
 import net.minecraft.client.User;
-import net.minecraft.network.Connection;
-import net.minecraft.network.ConnectionProtocol;
-import net.minecraft.network.protocol.handshake.ClientIntentionPacket;
-import net.minecraft.network.protocol.login.ServerboundHelloPacket;
 import net.minecraft.server.Bootstrap;
 import net.minecraft.util.thread.ReentrantBlockableEventLoop;
 
@@ -61,45 +52,17 @@ public class HeadlessMinecraft extends ReentrantBlockableEventLoop<Runnable> {
 		user = new User(authName, authUuid, authToken, authType);
 		sessionService = new YggdrasilAuthenticationService(Proxy.NO_PROXY).createMinecraftSessionService();
 		
-		connectionManager = new ConnectionManager();
+		connectionManager = new ConnectionManager(this);
 		
-		new HeadlessLoginPacketListener(this, null, null);
-		
-		// bootstrapMinecraft();
-		
-		// connect("mc-project.hycrafthd.net", 25566);
-		// HotbarManager
+		bootstrapMinecraft();
 	}
 	
 	private void bootstrapMinecraft() {
-		Main.LOGGER.info("Start Bootstrap");
+		Main.LOGGER.info("Started Bootstrap for minecraft");
 		CrashReport.preload();
 		Bootstrap.bootStrap();
 		Bootstrap.validate();
-		Main.LOGGER.info("Finish Bootstrap");
-	}
-	
-	private void connect(String host, int port) {
-		InetAddress inetAddress = null;
-		try {
-			inetAddress = InetAddress.getByName(host);
-			final Connection connection = Connection.connectToServer(inetAddress, port, false); // true = Linux packet optimisation
-			Main.LOGGER.info("Connected");
-			connection.setListener(new HeadlessLoginPacketListener(this, connection, component -> {
-				System.out.println(component.getString());
-			}));
-			connection.send(new ClientIntentionPacket(host, port, ConnectionProtocol.LOGIN));
-			connection.send(new ServerboundHelloPacket(user.getGameProfile()));
-			
-			Executors.newScheduledThreadPool(2).scheduleAtFixedRate(() -> {
-				connection.tick();
-				// System.out.println("TICK: rec: " + connection.getAverageReceivedPackets() + " -> send: " +
-				// connection.getAverageSentPackets());
-				
-			}, 50, 50, TimeUnit.MILLISECONDS);
-		} catch (final UnknownHostException e) {
-			e.printStackTrace();
-		}
+		Main.LOGGER.info("Finished Bootstrap for minecraft");
 	}
 	
 	private void run() {
@@ -115,7 +78,6 @@ public class HeadlessMinecraft extends ReentrantBlockableEventLoop<Runnable> {
 	}
 	
 	private void tick() {
-		System.out.println("SHOULD TICK EVERSY 50 MS");
 		connectionManager.tick();
 	}
 	
