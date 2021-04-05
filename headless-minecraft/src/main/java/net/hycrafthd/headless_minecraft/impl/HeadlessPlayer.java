@@ -37,7 +37,6 @@ public class HeadlessPlayer extends LocalPlayer {
 	
 	// TODO
 	// aiStep INSANITY
-	// handleNetherPortalClient
 	
 	@Override
 	public void clientSideCloseContainer() {
