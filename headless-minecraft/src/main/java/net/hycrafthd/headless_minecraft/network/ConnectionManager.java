@@ -10,6 +10,7 @@ import net.minecraft.client.multiplayer.ServerAddress;
 import net.minecraft.client.multiplayer.ServerData;
 import net.minecraft.network.Connection;
 import net.minecraft.network.ConnectionProtocol;
+import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.handshake.ClientIntentionPacket;
 import net.minecraft.network.protocol.login.ServerboundHelloPacket;
 
@@ -50,6 +51,11 @@ public class ConnectionManager {
 		}
 	}
 	
+	public void disconnectFromServer(Component component) {
+		LOGGER.info("Disconnected from server because: {}", component.getString());
+		connection = null;
+	}
+	
 	public ServerData getServerData() {
 		return serverData;
 	}
@@ -57,4 +63,5 @@ public class ConnectionManager {
 	public Connection getConnection() {
 		return connection;
 	}
+	
 }
