@@ -12,7 +12,9 @@ import org.spongepowered.asm.mixin.injection.ModifyConstant;
 import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.Options;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.player.Input;
 import net.minecraft.client.player.LocalPlayer;
@@ -72,6 +74,21 @@ public abstract class LocalPlayerMixin {
 	
 	@Redirect(method = "aiStep", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/tutorial/Tutorial;onInput(Lnet/minecraft/client/player/Input;)V", ordinal = 0))
 	private void removeTutorialOnInputCall(Tutorial minecraft, Input input) {
+	}
+	
+	@Redirect(method = "aiStep", at = @At(value = "FIELD", opcode = Opcodes.GETFIELD, target = "options"))
+	private Options removeOptionsFieldAccess(Minecraft minecraft) {
+		return null;
+	}
+	
+	@Redirect(method = "aiStep", at = @At(value = "FIELD", opcode = Opcodes.GETFIELD, target = "keySprint"))
+	private KeyMapping removeKeySprintFieldAccess(Options minecraft) {
+		return null;
+	}
+	
+	@Redirect(method = "aiStep", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/KeyMapping;isDown()Z"))
+	private boolean isSprintKeyDown(KeyMapping keyMapping) {
+		return false; // TODO return variable value
 	}
 	
 }
