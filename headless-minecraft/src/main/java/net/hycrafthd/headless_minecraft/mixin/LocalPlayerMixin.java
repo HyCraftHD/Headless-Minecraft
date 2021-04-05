@@ -16,6 +16,7 @@ import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.Options;
 import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.multiplayer.MultiPlayerGameMode;
 import net.minecraft.client.player.Input;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.resources.sounds.AmbientSoundHandler;
@@ -89,6 +90,11 @@ public abstract class LocalPlayerMixin {
 	@Redirect(method = "aiStep", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/KeyMapping;isDown()Z"))
 	private boolean isSprintKeyDown(KeyMapping keyMapping) {
 		return false; // TODO return variable value
+	}
+	
+	@Redirect(method = "aiStep", at = @At(value = "FIELD", opcode = Opcodes.GETFIELD, target = "gameMode"))
+	private MultiPlayerGameMode gameModeFieldAccess(Minecraft minecraft) {
+		return null; // TODO return out multi player game mode field
 	}
 	
 }
