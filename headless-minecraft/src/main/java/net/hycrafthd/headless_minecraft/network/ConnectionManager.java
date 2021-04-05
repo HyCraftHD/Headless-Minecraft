@@ -46,7 +46,7 @@ public class ConnectionManager {
 			connection.send(new ClientIntentionPacket(serverAddress.getHost(), serverAddress.getPort(), ConnectionProtocol.LOGIN));
 			connection.send(new ServerboundHelloPacket(headlessMinecraft.getUser().getGameProfile()));
 		} catch (final Exception ex) {
-			LOGGER.error("Could not connect to server", ex);
+			LOGGER.warn("Could not connect to server", ex);
 		}
 	}
 	
