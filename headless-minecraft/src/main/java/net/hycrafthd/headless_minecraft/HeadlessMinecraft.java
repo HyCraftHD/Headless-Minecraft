@@ -20,7 +20,11 @@ public class HeadlessMinecraft extends ReentrantBlockableEventLoop<Runnable> {
 	private static HeadlessMinecraft INSTANCE;
 	
 	static void launch(File run, String authName, String authUuid, String authToken, String authType) {
+		ScriptManager.load();
+		
 		INSTANCE = new HeadlessMinecraft(run, authName, authUuid, authToken, authType);
+		
+		ScriptManager.finishedLoading();
 		
 		while (INSTANCE.isRunning()) {
 			INSTANCE.run();
@@ -53,7 +57,6 @@ public class HeadlessMinecraft extends ReentrantBlockableEventLoop<Runnable> {
 		connectionManager = new ConnectionManager(this);
 		
 		bootstrapMinecraft();
-		loadScripts();
 	}
 	
 	private void bootstrapMinecraft() {
@@ -62,12 +65,6 @@ public class HeadlessMinecraft extends ReentrantBlockableEventLoop<Runnable> {
 		Bootstrap.bootStrap();
 		Bootstrap.validate();
 		Main.LOGGER.info("Finished bootstrap for minecraft");
-	}
-	
-	private void loadScripts() {
-		Main.LOGGER.info("Started to load scripts");
-		ScriptManager.load();
-		Main.LOGGER.info("Finished loading scripts");
 	}
 	
 	private void run() {

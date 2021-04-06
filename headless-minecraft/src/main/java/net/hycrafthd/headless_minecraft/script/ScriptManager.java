@@ -6,6 +6,8 @@ import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import net.hycrafthd.headless_minecraft.Main;
+
 public class ScriptManager {
 	
 	private static Logger LOGGER = LogManager.getLogger();
@@ -15,6 +17,8 @@ public class ScriptManager {
 	private static final List<IScript> LOADED_SCRIPTS = new ArrayList<>();
 	
 	public static void load() {
+		LOGGER.info("Started to load scripts");
+		
 		// TODO load stuff
 		// For now we just create it here.
 		SCRIPT_CANIDATES.add("net.hycrafthd.headless_minecraft.script_test.MainScript");
@@ -27,9 +31,12 @@ public class ScriptManager {
 				LOGGER.error("Script canidate {} cannot be loaded", canidate, ex);
 			}
 		}
+		
+		Main.LOGGER.info("Finished loading scripts");
 	}
 	
 	public static void finishedLoading() {
+		Main.LOGGER.info("Finished loading minecraft. Call script finished loading methods");
 		LOADED_SCRIPTS.forEach(IScript::finishedLoading);
 	}
 }
