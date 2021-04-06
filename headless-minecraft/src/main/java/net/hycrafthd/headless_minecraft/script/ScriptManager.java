@@ -32,11 +32,11 @@ public class ScriptManager {
 			}
 		}
 		
-		Main.LOGGER.info("Finished loading scripts");
+		LOGGER.info("Finished loading scripts");
 	}
 	
 	public static void finishedLoading() {
-		Main.LOGGER.info("Finished loading minecraft. Call script finished loading methods");
+		LOGGER.info("Finished loading minecraft. Call script finished loading methods");
 		LOADED_SCRIPTS.forEach(IScript::finishedLoading);
 	}
 }

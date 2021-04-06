@@ -10,6 +10,6 @@ class ScriptClassLoader extends URLClassLoader {
 	}
 	
 	public ScriptClassLoader() {
-		super(new URL[] {});
+		super(new URL[] {}, ScriptClassLoader.class.getClassLoader());
 	}
 }
