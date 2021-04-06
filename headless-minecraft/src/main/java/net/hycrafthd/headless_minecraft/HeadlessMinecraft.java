@@ -7,6 +7,7 @@ import com.mojang.authlib.minecraft.MinecraftSessionService;
 import com.mojang.authlib.yggdrasil.YggdrasilAuthenticationService;
 
 import net.hycrafthd.headless_minecraft.network.ConnectionManager;
+import net.hycrafthd.headless_minecraft.script.ScriptManager;
 import net.minecraft.CrashReport;
 import net.minecraft.Util;
 import net.minecraft.client.Timer;
@@ -56,15 +57,17 @@ public class HeadlessMinecraft extends ReentrantBlockableEventLoop<Runnable> {
 	}
 	
 	private void bootstrapMinecraft() {
-		Main.LOGGER.info("Started Bootstrap for minecraft");
+		Main.LOGGER.info("Started bootstrap for minecraft");
 		CrashReport.preload();
 		Bootstrap.bootStrap();
 		Bootstrap.validate();
-		Main.LOGGER.info("Finished Bootstrap for minecraft");
+		Main.LOGGER.info("Finished bootstrap for minecraft");
 	}
 	
 	private void loadScripts() {
 		Main.LOGGER.info("Started to load scripts");
+		ScriptManager.load();
+		Main.LOGGER.info("Finished loading scripts");
 	}
 	
 	private void run() {
