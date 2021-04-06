@@ -52,6 +52,7 @@ public class HeadlessMinecraft extends ReentrantBlockableEventLoop<Runnable> {
 		connectionManager = new ConnectionManager(this);
 		
 		bootstrapMinecraft();
+		loadScripts();
 	}
 	
 	private void bootstrapMinecraft() {
@@ -60,6 +61,10 @@ public class HeadlessMinecraft extends ReentrantBlockableEventLoop<Runnable> {
 		Bootstrap.bootStrap();
 		Bootstrap.validate();
 		Main.LOGGER.info("Finished Bootstrap for minecraft");
+	}
+	
+	private void loadScripts() {
+		Main.LOGGER.info("Started to load scripts");
 	}
 	
 	private void run() {
