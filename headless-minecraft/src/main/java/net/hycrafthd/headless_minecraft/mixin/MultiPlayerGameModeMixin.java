@@ -17,12 +17,12 @@ public abstract class MultiPlayerGameModeMixin {
 	
 	@Redirect(method = "*", at = @At(value = "FIELD", opcode = Opcodes.GETFIELD, target = "Lnet/minecraft/client/Minecraft;player:Lnet/minecraft/client/player/LocalPlayer;"))
 	private LocalPlayer redirectPlayerFieldAccess(Minecraft minecraft) {
-		return null;
+		return null; // TODO return client player
 	}
 	
 	@Redirect(method = "*", at = @At(value = "FIELD", opcode = Opcodes.GETFIELD, target = "Lnet/minecraft/client/Minecraft;level:Lnet/minecraft/client/multiplayer/ClientLevel;"))
 	private ClientLevel redirectLevelFieldAccess(Minecraft minecraft) {
-		return null;
+		return null; // TODO return client level
 	}
 	
 	@Redirect(method = "*", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/Minecraft;getTutorial()Lnet/minecraft/client/tutorial/Tutorial;"))
