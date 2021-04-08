@@ -14,8 +14,8 @@ public class HeadlessMultiPlayerGameMode extends MultiPlayerGameMode {
 	}
 	
 	@Override
-	public LocalPlayer createPlayer(ClientLevel name, StatsCounter name2, ClientRecipeBook name3, boolean name4, boolean name5) {
-		return null;
+	public LocalPlayer createPlayer(ClientLevel level, StatsCounter statsCounter, ClientRecipeBook recipeBook, boolean wasShiftKeyDown, boolean wasSprinting) {
+		throw new AssertionError("Method should not be called");
 	}
 	
 }
