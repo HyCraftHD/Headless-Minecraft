@@ -6,8 +6,6 @@ import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import net.hycrafthd.headless_minecraft.Main;
-
 public class ScriptManager {
 	
 	private static Logger LOGGER = LogManager.getLogger();
@@ -35,8 +33,8 @@ public class ScriptManager {
 		LOGGER.info("Finished loading scripts");
 	}
 	
-	public static void finishedLoading() {
+	public static void enable() {
 		LOGGER.info("Finished loading minecraft. Call script finished loading methods");
-		LOADED_SCRIPTS.forEach(IScript::finishedLoading);
+		LOADED_SCRIPTS.forEach(IScript::enable);
 	}
 }

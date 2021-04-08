@@ -4,6 +4,6 @@ public interface IScript {
 	
 	String name();
 	
-	void finishedLoading();
+	void enable();
 	
 }

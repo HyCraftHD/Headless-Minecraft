@@ -24,7 +24,7 @@ public class HeadlessMinecraft extends ReentrantBlockableEventLoop<Runnable> {
 		
 		INSTANCE = new HeadlessMinecraft(run, authName, authUuid, authToken, authType);
 		
-		ScriptManager.finishedLoading();
+		ScriptManager.enable();
 		
 		while (INSTANCE.isRunning()) {
 			INSTANCE.run();

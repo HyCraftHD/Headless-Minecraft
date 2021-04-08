@@ -19,7 +19,7 @@ public class MainScript implements IScript {
 	}
 	
 	@Override
-	public void finishedLoading() {
+	public void enable() {
 		LOGGER.info("Finished loading main script.");
 	}
 	
