@@ -22,12 +22,12 @@ public class FakeTutorial extends Tutorial {
 	
 	@Override
 	public GameType getGameMode() {
-		return null;
+		throw new AssertionError("Method should not be called");
 	}
 	
 	@Override
 	public Minecraft getMinecraft() {
-		return null;
+		throw new AssertionError("Method should not be called");
 	}
 	
 	@Override
