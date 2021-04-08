@@ -3,7 +3,7 @@ package net.hycrafthd.headless_minecraft.network;
 import java.util.function.Consumer;
 
 import net.hycrafthd.headless_minecraft.HeadlessMinecraft;
-import net.hycrafthd.headless_minecraft.mixin.ClientHandshakePacketListenerImplMixin;
+import net.hycrafthd.headless_minecraft.mixin.ClientHandshakePacketListenerImplAccessorMixin;
 import net.minecraft.client.multiplayer.ClientHandshakePacketListenerImpl;
 import net.minecraft.network.Connection;
 import net.minecraft.network.ConnectionProtocol;
@@ -27,7 +27,7 @@ public class HeadlessLoginPacketListener extends ClientHandshakePacketListenerIm
 	
 	@Override
 	public void handleGameProfile(ClientboundGameProfilePacket packet) {
-		final Consumer<Component> updateStatus = ((ClientHandshakePacketListenerImplMixin) (Object) this).getUpdateStatus();
+		final Consumer<Component> updateStatus = ((ClientHandshakePacketListenerImplAccessorMixin) (Object) this).getUpdateStatus();
 		final Connection connection = getConnection();
 		
 		updateStatus.accept(new TranslatableComponent("connect.joining"));
