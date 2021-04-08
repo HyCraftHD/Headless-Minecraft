@@ -8,7 +8,8 @@
 		"ClientLevelMixin",
 		"LocalPlayerMixin",
 		"ClientHandshakePacketListenerImplMixin",
-		"ClientHandshakePacketListenerImplAccessorMixin"
+		"ClientHandshakePacketListenerImplAccessorMixin",
+		"ClientPacketListenerAccessorMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1
