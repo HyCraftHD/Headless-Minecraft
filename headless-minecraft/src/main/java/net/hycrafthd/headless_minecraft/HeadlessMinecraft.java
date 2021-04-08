@@ -69,6 +69,7 @@ public class HeadlessMinecraft extends ReentrantBlockableEventLoop<Runnable> {
 	
 	private void run() {
 		final int ticksToDo = timer.advanceTime(Util.getMillis());
+		runAllTasks();
 		for (int index = 0; index < Math.min(10, ticksToDo); index++) {
 			tick();
 		}
