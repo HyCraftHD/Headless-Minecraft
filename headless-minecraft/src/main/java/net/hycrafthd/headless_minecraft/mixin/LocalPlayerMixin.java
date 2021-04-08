@@ -12,12 +12,12 @@ import org.spongepowered.asm.mixin.injection.ModifyConstant;
 import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+import net.hycrafthd.headless_minecraft.impl.FakeTutorial;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.Options;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.multiplayer.MultiPlayerGameMode;
-import net.minecraft.client.player.Input;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.resources.sounds.AmbientSoundHandler;
 import net.minecraft.client.sounds.SoundManager;
@@ -69,12 +69,8 @@ public abstract class LocalPlayerMixin {
 	}
 	
 	@Redirect(method = "aiStep", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/Minecraft;getTutorial()Lnet/minecraft/client/tutorial/Tutorial;", ordinal = 0))
-	private Tutorial removeMinecraftGetTutorialCall(Minecraft minecraft) {
-		return null;
-	}
-	
-	@Redirect(method = "aiStep", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/tutorial/Tutorial;onInput(Lnet/minecraft/client/player/Input;)V", ordinal = 0))
-	private void removeTutorialOnInputCall(Tutorial minecraft, Input input) {
+	private Tutorial redirectGetTutorialMethodeInvocation(Minecraft minecraft) {
+		return FakeTutorial.INSTANCE;
 	}
 	
 	@Redirect(method = "aiStep", at = @At(value = "FIELD", opcode = Opcodes.GETFIELD, target = "options"))
