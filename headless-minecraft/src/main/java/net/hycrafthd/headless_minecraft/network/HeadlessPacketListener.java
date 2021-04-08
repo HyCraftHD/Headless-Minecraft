@@ -3,12 +3,10 @@ package net.hycrafthd.headless_minecraft.network;
 import com.mojang.authlib.GameProfile;
 
 import net.hycrafthd.headless_minecraft.HeadlessMinecraft;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.multiplayer.ClientPacketListener;
 import net.minecraft.network.Connection;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.protocol.game.ClientGamePacketListener;
+import net.minecraft.network.protocol.PacketUtils;
 import net.minecraft.network.protocol.game.ClientboundAddEntityPacket;
 import net.minecraft.network.protocol.game.ClientboundAddExperienceOrbPacket;
 import net.minecraft.network.protocol.game.ClientboundAddMobPacket;
@@ -98,7 +96,6 @@ import net.minecraft.network.protocol.game.ClientboundUpdateAttributesPacket;
 import net.minecraft.network.protocol.game.ClientboundUpdateMobEffectPacket;
 import net.minecraft.network.protocol.game.ClientboundUpdateRecipesPacket;
 import net.minecraft.network.protocol.game.ClientboundUpdateTagsPacket;
-import net.minecraft.network.protocol.game.ServerboundKeepAlivePacket;
 
 public class HeadlessPacketListener extends ClientPacketListener {
 	
@@ -107,6 +104,12 @@ public class HeadlessPacketListener extends ClientPacketListener {
 	public HeadlessPacketListener(HeadlessMinecraft headlessMinecraft, Connection connection, GameProfile gameProfile) {
 		super(null, null, connection, gameProfile);
 		this.headlessMinecraft = headlessMinecraft;
+	}
+	
+	@Override
+	public void handleLogin(ClientboundLoginPacket packet) {
+		PacketUtils.ensureRunningOnSameThread(packet, this, headlessMinecraft);
+
 	}
 	
 	// Implemented
@@ -306,11 +309,6 @@ public class HeadlessPacketListener extends ClientPacketListener {
 	
 	@Override
 	public void handleLightUpdatePacked(ClientboundLightUpdatePacket packet) {
-		
-	}
-	
-	@Override
-	public void handleLogin(ClientboundLoginPacket packet) {
 		
 	}
 	
