@@ -12,6 +12,7 @@ import org.spongepowered.asm.mixin.injection.ModifyConstant;
 import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+import net.hycrafthd.headless_minecraft.HeadlessMinecraft;
 import net.hycrafthd.headless_minecraft.impl.FakeTutorial;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
@@ -90,7 +91,7 @@ public abstract class LocalPlayerMixin {
 	
 	@Redirect(method = "aiStep", at = @At(value = "FIELD", opcode = Opcodes.GETFIELD, target = "gameMode"))
 	private MultiPlayerGameMode gameModeFieldAccess(Minecraft minecraft) {
-		return null; // TODO return out multi player game mode field
+		return HeadlessMinecraft.getInstance().getConnectionManager().getGameMode();
 	}
 	
 }

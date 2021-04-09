@@ -5,6 +5,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
 
+import net.hycrafthd.headless_minecraft.HeadlessMinecraft;
 import net.hycrafthd.headless_minecraft.impl.FakeTutorial;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
@@ -17,12 +18,12 @@ public abstract class MultiPlayerGameModeMixin {
 	
 	@Redirect(method = "*", at = @At(value = "FIELD", opcode = Opcodes.GETFIELD, target = "Lnet/minecraft/client/Minecraft;player:Lnet/minecraft/client/player/LocalPlayer;"))
 	private LocalPlayer redirectPlayerFieldAccess(Minecraft minecraft) {
-		return null; // TODO return client player
+		return HeadlessMinecraft.getInstance().getConnectionManager().getPlayer();
 	}
 	
 	@Redirect(method = "*", at = @At(value = "FIELD", opcode = Opcodes.GETFIELD, target = "Lnet/minecraft/client/Minecraft;level:Lnet/minecraft/client/multiplayer/ClientLevel;"))
 	private ClientLevel redirectLevelFieldAccess(Minecraft minecraft) {
-		return null; // TODO return client level
+		return HeadlessMinecraft.getInstance().getConnectionManager().getLevel();
 	}
 	
 	@Redirect(method = "*", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/Minecraft;getTutorial()Lnet/minecraft/client/tutorial/Tutorial;"))
