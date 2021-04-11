@@ -65,10 +65,10 @@ public class ConnectionManager {
 	}
 	
 	public void disconnectFromServer() {
-		disconnectFromServer(new TextComponent("disconnect"));
+		connection.disconnect(new TextComponent("disconnect"));
 	}
 	
-	public void disconnectFromServer(Component component) {
+	public void disconnectedFromServer(Component component) {
 		LOGGER.info("Disconnected from server because: {}", component.getString());
 		connection = null;
 		gameMode = null;

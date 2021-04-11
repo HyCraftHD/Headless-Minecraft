@@ -126,6 +126,12 @@ public class HeadlessPacketListener extends ClientPacketListener {
 	}
 	
 	@Override
+	public void onDisconnect(Component component) {
+		headlessMinecraft.getConnectionManager().disconnectedFromServer(component);
+	}
+	
+	// Implemented
+	@Override
 	public void handleLogin(ClientboundLoginPacket packet) {
 		PacketUtils.ensureRunningOnSameThread(packet, this, headlessMinecraft);
 		
@@ -276,11 +282,6 @@ public class HeadlessPacketListener extends ClientPacketListener {
 	@Override
 	public void handleDisconnect(ClientboundDisconnectPacket packet) {
 		super.handleDisconnect(packet);
-	}
-	
-	@Override
-	public void onDisconnect(Component component) {
-		headlessMinecraft.getConnectionManager().disconnectFromServer(component);
 	}
 	
 	@Override

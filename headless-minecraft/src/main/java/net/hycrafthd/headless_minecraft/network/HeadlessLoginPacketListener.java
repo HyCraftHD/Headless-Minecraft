@@ -22,7 +22,7 @@ public class HeadlessLoginPacketListener extends ClientHandshakePacketListenerIm
 	
 	@Override
 	public void onDisconnect(Component component) {
-		headlessMinecraft.getConnectionManager().disconnectFromServer(component);
+		headlessMinecraft.getConnectionManager().disconnectedFromServer(component);
 	}
 	
 	@Override
