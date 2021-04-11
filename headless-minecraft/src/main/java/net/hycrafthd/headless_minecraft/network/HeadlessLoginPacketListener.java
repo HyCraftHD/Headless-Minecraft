@@ -3,7 +3,7 @@ package net.hycrafthd.headless_minecraft.network;
 import java.util.function.Consumer;
 
 import net.hycrafthd.headless_minecraft.HeadlessMinecraft;
-import net.hycrafthd.headless_minecraft.mixin.ClientHandshakePacketListenerImplAccessorMixin;
+import net.hycrafthd.headless_minecraft.mixin.accessor.ClientHandshakePacketListenerImplAccessorMixin;
 import net.minecraft.client.multiplayer.ClientHandshakePacketListenerImpl;
 import net.minecraft.network.Connection;
 import net.minecraft.network.ConnectionProtocol;

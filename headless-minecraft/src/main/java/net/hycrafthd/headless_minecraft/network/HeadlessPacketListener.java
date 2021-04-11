@@ -8,7 +8,7 @@ import net.hycrafthd.headless_minecraft.HeadlessMinecraft;
 import net.hycrafthd.headless_minecraft.impl.HeadlessLevel;
 import net.hycrafthd.headless_minecraft.impl.HeadlessMultiPlayerGameMode;
 import net.hycrafthd.headless_minecraft.impl.HeadlessPlayer;
-import net.hycrafthd.headless_minecraft.mixin.ClientPacketListenerAccessorMixin;
+import net.hycrafthd.headless_minecraft.mixin.accessor.ClientPacketListenerAccessorMixin;
 import net.minecraft.client.ClientRecipeBook;
 import net.minecraft.client.multiplayer.ClientLevel.ClientLevelData;
 import net.minecraft.client.multiplayer.ClientPacketListener;

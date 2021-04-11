@@ -1,4 +1,4 @@
-package net.hycrafthd.headless_minecraft.mixin;
+package net.hycrafthd.headless_minecraft.mixin.accessor;
 
 import java.util.function.Consumer;
 
