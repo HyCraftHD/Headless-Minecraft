@@ -82,7 +82,7 @@ abstract class ClientPacketListenerMixin {
 	}
 	
 	@Redirect(method = "handleTakeItemEntity", at = @At(value = "INVOKE", opcode = Opcodes.INVOKEVIRTUAL, target = "Lnet/minecraft/client/particle/ParticleEngine;add(Lnet/minecraft/client/particle/Particle;)V"))
-	private void replaceRenderBuffers(ParticleEngine engine, Particle particle) {
+	private void replaceAddToRenderEngine(ParticleEngine engine, Particle particle) {
 	}
 	
 }
