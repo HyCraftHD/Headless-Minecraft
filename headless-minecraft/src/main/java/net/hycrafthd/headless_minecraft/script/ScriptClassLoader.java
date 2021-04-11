@@ -12,4 +12,9 @@ class ScriptClassLoader extends URLClassLoader {
 	public ScriptClassLoader() {
 		super(new URL[] {}, ScriptClassLoader.class.getClassLoader());
 	}
+	
+	@Override
+	public void addURL(URL url) {
+		super.addURL(url);
+	}
 }
