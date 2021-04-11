@@ -43,7 +43,7 @@ abstract class ClientPacketListenerMixin {
 		return false;
 	}
 	
-	@Redirect(method = { "handleAddPlayer", "handleAddMob", "handleSetTime" }, at = @At(value = "FIELD", opcode = Opcodes.GETFIELD, target = "Lnet/minecraft/client/Minecraft;level:Lnet/minecraft/client/multiplayer/ClientLevel;"))
+	@Redirect(method = { "handleAddPlayer", "handleAddMob", "handleSetTime", "handleSetSpawn" }, at = @At(value = "FIELD", opcode = Opcodes.GETFIELD, target = "Lnet/minecraft/client/Minecraft;level:Lnet/minecraft/client/multiplayer/ClientLevel;"))
 	private ClientLevel replaceGetLevel(Minecraft minecraft) {
 		return HeadlessMinecraft.getInstance().getConnectionManager().getLevel();
 	}
