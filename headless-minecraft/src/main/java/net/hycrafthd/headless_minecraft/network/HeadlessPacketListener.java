@@ -308,6 +308,12 @@ public class HeadlessPacketListener extends ClientPacketListener {
 		super.handleAddMob(packet);
 	}
 	
+	// Implemented
+	@Override
+	public void handleSetTime(ClientboundSetTimePacket packet) {
+		super.handleSetTime(packet);
+	}
+	
 	@Override
 	public void handleAddObjective(ClientboundSetObjectivePacket packet) {
 		
@@ -575,11 +581,6 @@ public class HeadlessPacketListener extends ClientPacketListener {
 	
 	@Override
 	public void handleSetSpawn(ClientboundSetDefaultSpawnPositionPacket packet) {
-		
-	}
-	
-	@Override
-	public void handleSetTime(ClientboundSetTimePacket packet) {
 		
 	}
 	
