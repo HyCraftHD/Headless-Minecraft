@@ -320,6 +320,18 @@ public class HeadlessPacketListener extends ClientPacketListener {
 		super.handleSetSpawn(packet);
 	}
 	
+	// Implemented
+	@Override
+	public void handleSetEntityPassengersPacket(ClientboundSetPassengersPacket packet) {
+		super.handleSetEntityPassengersPacket(packet);
+	}
+	
+	// Implemented
+	@Override
+	public void handleEntityLinkPacket(ClientboundSetEntityLinkPacket packet) {
+		super.handleEntityLinkPacket(packet);
+	}
+	
 	@Override
 	public void handleAddObjective(ClientboundSetObjectivePacket packet) {
 		
@@ -412,11 +424,6 @@ public class HeadlessPacketListener extends ClientPacketListener {
 	
 	@Override
 	public void handleEntityEvent(ClientboundEntityEventPacket packet) {
-		
-	}
-	
-	@Override
-	public void handleEntityLinkPacket(ClientboundSetEntityLinkPacket packet) {
 		
 	}
 	
@@ -552,11 +559,6 @@ public class HeadlessPacketListener extends ClientPacketListener {
 	
 	@Override
 	public void handleSetDisplayObjective(ClientboundSetDisplayObjectivePacket packet) {
-		
-	}
-	
-	@Override
-	public void handleSetEntityPassengersPacket(ClientboundSetPassengersPacket packet) {
 		
 	}
 	
