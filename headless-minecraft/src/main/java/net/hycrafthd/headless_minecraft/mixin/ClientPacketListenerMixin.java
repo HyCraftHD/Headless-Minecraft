@@ -37,7 +37,7 @@ abstract class ClientPacketListenerMixin {
 	
 	@Redirect(method = "handleAddPlayer", at = @At(value = "FIELD", opcode = Opcodes.GETFIELD, target = "Lnet/minecraft/client/Minecraft;level:Lnet/minecraft/client/multiplayer/ClientLevel;"))
 	private ClientLevel replaceGetLevel(Minecraft minecraft) {
-		return null; // Do not care as we will no use the return value (see replaceConstructRemovePlayer)
+		return HeadlessMinecraft.getInstance().getConnectionManager().getLevel();
 	}
 	
 	@Redirect(method = "handleAddPlayer", at = @At(value = "NEW", target = "Lnet/minecraft/client/player/RemotePlayer;"))
