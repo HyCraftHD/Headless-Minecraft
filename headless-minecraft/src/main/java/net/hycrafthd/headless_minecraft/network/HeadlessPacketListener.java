@@ -284,6 +284,12 @@ public class HeadlessPacketListener extends ClientPacketListener {
 		super.handleDisconnect(packet);
 	}
 	
+	// Implemented
+	@Override
+	public void handleTakeItemEntity(ClientboundTakeItemEntityPacket packet) {
+		super.handleTakeItemEntity(packet);
+	}
+	
 	@Override
 	public void handleAddMob(ClientboundAddMobPacket packet) {
 		
@@ -601,11 +607,6 @@ public class HeadlessPacketListener extends ClientPacketListener {
 	
 	@Override
 	public void handleTagQueryPacket(ClientboundTagQueryPacket packet) {
-		
-	}
-	
-	@Override
-	public void handleTakeItemEntity(ClientboundTakeItemEntityPacket packet) {
 		
 	}
 	
