@@ -266,6 +266,12 @@ public class HeadlessPacketListener extends ClientPacketListener {
 		super.handleForgetLevelChunk(packet);
 	}
 	
+	// Implemented
+	@Override
+	public void handleBlockUpdate(ClientboundBlockUpdatePacket packet) {
+		super.handleBlockUpdate(packet);
+	}
+	
 	@Override
 	public void onDisconnect(Component packet) {
 	}
@@ -312,11 +318,6 @@ public class HeadlessPacketListener extends ClientPacketListener {
 	
 	@Override
 	public void handleBlockEvent(ClientboundBlockEventPacket packet) {
-		
-	}
-	
-	@Override
-	public void handleBlockUpdate(ClientboundBlockUpdatePacket packet) {
 		
 	}
 	
