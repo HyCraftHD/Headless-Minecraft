@@ -93,4 +93,15 @@ public class ConnectionManager {
 		return gameMode;
 	}
 	
+	public void setLevel(HeadlessLevel level) {
+		this.level = level;
+	}
+	
+	public void setPlayer(HeadlessPlayer player) {
+		this.player = player;
+	}
+	
+	public void setGameMode(HeadlessMultiPlayerGameMode gameMode) {
+		this.gameMode = gameMode;
+	}
 }
