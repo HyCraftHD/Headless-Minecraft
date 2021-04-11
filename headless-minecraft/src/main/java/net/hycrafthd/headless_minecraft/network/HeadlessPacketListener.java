@@ -230,6 +230,18 @@ public class HeadlessPacketListener extends ClientPacketListener {
 		super.handleMoveEntity(packet);
 	}
 	
+	// Implemented
+	@Override
+	public void handleRotateMob(ClientboundRotateHeadPacket packet) {
+		super.handleRotateMob(packet);
+	}
+	
+	// Implemented
+	@Override
+	public void handleRemoveEntity(ClientboundRemoveEntitiesPacket packet) {
+		super.handleRemoveEntity(packet);
+	}
+	
 	@Override
 	public void onDisconnect(Component packet) {
 	}
@@ -470,11 +482,6 @@ public class HeadlessPacketListener extends ClientPacketListener {
 	}
 	
 	@Override
-	public void handleRemoveEntity(ClientboundRemoveEntitiesPacket packet) {
-		
-	}
-	
-	@Override
 	public void handleRemoveMobEffect(ClientboundRemoveMobEffectPacket packet) {
 		
 	}
@@ -486,11 +493,6 @@ public class HeadlessPacketListener extends ClientPacketListener {
 	
 	@Override
 	public void handleRespawn(ClientboundRespawnPacket packet) {
-		
-	}
-	
-	@Override
-	public void handleRotateMob(ClientboundRotateHeadPacket packet) {
 		
 	}
 	
