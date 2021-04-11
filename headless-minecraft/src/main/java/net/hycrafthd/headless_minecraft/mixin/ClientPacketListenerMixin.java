@@ -27,6 +27,7 @@ import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.PacketUtils;
 import net.minecraft.util.thread.BlockableEventLoop;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.animal.Bee;
 import net.minecraft.world.entity.vehicle.AbstractMinecart;
 
 @Mixin(ClientPacketListener.class)
@@ -42,7 +43,7 @@ abstract class ClientPacketListenerMixin {
 		return false;
 	}
 	
-	@Redirect(method = "handleAddPlayer", at = @At(value = "FIELD", opcode = Opcodes.GETFIELD, target = "Lnet/minecraft/client/Minecraft;level:Lnet/minecraft/client/multiplayer/ClientLevel;"))
+	@Redirect(method = { "handleAddPlayer", "handleAddMob" }, at = @At(value = "FIELD", opcode = Opcodes.GETFIELD, target = "Lnet/minecraft/client/Minecraft;level:Lnet/minecraft/client/multiplayer/ClientLevel;"))
 	private ClientLevel replaceGetLevel(Minecraft minecraft) {
 		return HeadlessMinecraft.getInstance().getConnectionManager().getLevel();
 	}
@@ -93,6 +94,11 @@ abstract class ClientPacketListenerMixin {
 	@ModifyConstant(method = "handleAnimate", constant = @Constant(intValue = 5, ordinal = 0))
 	public int removeAnimation5(int value) {
 		return 555555; // Must not be blow 5
+	}
+	
+	@ModifyConstant(method = "handleAddMob", constant = @Constant(classValue = Bee.class, ordinal = 0))
+	public boolean removeSoundManagerCallForBee(Object entity, Class<?> constant) {
+		return false;
 	}
 	
 }

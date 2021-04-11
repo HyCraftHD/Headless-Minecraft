@@ -302,9 +302,10 @@ public class HeadlessPacketListener extends ClientPacketListener {
 		super.handleAnimate(packet);
 	}
 	
+	// Implemented
 	@Override
 	public void handleAddMob(ClientboundAddMobPacket packet) {
-		
+		super.handleAddMob(packet);
 	}
 	
 	@Override
