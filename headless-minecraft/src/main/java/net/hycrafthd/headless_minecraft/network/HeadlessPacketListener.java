@@ -296,6 +296,12 @@ public class HeadlessPacketListener extends ClientPacketListener {
 		Constants.CHAT_LOGGER.info("{}: {}", packet.getSender(), packet.getMessage().getString());
 	}
 	
+	// Implemented
+	@Override
+	public void handleAnimate(ClientboundAnimatePacket packet) {
+		super.handleAnimate(packet);
+	}
+	
 	@Override
 	public void handleAddMob(ClientboundAddMobPacket packet) {
 		
@@ -308,11 +314,6 @@ public class HeadlessPacketListener extends ClientPacketListener {
 	
 	@Override
 	public void handleAddOrRemoveRecipes(ClientboundRecipePacket packet) {
-		
-	}
-	
-	@Override
-	public void handleAnimate(ClientboundAnimatePacket packet) {
 		
 	}
 	

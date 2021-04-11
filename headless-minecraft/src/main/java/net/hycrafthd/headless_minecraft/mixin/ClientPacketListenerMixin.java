@@ -85,4 +85,14 @@ abstract class ClientPacketListenerMixin {
 	private void replaceAddToRenderEngine(ParticleEngine engine, Particle particle) {
 	}
 	
+	@ModifyConstant(method = "handleAnimate", constant = @Constant(intValue = 4, ordinal = 0))
+	public int removeAnimation4(int value) {
+		return 555555; // Must not be blow 5
+	}
+	
+	@ModifyConstant(method = "handleAnimate", constant = @Constant(intValue = 5, ordinal = 0))
+	public int removeAnimation5(int value) {
+		return 555555; // Must not be blow 5
+	}
+	
 }
