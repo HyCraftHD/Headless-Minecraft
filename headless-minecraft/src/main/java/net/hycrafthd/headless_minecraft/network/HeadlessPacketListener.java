@@ -290,6 +290,12 @@ public class HeadlessPacketListener extends ClientPacketListener {
 		super.handleTakeItemEntity(packet);
 	}
 	
+	// Implemented
+	@Override
+	public void handleChat(ClientboundChatPacket packet) {
+		Constants.CHAT_LOGGER.info("{}: {}", packet.getSender(), packet.getMessage().getString());
+	}
+	
 	@Override
 	public void handleAddMob(ClientboundAddMobPacket packet) {
 		
@@ -342,11 +348,6 @@ public class HeadlessPacketListener extends ClientPacketListener {
 	
 	@Override
 	public void handleChangeDifficulty(ClientboundChangeDifficultyPacket packet) {
-		
-	}
-	
-	@Override
-	public void handleChat(ClientboundChatPacket packet) {
 		
 	}
 	
