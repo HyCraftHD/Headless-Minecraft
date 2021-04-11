@@ -71,6 +71,9 @@ public class ConnectionManager {
 	public void disconnectFromServer(Component component) {
 		LOGGER.info("Disconnected from server because: {}", component.getString());
 		connection = null;
+		gameMode = null;
+		level = null;
+		player = null;
 	}
 	
 	public ServerData getServerData() {
