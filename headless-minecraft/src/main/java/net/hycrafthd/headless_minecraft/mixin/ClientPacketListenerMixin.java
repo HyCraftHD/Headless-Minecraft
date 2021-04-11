@@ -15,12 +15,18 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.multiplayer.ClientPacketListener;
+import net.minecraft.client.particle.ItemPickupParticle;
+import net.minecraft.client.particle.Particle;
+import net.minecraft.client.particle.ParticleEngine;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.player.RemotePlayer;
+import net.minecraft.client.renderer.RenderBuffers;
+import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
 import net.minecraft.network.PacketListener;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.PacketUtils;
 import net.minecraft.util.thread.BlockableEventLoop;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.vehicle.AbstractMinecart;
 
 @Mixin(ClientPacketListener.class)
@@ -53,6 +59,30 @@ abstract class ClientPacketListenerMixin {
 	
 	@Redirect(method = "handleMovePlayer", at = @At(value = "INVOKE", opcode = Opcodes.INVOKEVIRTUAL, target = "Lnet/minecraft/client/Minecraft;setScreen(Lnet/minecraft/client/gui/screens/Screen;)V"))
 	private void replaceSetScreen(Minecraft minecraft, Screen screen) {
+	}
+	
+	@Redirect(method = "handleTakeItemEntity", at = @At(value = "INVOKE", opcode = Opcodes.INVOKEVIRTUAL, target = "Lnet/minecraft/client/Minecraft;getEntityRenderDispatcher()Lnet/minecraft/client/renderer/entity/EntityRenderDispatcher;"))
+	private EntityRenderDispatcher replaceGetEntityRenderDispatcher(Minecraft minecraft) {
+		return null;
+	}
+	
+	@Redirect(method = "handleTakeItemEntity", at = @At(value = "INVOKE", opcode = Opcodes.INVOKEVIRTUAL, target = "Lnet/minecraft/client/Minecraft;renderBuffers()Lnet/minecraft/client/renderer/RenderBuffers;"))
+	private RenderBuffers replaceRenderBuffers(Minecraft minecraft) {
+		return null;
+	}
+	
+	@Redirect(method = "handleTakeItemEntity", at = @At(value = "NEW", target = "Lnet/minecraft/client/particle/ItemPickupParticle;"))
+	private ItemPickupParticle replaceConstructItemPickupParticle(EntityRenderDispatcher dispatcher, RenderBuffers buffers, ClientLevel level, Entity entity, Entity entity2) {
+		return null;
+	}
+	
+	@Redirect(method = "handleTakeItemEntity", at = @At(value = "FIELD", opcode = Opcodes.GETFIELD, target = "Lnet/minecraft/client/Minecraft;particleEngine:Lnet/minecraft/client/particle/ParticleEngine;"))
+	private ParticleEngine replaceGetParticleEngine(Minecraft minecraft) {
+		return null;
+	}
+	
+	@Redirect(method = "handleTakeItemEntity", at = @At(value = "INVOKE", opcode = Opcodes.INVOKEVIRTUAL, target = "Lnet/minecraft/client/particle/ParticleEngine;add(Lnet/minecraft/client/particle/Particle;)V"))
+	private void replaceRenderBuffers(ParticleEngine engine, Particle particle) {
 	}
 	
 }
