@@ -3,7 +3,10 @@ package net.hycrafthd.headless_minecraft.network;
 import com.mojang.authlib.GameProfile;
 
 import net.hycrafthd.headless_minecraft.HeadlessMinecraft;
+import net.hycrafthd.headless_minecraft.impl.HeadlessLevel;
+import net.hycrafthd.headless_minecraft.impl.HeadlessMultiPlayerGameMode;
 import net.hycrafthd.headless_minecraft.mixin.ClientPacketListenerAccessorMixin;
+import net.minecraft.client.multiplayer.ClientLevel.ClientLevelData;
 import net.minecraft.client.multiplayer.ClientPacketListener;
 import net.minecraft.network.Connection;
 import net.minecraft.network.chat.Component;
@@ -97,14 +100,19 @@ import net.minecraft.network.protocol.game.ClientboundUpdateAttributesPacket;
 import net.minecraft.network.protocol.game.ClientboundUpdateMobEffectPacket;
 import net.minecraft.network.protocol.game.ClientboundUpdateRecipesPacket;
 import net.minecraft.network.protocol.game.ClientboundUpdateTagsPacket;
+import net.minecraft.tags.StaticTags;
+import net.minecraft.util.profiling.InactiveProfiler;
+import net.minecraft.world.Difficulty;
 
 public class HeadlessPacketListener extends ClientPacketListener {
 	
 	private final HeadlessMinecraft headlessMinecraft;
+	private final ConnectionManager connectionManager;
 	
 	public HeadlessPacketListener(HeadlessMinecraft headlessMinecraft, Connection connection, GameProfile gameProfile) {
 		super(null, null, connection, gameProfile);
 		this.headlessMinecraft = headlessMinecraft;
+		connectionManager = headlessMinecraft.getConnectionManager();
 		
 		((ClientPacketListenerAccessorMixin) this).setAdvancements(null);
 		((ClientPacketListenerAccessorMixin) this).setSuggestionsProvider(null);
@@ -113,6 +121,20 @@ public class HeadlessPacketListener extends ClientPacketListener {
 	@Override
 	public void handleLogin(ClientboundLoginPacket packet) {
 		PacketUtils.ensureRunningOnSameThread(packet, this, headlessMinecraft);
+		
+		StaticTags.resetAllToEmpty();
+		
+		connectionManager.setGameMode(new HeadlessMultiPlayerGameMode(this));
+		
+		((ClientPacketListenerAccessorMixin) this).setLevels(packet.levels());
+		((ClientPacketListenerAccessorMixin) this).setRegistryAccess(packet.registryAccess());
+		((ClientPacketListenerAccessorMixin) this).setServerChunkRadius(packet.getChunkRadius());
+		
+		final ClientLevelData levelData = new ClientLevelData(Difficulty.NORMAL, packet.isHardcore(), packet.isFlat());
+		final HeadlessLevel level = new HeadlessLevel(this, levelData, packet.getDimension(), packet.getDimensionType(), packet.getChunkRadius(), () -> InactiveProfiler.INSTANCE, packet.isDebug(), packet.getSeed());
+		
+		((ClientPacketListenerAccessorMixin) this).setLevelData(levelData);
+		((ClientPacketListenerAccessorMixin) this).setLevel(level);
 		
 	}
 	
