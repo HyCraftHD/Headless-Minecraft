@@ -11,7 +11,8 @@
 		"ClientHandshakePacketListenerImplAccessorMixin",
 		"ClientPacketListenerAccessorMixin",
 		"ClientPacketListenerMixin",
-		"MultiPlayerGameModeMixin"
+		"MultiPlayerGameModeMixin",
+		"AbstractClientPlayerMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1
