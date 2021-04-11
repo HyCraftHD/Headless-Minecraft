@@ -14,6 +14,7 @@ import net.hycrafthd.headless_minecraft.impl.HeadlessRemotePlayer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.multiplayer.ClientPacketListener;
+import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.player.RemotePlayer;
 import net.minecraft.network.PacketListener;
 import net.minecraft.network.protocol.Packet;
@@ -42,6 +43,11 @@ abstract class ClientPacketListenerMixin {
 	@Redirect(method = "handleAddPlayer", at = @At(value = "NEW", target = "Lnet/minecraft/client/player/RemotePlayer;"))
 	private RemotePlayer replaceConstructRemovePlayer(ClientLevel unused, GameProfile profile) {
 		return new HeadlessRemotePlayer(HeadlessMinecraft.getInstance().getConnectionManager().getLevel(), profile);
+	}
+	
+	@Redirect(method = "handleSetCarriedItem", at = @At(value = "FIELD", opcode = Opcodes.GETFIELD, target = "Lnet/minecraft/client/Minecraft;player:Lnet/minecraft/client/player/LocalPlayer;"))
+	private LocalPlayer replaceGetPlayer(Minecraft minecraft) {
+		return HeadlessMinecraft.getInstance().getConnectionManager().getPlayer();
 	}
 	
 }

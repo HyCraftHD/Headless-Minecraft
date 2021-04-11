@@ -212,6 +212,18 @@ public class HeadlessPacketListener extends ClientPacketListener {
 		super.handleKeepAlive(packet);
 	}
 	
+	// Implemented
+	@Override
+	public void handleTeleportEntity(ClientboundTeleportEntityPacket packet) {
+		super.handleTeleportEntity(packet);
+	}
+	
+	// Implemented
+	@Override
+	public void handleSetCarriedItem(ClientboundSetCarriedItemPacket packet) {
+		super.handleSetCarriedItem(packet);
+	}
+	
 	@Override
 	public void onDisconnect(Component packet) {
 	}
@@ -497,11 +509,6 @@ public class HeadlessPacketListener extends ClientPacketListener {
 	}
 	
 	@Override
-	public void handleSetCarriedItem(ClientboundSetCarriedItemPacket packet) {
-		
-	}
-	
-	@Override
 	public void handleSetChunkCacheCenter(ClientboundSetChunkCacheCenterPacket packet) {
 		
 	}
@@ -588,11 +595,6 @@ public class HeadlessPacketListener extends ClientPacketListener {
 	
 	@Override
 	public void handleTakeItemEntity(ClientboundTakeItemEntityPacket packet) {
-		
-	}
-	
-	@Override
-	public void handleTeleportEntity(ClientboundTeleportEntityPacket packet) {
 		
 	}
 	
