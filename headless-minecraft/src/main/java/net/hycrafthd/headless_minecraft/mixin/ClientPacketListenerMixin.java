@@ -3,8 +3,10 @@ package net.hycrafthd.headless_minecraft.mixin;
 import org.objectweb.asm.Opcodes;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.At.Shift;
 import org.spongepowered.asm.mixin.injection.Constant;
 import org.spongepowered.asm.mixin.injection.ModifyConstant;
+import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.Redirect;
 
 import com.mojang.authlib.GameProfile;
@@ -53,7 +55,7 @@ abstract class ClientPacketListenerMixin {
 		return new HeadlessRemotePlayer(HeadlessMinecraft.getInstance().getConnectionManager().getLevel(), profile);
 	}
 	
-	@Redirect(method = { "handleSetCarriedItem", "handleMovePlayer", "handleTakeItemEntity" }, at = @At(value = "FIELD", opcode = Opcodes.GETFIELD, target = "Lnet/minecraft/client/Minecraft;player:Lnet/minecraft/client/player/LocalPlayer;"))
+	@Redirect(method = { "handleSetCarriedItem", "handleMovePlayer", "handleTakeItemEntity", "handleSetEntityPassengersPacket" }, at = @At(value = "FIELD", opcode = Opcodes.GETFIELD, target = "Lnet/minecraft/client/Minecraft;player:Lnet/minecraft/client/player/LocalPlayer;"))
 	private LocalPlayer replaceGetPlayer(Minecraft minecraft) {
 		return HeadlessMinecraft.getInstance().getConnectionManager().getPlayer();
 	}
@@ -99,6 +101,11 @@ abstract class ClientPacketListenerMixin {
 	@ModifyConstant(method = "handleAddMob", constant = @Constant(classValue = Bee.class, ordinal = 0))
 	public boolean removeSoundManagerCallForBee(Object entity, Class<?> constant) {
 		return false;
+	}
+	
+	@ModifyVariable(method = "handleSetEntityPassengersPacket", ordinal = 1, at = @At(value = "FIELD", opcode = Opcodes.GETFIELD, target = "Lnet/minecraft/client/multiplayer/ClientPacketListener;minecraft:Lnet/minecraft/client/Minecraft;", shift = Shift.BY, by = -3, ordinal = 2))
+	public Entity removeOverlayMountMessage(Entity entity) {
+		return null;
 	}
 	
 }
