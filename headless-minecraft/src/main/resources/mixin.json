@@ -8,8 +8,8 @@
 		"ClientLevelMixin",
 		"LocalPlayerMixin",
 		"ClientHandshakePacketListenerImplMixin",
-		"ClientHandshakePacketListenerImplAccessorMixin",
-		"ClientPacketListenerAccessorMixin",
+		"accessor.ClientHandshakePacketListenerImplAccessorMixin",
+		"accessor.ClientPacketListenerAccessorMixin",
 		"ClientPacketListenerMixin",
 		"MultiPlayerGameModeMixin",
 		"AbstractClientPlayerMixin"
