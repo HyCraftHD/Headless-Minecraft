@@ -248,6 +248,18 @@ public class HeadlessPacketListener extends ClientPacketListener {
 		super.handleMovePlayer(packet);
 	}
 	
+	// Implemented
+	@Override
+	public void handleChunkBlocksUpdate(ClientboundSectionBlocksUpdatePacket packet) {
+		super.handleChunkBlocksUpdate(packet);
+	}
+	
+	// Implemented
+	@Override
+	public void handleLevelChunk(ClientboundLevelChunkPacket packet) {
+		super.handleLevelChunk(packet);
+	}
+	
 	@Override
 	public void onDisconnect(Component packet) {
 	}
@@ -314,11 +326,6 @@ public class HeadlessPacketListener extends ClientPacketListener {
 	
 	@Override
 	public void handleChat(ClientboundChatPacket packet) {
-		
-	}
-	
-	@Override
-	public void handleChunkBlocksUpdate(ClientboundSectionBlocksUpdatePacket packet) {
 		
 	}
 	
@@ -404,11 +411,6 @@ public class HeadlessPacketListener extends ClientPacketListener {
 	
 	@Override
 	public void handleItemCooldown(ClientboundCooldownPacket packet) {
-		
-	}
-	
-	@Override
-	public void handleLevelChunk(ClientboundLevelChunkPacket packet) {
 		
 	}
 	
