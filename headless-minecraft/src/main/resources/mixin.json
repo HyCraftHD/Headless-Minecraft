@@ -10,6 +10,7 @@
 		"ClientHandshakePacketListenerImplMixin",
 		"ClientHandshakePacketListenerImplAccessorMixin",
 		"ClientPacketListenerAccessorMixin",
+		"ClientPacketListenerMixin",
 		"MultiPlayerGameModeMixin"
 	],
 	"injectors": {

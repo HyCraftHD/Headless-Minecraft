@@ -172,17 +172,18 @@ public class HeadlessPacketListener extends ClientPacketListener {
 	
 	// Implemented
 	@Override
+	public void handleAddEntity(ClientboundAddEntityPacket packet) {
+		super.handleAddEntity(packet);
+	}
+	
+	// Implemented
+	@Override
 	public void handleKeepAlive(ClientboundKeepAlivePacket packet) {
 		super.handleKeepAlive(packet);
 	}
 	
 	@Override
 	public void onDisconnect(Component packet) {
-	}
-	
-	@Override
-	public void handleAddEntity(ClientboundAddEntityPacket packet) {
-		
 	}
 	
 	@Override
