@@ -178,17 +178,36 @@ public class HeadlessPacketListener extends ClientPacketListener {
 	
 	// Implemented
 	@Override
+	public void handleAddExperienceOrb(ClientboundAddExperienceOrbPacket packet) {
+		super.handleAddExperienceOrb(packet);
+	}
+	
+	// Implemented
+	@Override
+	public void handleAddPainting(ClientboundAddPaintingPacket packet) {
+		super.handleAddPainting(packet);
+	}
+	
+	// Implemented
+	@Override
+	public void handleSetEntityMotion(ClientboundSetEntityMotionPacket packet) {
+		super.handleSetEntityMotion(packet);
+	}
+	
+	// Implemented
+	@Override
+	public void handleSetEntityData(ClientboundSetEntityDataPacket packet) {
+		super.handleSetEntityData(packet);
+	}
+	
+	// Implemented
+	@Override
 	public void handleKeepAlive(ClientboundKeepAlivePacket packet) {
 		super.handleKeepAlive(packet);
 	}
 	
 	@Override
 	public void onDisconnect(Component packet) {
-	}
-	
-	@Override
-	public void handleAddExperienceOrb(ClientboundAddExperienceOrbPacket packet) {
-		
 	}
 	
 	@Override
@@ -203,11 +222,6 @@ public class HeadlessPacketListener extends ClientPacketListener {
 	
 	@Override
 	public void handleAddOrRemoveRecipes(ClientboundRecipePacket packet) {
-		
-	}
-	
-	@Override
-	public void handleAddPainting(ClientboundAddPaintingPacket packet) {
 		
 	}
 	
@@ -498,16 +512,6 @@ public class HeadlessPacketListener extends ClientPacketListener {
 	
 	@Override
 	public void handleSetDisplayObjective(ClientboundSetDisplayObjectivePacket packet) {
-		
-	}
-	
-	@Override
-	public void handleSetEntityData(ClientboundSetEntityDataPacket packet) {
-		
-	}
-	
-	@Override
-	public void handleSetEntityMotion(ClientboundSetEntityMotionPacket packet) {
 		
 	}
 	
