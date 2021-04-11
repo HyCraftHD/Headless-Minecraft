@@ -338,6 +338,12 @@ public class HeadlessPacketListener extends ClientPacketListener {
 		// Do nothing, as everything here is only rendering relevant
 	}
 	
+	// Implemented
+	@Override
+	public void handleSetHealth(ClientboundSetHealthPacket packet) {
+		super.handleSetHealth(packet);
+	}
+	
 	@Override
 	public void handleAddObjective(ClientboundSetObjectivePacket packet) {
 		
@@ -570,11 +576,6 @@ public class HeadlessPacketListener extends ClientPacketListener {
 	
 	@Override
 	public void handleSetExperience(ClientboundSetExperiencePacket packet) {
-		
-	}
-	
-	@Override
-	public void handleSetHealth(ClientboundSetHealthPacket packet) {
 		
 	}
 	
