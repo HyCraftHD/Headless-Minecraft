@@ -12,7 +12,7 @@ import net.minecraft.CrashReport;
 import net.minecraft.Util;
 import net.minecraft.client.Timer;
 import net.minecraft.client.User;
-import net.minecraft.client.multiplayer.ClientPacketListener;
+import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.server.Bootstrap;
 import net.minecraft.util.thread.ReentrantBlockableEventLoop;
 
@@ -22,7 +22,8 @@ public class HeadlessMinecraft extends ReentrantBlockableEventLoop<Runnable> {
 	
 	static void launch(File run, String authName, String authUuid, String authToken, String authType) {
 		
-		new ClientPacketListener(null, null, null, null);
+		new AbstractClientPlayer(null, null) {
+		};
 		
 		ScriptManager.load();
 		
