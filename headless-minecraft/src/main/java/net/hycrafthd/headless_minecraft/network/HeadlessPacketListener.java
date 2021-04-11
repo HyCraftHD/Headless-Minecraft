@@ -272,6 +272,12 @@ public class HeadlessPacketListener extends ClientPacketListener {
 		super.handleBlockUpdate(packet);
 	}
 	
+	// Implemented
+	@Override
+	public void handleDisconnect(ClientboundDisconnectPacket packet) {
+		super.handleDisconnect(packet);
+	}
+	
 	@Override
 	public void onDisconnect(Component packet) {
 	}
@@ -378,11 +384,6 @@ public class HeadlessPacketListener extends ClientPacketListener {
 	
 	@Override
 	public void handleCustomSoundEvent(ClientboundCustomSoundPacket packet) {
-		
-	}
-	
-	@Override
-	public void handleDisconnect(ClientboundDisconnectPacket packet) {
 		
 	}
 	
