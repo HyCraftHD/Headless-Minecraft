@@ -332,6 +332,12 @@ public class HeadlessPacketListener extends ClientPacketListener {
 		super.handleEntityLinkPacket(packet);
 	}
 	
+	// Implemented
+	@Override
+	public void handleEntityEvent(ClientboundEntityEventPacket packet) {
+		// Do nothing, as everything here is only rendering relevant
+	}
+	
 	@Override
 	public void handleAddObjective(ClientboundSetObjectivePacket packet) {
 		
@@ -419,11 +425,6 @@ public class HeadlessPacketListener extends ClientPacketListener {
 	
 	@Override
 	public void handleCustomSoundEvent(ClientboundCustomSoundPacket packet) {
-		
-	}
-	
-	@Override
-	public void handleEntityEvent(ClientboundEntityEventPacket packet) {
 		
 	}
 	
