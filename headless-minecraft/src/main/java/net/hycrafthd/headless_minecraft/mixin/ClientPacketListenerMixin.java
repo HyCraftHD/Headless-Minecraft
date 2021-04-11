@@ -12,6 +12,7 @@ import com.mojang.authlib.GameProfile;
 import net.hycrafthd.headless_minecraft.HeadlessMinecraft;
 import net.hycrafthd.headless_minecraft.impl.HeadlessRemotePlayer;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.multiplayer.ClientPacketListener;
 import net.minecraft.client.player.LocalPlayer;
@@ -45,9 +46,13 @@ abstract class ClientPacketListenerMixin {
 		return new HeadlessRemotePlayer(HeadlessMinecraft.getInstance().getConnectionManager().getLevel(), profile);
 	}
 	
-	@Redirect(method = "handleSetCarriedItem", at = @At(value = "FIELD", opcode = Opcodes.GETFIELD, target = "Lnet/minecraft/client/Minecraft;player:Lnet/minecraft/client/player/LocalPlayer;"))
+	@Redirect(method = { "handleSetCarriedItem", "handleMovePlayer" }, at = @At(value = "FIELD", opcode = Opcodes.GETFIELD, target = "Lnet/minecraft/client/Minecraft;player:Lnet/minecraft/client/player/LocalPlayer;"))
 	private LocalPlayer replaceGetPlayer(Minecraft minecraft) {
 		return HeadlessMinecraft.getInstance().getConnectionManager().getPlayer();
+	}
+	
+	@Redirect(method = "handleMovePlayer", at = @At(value = "INVOKE", opcode = Opcodes.INVOKEVIRTUAL, target = "Lnet/minecraft/client/Minecraft;setScreen(Lnet/minecraft/client/gui/screens/Screen;)V"))
+	private void replaceSetScreen(Minecraft minecraft, Screen screen) {
 	}
 	
 }

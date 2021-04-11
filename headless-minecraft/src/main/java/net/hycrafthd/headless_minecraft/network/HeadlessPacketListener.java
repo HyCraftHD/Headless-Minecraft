@@ -242,6 +242,12 @@ public class HeadlessPacketListener extends ClientPacketListener {
 		super.handleRemoveEntity(packet);
 	}
 	
+	// Implemented
+	@Override
+	public void handleMovePlayer(ClientboundPlayerPositionPacket packet) {
+		super.handleMovePlayer(packet);
+	}
+	
 	@Override
 	public void onDisconnect(Component packet) {
 	}
@@ -428,11 +434,6 @@ public class HeadlessPacketListener extends ClientPacketListener {
 	
 	@Override
 	public void handleMerchantOffers(ClientboundMerchantOffersPacket packet) {
-		
-	}
-	
-	@Override
-	public void handleMovePlayer(ClientboundPlayerPositionPacket packet) {
 		
 	}
 	
