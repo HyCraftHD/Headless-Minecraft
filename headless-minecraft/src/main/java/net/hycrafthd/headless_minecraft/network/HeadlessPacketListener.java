@@ -3,6 +3,7 @@ package net.hycrafthd.headless_minecraft.network;
 import com.mojang.authlib.GameProfile;
 
 import net.hycrafthd.headless_minecraft.HeadlessMinecraft;
+import net.hycrafthd.headless_minecraft.mixin.ClientPacketListenerAccessorMixin;
 import net.minecraft.client.multiplayer.ClientPacketListener;
 import net.minecraft.network.Connection;
 import net.minecraft.network.chat.Component;
@@ -104,12 +105,15 @@ public class HeadlessPacketListener extends ClientPacketListener {
 	public HeadlessPacketListener(HeadlessMinecraft headlessMinecraft, Connection connection, GameProfile gameProfile) {
 		super(null, null, connection, gameProfile);
 		this.headlessMinecraft = headlessMinecraft;
+		
+		((ClientPacketListenerAccessorMixin) this).setAdvancements(null);
+		((ClientPacketListenerAccessorMixin) this).setSuggestionsProvider(null);
 	}
 	
 	@Override
 	public void handleLogin(ClientboundLoginPacket packet) {
 		PacketUtils.ensureRunningOnSameThread(packet, this, headlessMinecraft);
-
+		
 	}
 	
 	// Implemented

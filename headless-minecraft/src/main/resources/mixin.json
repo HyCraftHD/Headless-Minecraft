@@ -8,7 +8,9 @@
 		"ClientLevelMixin",
 		"LocalPlayerMixin",
 		"ClientHandshakePacketListenerImplMixin",
-		"ClientHandshakePacketListenerImplAccessorMixin"
+		"ClientHandshakePacketListenerImplAccessorMixin",
+		"ClientPacketListenerAccessorMixin",
+		"MultiPlayerGameModeMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1

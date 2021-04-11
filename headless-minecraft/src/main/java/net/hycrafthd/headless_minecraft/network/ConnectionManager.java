@@ -6,6 +6,9 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import net.hycrafthd.headless_minecraft.HeadlessMinecraft;
+import net.hycrafthd.headless_minecraft.impl.HeadlessLevel;
+import net.hycrafthd.headless_minecraft.impl.HeadlessMultiPlayerGameMode;
+import net.hycrafthd.headless_minecraft.impl.HeadlessPlayer;
 import net.minecraft.client.multiplayer.ServerAddress;
 import net.minecraft.client.multiplayer.ServerData;
 import net.minecraft.network.Connection;
@@ -23,6 +26,10 @@ public class ConnectionManager {
 	
 	private ServerData serverData;
 	private Connection connection;
+	
+	private HeadlessLevel level;
+	private HeadlessPlayer player;
+	private HeadlessMultiPlayerGameMode gameMode;
 	
 	public ConnectionManager(HeadlessMinecraft headlessMinecraft) {
 		this.headlessMinecraft = headlessMinecraft;
@@ -74,4 +81,27 @@ public class ConnectionManager {
 		return connection;
 	}
 	
+	public HeadlessLevel getLevel() {
+		return level;
+	}
+	
+	public HeadlessPlayer getPlayer() {
+		return player;
+	}
+	
+	public HeadlessMultiPlayerGameMode getGameMode() {
+		return gameMode;
+	}
+	
+	public void setLevel(HeadlessLevel level) {
+		this.level = level;
+	}
+	
+	public void setPlayer(HeadlessPlayer player) {
+		this.player = player;
+	}
+	
+	public void setGameMode(HeadlessMultiPlayerGameMode gameMode) {
+		this.gameMode = gameMode;
+	}
 }
