@@ -26,7 +26,7 @@ import net.minecraft.client.tutorial.Tutorial;
 import net.minecraft.world.entity.vehicle.AbstractMinecart;
 
 @Mixin(LocalPlayer.class)
-public abstract class LocalPlayerMixin {
+abstract class LocalPlayerMixin {
 	
 	@Shadow(aliases = "ambientSoundHandlers")
 	private List<AmbientSoundHandler> ambientSoundHandlers;

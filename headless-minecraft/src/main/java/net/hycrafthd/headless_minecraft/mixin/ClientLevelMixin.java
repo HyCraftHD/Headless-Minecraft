@@ -15,7 +15,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 
 @Mixin(ClientLevel.class)
-public abstract class ClientLevelMixin {
+abstract class ClientLevelMixin {
 	
 	@Redirect(method = "<init>", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/Minecraft;getInstance()Lnet/minecraft/client/Minecraft;"))
 	private Minecraft returnNullForMinecraftInstance() {

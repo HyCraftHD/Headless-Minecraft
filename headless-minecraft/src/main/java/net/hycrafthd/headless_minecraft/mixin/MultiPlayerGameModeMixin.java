@@ -14,7 +14,7 @@ import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.tutorial.Tutorial;
 
 @Mixin(MultiPlayerGameMode.class)
-public abstract class MultiPlayerGameModeMixin {
+abstract class MultiPlayerGameModeMixin {
 	
 	@Redirect(method = "*", at = @At(value = "FIELD", opcode = Opcodes.GETFIELD, target = "Lnet/minecraft/client/Minecraft;player:Lnet/minecraft/client/player/LocalPlayer;"))
 	private LocalPlayer redirectPlayerFieldAccess(Minecraft minecraft) {

@@ -14,7 +14,7 @@ import net.minecraft.client.renderer.texture.HttpTexture;
 import net.minecraft.resources.ResourceLocation;
 
 @Mixin(AbstractClientPlayer.class)
-public abstract class AbstractClientPlayerMixin {
+abstract class AbstractClientPlayerMixin {
 	
 	@Redirect(method = "*", at = @At(value = "INVOKE", opcode = Opcodes.INVOKEVIRTUAL, target = "Lnet/minecraft/client/Minecraft;getConnection()Lnet/minecraft/client/multiplayer/ClientPacketListener;"))
 	private ClientPacketListener replaceGetConnection(Minecraft minecraft) {

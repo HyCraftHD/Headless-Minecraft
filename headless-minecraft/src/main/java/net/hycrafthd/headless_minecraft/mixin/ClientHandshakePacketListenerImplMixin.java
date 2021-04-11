@@ -14,7 +14,7 @@ import net.minecraft.client.multiplayer.ClientHandshakePacketListenerImpl;
 import net.minecraft.client.multiplayer.ServerData;
 
 @Mixin(ClientHandshakePacketListenerImpl.class)
-public abstract class ClientHandshakePacketListenerImplMixin {
+abstract class ClientHandshakePacketListenerImplMixin {
 	
 	@Redirect(method = "authenticateServer", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/Minecraft;getUser()Lnet/minecraft/client/User;"))
 	private User getHeadlessUser(Minecraft minecraft) {

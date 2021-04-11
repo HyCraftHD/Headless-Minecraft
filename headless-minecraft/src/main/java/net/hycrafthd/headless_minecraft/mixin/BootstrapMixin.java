@@ -8,7 +8,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import net.minecraft.server.Bootstrap;
 
 @Mixin(Bootstrap.class)
-public abstract class BootstrapMixin {
+abstract class BootstrapMixin {
 	
 	@Inject(method = "wrapStreams", cancellable = true, at = @At("HEAD"))
 	private static void removeStreamWrapping(CallbackInfo info) {
