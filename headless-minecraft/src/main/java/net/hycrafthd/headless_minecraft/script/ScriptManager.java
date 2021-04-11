@@ -48,6 +48,13 @@ public class ScriptManager {
 			}
 		});
 		
+		// TODO remove test
+		try {
+			LOADED_SCRIPTS.add(Class.forName("net.hycrafthd.headless_minecraft.script_test.MainScript", true, CLASSLOADER).asSubclass(IScript.class).newInstance());
+		} catch (Exception ex) {
+			throw new IllegalStateException(ex);
+		}
+		
 		LOGGER.info("Finished loading scripts");
 	}
 	
