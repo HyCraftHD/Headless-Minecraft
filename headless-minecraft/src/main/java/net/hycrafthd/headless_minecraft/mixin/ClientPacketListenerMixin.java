@@ -15,7 +15,7 @@ import net.minecraft.util.thread.BlockableEventLoop;
 @Mixin(ClientPacketListener.class)
 public abstract class ClientPacketListenerMixin {
 	
-	@Redirect(method = "handleAddEntity", at = @At(value = "INVOKE", opcode = Opcodes.INVOKESTATIC, target = "Lnet/minecraft/network/protocol/PacketUtils;ensureRunningOnSameThread(Lnet/minecraft/network/protocol/Packet;Lnet/minecraft/network/PacketListener;Lnet/minecraft/util/thread/BlockableEventLoop;)V"))
+	@Redirect(method = "*", at = @At(value = "INVOKE", opcode = Opcodes.INVOKESTATIC, target = "Lnet/minecraft/network/protocol/PacketUtils;ensureRunningOnSameThread(Lnet/minecraft/network/protocol/Packet;Lnet/minecraft/network/PacketListener;Lnet/minecraft/util/thread/BlockableEventLoop;)V"))
 	private <T extends PacketListener> void replaceEnsureRunningOnSameThread(Packet<T> packet, T listener, BlockableEventLoop<?> unused) {
 		PacketUtils.ensureRunningOnSameThread(packet, listener, HeadlessMinecraft.getInstance());
 	}
