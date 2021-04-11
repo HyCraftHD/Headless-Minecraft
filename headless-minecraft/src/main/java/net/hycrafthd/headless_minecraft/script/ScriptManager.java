@@ -26,27 +26,27 @@ public class ScriptManager {
 	public static void load() {
 		LOGGER.info("Started to load scripts");
 		
-		File pluginsFolder = new File(PLUGIN_FOLDER);
-		
-		List<File> files = Arrays.asList(pluginsFolder.listFiles());
-		
-		files.stream().filter(e -> FilenameUtils.getExtension(e.getName()).equals("jar")).forEach(e -> {
-			try {
-				CLASSLOADER.addURL(e.toURI().toURL());
-			} catch (MalformedURLException ex) {
-				throw new RuntimeException(ex);
-			}
-			SCRIPT_CANIDATES.add(e);
-		});
-		
-		SCRIPT_CANIDATES.forEach(e -> {
-			try (final JarFile jarFile = new JarFile(e)) {
-				final Class<?> clazz = Class.forName((String) jarFile.getManifest().getMainAttributes().getValue(MANIFEST_KEY), true, CLASSLOADER);
-				// TODO add to loaded scripts
-			} catch (IOException | ClassNotFoundException ex) {
-				throw new RuntimeException(ex);
-			}
-		});
+//		File pluginsFolder = new File(PLUGIN_FOLDER);
+//		
+//		List<File> files = Arrays.asList(pluginsFolder.listFiles());
+//		
+//		files.stream().filter(e -> FilenameUtils.getExtension(e.getName()).equals("jar")).forEach(e -> {
+//			try {
+//				CLASSLOADER.addURL(e.toURI().toURL());
+//			} catch (MalformedURLException ex) {
+//				throw new RuntimeException(ex);
+//			}
+//			SCRIPT_CANIDATES.add(e);
+//		});
+//		
+//		SCRIPT_CANIDATES.forEach(e -> {
+//			try (final JarFile jarFile = new JarFile(e)) {
+//				final Class<?> clazz = Class.forName((String) jarFile.getManifest().getMainAttributes().getValue(MANIFEST_KEY), true, CLASSLOADER);
+//				// TODO add to loaded scripts
+//			} catch (IOException | ClassNotFoundException ex) {
+//				throw new RuntimeException(ex);
+//			}
+//		});
 		
 		// TODO remove test
 		try {
