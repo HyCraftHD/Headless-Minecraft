@@ -2,13 +2,18 @@ package net.hycrafthd.headless_minecraft.network;
 
 import com.mojang.authlib.GameProfile;
 
+import io.netty.buffer.Unpooled;
+import net.hycrafthd.headless_minecraft.Constants;
 import net.hycrafthd.headless_minecraft.HeadlessMinecraft;
 import net.hycrafthd.headless_minecraft.impl.HeadlessLevel;
 import net.hycrafthd.headless_minecraft.impl.HeadlessMultiPlayerGameMode;
+import net.hycrafthd.headless_minecraft.impl.HeadlessPlayer;
 import net.hycrafthd.headless_minecraft.mixin.ClientPacketListenerAccessorMixin;
+import net.minecraft.client.ClientRecipeBook;
 import net.minecraft.client.multiplayer.ClientLevel.ClientLevelData;
 import net.minecraft.client.multiplayer.ClientPacketListener;
 import net.minecraft.network.Connection;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.PacketUtils;
 import net.minecraft.network.protocol.game.ClientboundAddEntityPacket;
@@ -100,6 +105,8 @@ import net.minecraft.network.protocol.game.ClientboundUpdateAttributesPacket;
 import net.minecraft.network.protocol.game.ClientboundUpdateMobEffectPacket;
 import net.minecraft.network.protocol.game.ClientboundUpdateRecipesPacket;
 import net.minecraft.network.protocol.game.ClientboundUpdateTagsPacket;
+import net.minecraft.network.protocol.game.ServerboundCustomPayloadPacket;
+import net.minecraft.stats.StatsCounter;
 import net.minecraft.tags.StaticTags;
 import net.minecraft.util.profiling.InactiveProfiler;
 import net.minecraft.world.Difficulty;
@@ -124,7 +131,9 @@ public class HeadlessPacketListener extends ClientPacketListener {
 		
 		StaticTags.resetAllToEmpty();
 		
-		connectionManager.setGameMode(new HeadlessMultiPlayerGameMode(this));
+		final HeadlessMultiPlayerGameMode gameMode = new HeadlessMultiPlayerGameMode(this);
+		
+		connectionManager.setGameMode(gameMode);
 		
 		((ClientPacketListenerAccessorMixin) this).setLevels(packet.levels());
 		((ClientPacketListenerAccessorMixin) this).setRegistryAccess(packet.registryAccess());
@@ -136,6 +145,29 @@ public class HeadlessPacketListener extends ClientPacketListener {
 		((ClientPacketListenerAccessorMixin) this).setLevelData(levelData);
 		((ClientPacketListenerAccessorMixin) this).setLevel(level);
 		
+		connectionManager.setLevel(level);
+		
+		final HeadlessPlayer player;
+		
+		if (connectionManager.getPlayer() == null) {
+			player = new HeadlessPlayer(this, level, new StatsCounter(), new ClientRecipeBook(), false, false);
+			player.yRot = -180.0F;
+			connectionManager.setPlayer(player);
+		} else {
+			player = connectionManager.getPlayer();
+		}
+		
+		player.resetPos();
+		level.addPlayer(packet.getPlayerId(), player);
+		// TODO player.input = new KeyboardInput(xyz);
+		gameMode.adjustPlayer(player);
+		player.setId(packet.getPlayerId());
+		player.setReducedDebugInfo(packet.isReducedDebugInfo());
+		player.setShowDeathScreen(packet.shouldShowDeathScreen());
+		gameMode.setLocalMode(packet.getGameType());
+		gameMode.setPreviousLocalMode(packet.getPreviousGameType());
+		// TODO or do not care? options.broadcastOptions();
+		getConnection().send(new ServerboundCustomPayloadPacket(ServerboundCustomPayloadPacket.BRAND, new FriendlyByteBuf(Unpooled.buffer()).writeUtf(Constants.NAME)));
 	}
 	
 	// Implemented
