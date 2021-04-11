@@ -202,6 +202,12 @@ public class HeadlessPacketListener extends ClientPacketListener {
 	
 	// Implemented
 	@Override
+	public void handleAddPlayer(ClientboundAddPlayerPacket packet) {
+		super.handleAddPlayer(packet);
+	}
+	
+	// Implemented
+	@Override
 	public void handleKeepAlive(ClientboundKeepAlivePacket packet) {
 		super.handleKeepAlive(packet);
 	}
@@ -222,11 +228,6 @@ public class HeadlessPacketListener extends ClientPacketListener {
 	
 	@Override
 	public void handleAddOrRemoveRecipes(ClientboundRecipePacket packet) {
-		
-	}
-	
-	@Override
-	public void handleAddPlayer(ClientboundAddPlayerPacket packet) {
 		
 	}
 	
