@@ -106,10 +106,13 @@ import net.minecraft.network.protocol.game.ClientboundUpdateMobEffectPacket;
 import net.minecraft.network.protocol.game.ClientboundUpdateRecipesPacket;
 import net.minecraft.network.protocol.game.ClientboundUpdateTagsPacket;
 import net.minecraft.network.protocol.game.ServerboundCustomPayloadPacket;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.stats.StatsCounter;
 import net.minecraft.tags.StaticTags;
 import net.minecraft.util.profiling.InactiveProfiler;
 import net.minecraft.world.Difficulty;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.scores.Scoreboard;
 
 public class HeadlessPacketListener extends ClientPacketListener {
 	
@@ -355,6 +358,60 @@ public class HeadlessPacketListener extends ClientPacketListener {
 	public void handleRespawn(ClientboundRespawnPacket packet) {
 		PacketUtils.ensureRunningOnSameThread(packet, this, headlessMinecraft);
 		
+		final HeadlessPlayer previousPlayer = headlessMinecraft.getConnectionManager().getPlayer();
+		final ResourceKey<Level> dimension = packet.getDimension();
+		
+		((ClientPacketListenerAccessorMixin) this).setStarted(false);
+		
+		if (dimension != previousPlayer.level.dimension()) {
+			final Scoreboard scoreBoard = ((ClientPacketListenerAccessorMixin) this).getLevel().getScoreboard();
+			final ClientLevelData previousLevelData = ((ClientPacketListenerAccessorMixin) this).getLevelData();
+			
+			final ClientLevelData levelData = new ClientLevelData(previousLevelData.getDifficulty(), previousLevelData.isHardcore(), packet.isFlat());
+			final HeadlessLevel level = new HeadlessLevel(this, levelData, dimension, packet.getDimensionType(), ((ClientPacketListenerAccessorMixin) this).getServerChunkRadius(), () -> InactiveProfiler.INSTANCE, packet.isDebug(), packet.getSeed());
+			
+			level.setScoreboard(scoreBoard);
+			
+			((ClientPacketListenerAccessorMixin) this).setLevelData(levelData);
+			((ClientPacketListenerAccessorMixin) this).setLevel(level);
+			
+			connectionManager.setLevel(level);
+		}
+		
+		final HeadlessLevel level = connectionManager.getLevel();
+		
+		level.removeAllPendingEntityRemovals();
+		
+		final HeadlessPlayer player = new HeadlessPlayer(this, level, previousPlayer.getStats(), previousPlayer.getRecipeBook(), previousPlayer.isShiftKeyDown(), previousPlayer.isSprinting());
+		
+		player.setId(previousPlayer.getId());
+		player.getEntityData().assignValues(previousPlayer.getEntityData().getAll());
+		if (packet.shouldKeepAllPlayerData()) {
+			player.getAttributes().assignValues(previousPlayer.getAttributes());
+		}
+		player.resetPos();
+		player.setServerBrand(previousPlayer.getServerBrand());
+		
+		connectionManager.setPlayer(player);
+		level.addPlayer(previousPlayer.getId(), player);
+		
+		player.yRot = -180;
+		// TODO player.input = new KeyboardInput(this.minecraft.options);
+		player.setReducedDebugInfo(previousPlayer.isReducedDebugInfo());
+		player.setShowDeathScreen(previousPlayer.shouldShowDeathScreen());
+		
+		final HeadlessMultiPlayerGameMode gameMode = connectionManager.getGameMode();
+		
+		gameMode.adjustPlayer(player);
+		
+		gameMode.setLocalMode(packet.getPlayerGameType());
+		gameMode.setPreviousLocalMode(packet.getPreviousPlayerGameType());
+	}
+	
+	// Implemented
+	@Override
+	public void handleExplosion(ClientboundExplodePacket packet) {
+		super.handleExplosion(packet);
 	}
 	
 	@Override
@@ -444,11 +501,6 @@ public class HeadlessPacketListener extends ClientPacketListener {
 	
 	@Override
 	public void handleCustomSoundEvent(ClientboundCustomSoundPacket packet) {
-		
-	}
-	
-	@Override
-	public void handleExplosion(ClientboundExplodePacket packet) {
 		
 	}
 	
