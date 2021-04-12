@@ -114,6 +114,7 @@ import net.minecraft.world.Difficulty;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.animal.horse.AbstractHorse;
+import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.HorseInventoryMenu;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.scores.Scoreboard;
@@ -434,6 +435,17 @@ public class HeadlessPacketListener extends ClientPacketListener {
 		}
 	}
 	
+	// Implemented // TODO handle containers
+	@Override
+	public void handleOpenScreen(ClientboundOpenScreenPacket packet) {
+		PacketUtils.ensureRunningOnSameThread(packet, this, headlessMinecraft);
+		
+		final HeadlessPlayer player = connectionManager.getPlayer();
+		
+		final AbstractContainerMenu menu = packet.getType().create(packet.getContainerId(), player.inventory);
+		player.containerMenu = menu;
+	}
+	
 	@Override
 	public void handleAddObjective(ClientboundSetObjectivePacket packet) {
 		
@@ -566,11 +578,6 @@ public class HeadlessPacketListener extends ClientPacketListener {
 	
 	@Override
 	public void handleOpenBook(ClientboundOpenBookPacket packet) {
-		
-	}
-	
-	@Override
-	public void handleOpenScreen(ClientboundOpenScreenPacket packet) {
 		
 	}
 	
