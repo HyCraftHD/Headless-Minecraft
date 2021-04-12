@@ -350,6 +350,13 @@ public class HeadlessPacketListener extends ClientPacketListener {
 		super.handleSetExperience(packet);
 	}
 	
+	// Implemented
+	@Override
+	public void handleRespawn(ClientboundRespawnPacket packet) {
+		PacketUtils.ensureRunningOnSameThread(packet, this, headlessMinecraft);
+		
+	}
+	
 	@Override
 	public void handleAddObjective(ClientboundSetObjectivePacket packet) {
 		
@@ -537,11 +544,6 @@ public class HeadlessPacketListener extends ClientPacketListener {
 	
 	@Override
 	public void handleResourcePack(ClientboundResourcePackPacket packet) {
-		
-	}
-	
-	@Override
-	public void handleRespawn(ClientboundRespawnPacket packet) {
 		
 	}
 	
