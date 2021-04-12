@@ -111,6 +111,10 @@ import net.minecraft.stats.StatsCounter;
 import net.minecraft.tags.StaticTags;
 import net.minecraft.util.profiling.InactiveProfiler;
 import net.minecraft.world.Difficulty;
+import net.minecraft.world.SimpleContainer;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.animal.horse.AbstractHorse;
+import net.minecraft.world.inventory.HorseInventoryMenu;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.scores.Scoreboard;
 
@@ -414,6 +418,22 @@ public class HeadlessPacketListener extends ClientPacketListener {
 		super.handleExplosion(packet);
 	}
 	
+	// Implemented // TODO handle containers
+	@Override
+	public void handleHorseScreenOpen(ClientboundHorseScreenOpenPacket packet) {
+		PacketUtils.ensureRunningOnSameThread(packet, this, headlessMinecraft);
+		
+		final Entity entity = ((ClientPacketListenerAccessorMixin) this).getLevel().getEntity(packet.getEntityId());
+		if (entity instanceof AbstractHorse) {
+			final AbstractHorse horse = (AbstractHorse) entity;
+			final HeadlessPlayer player = connectionManager.getPlayer();
+			
+			final SimpleContainer container = new SimpleContainer(packet.getSize());
+			final HorseInventoryMenu menu = new HorseInventoryMenu(packet.getContainerId(), player.inventory, container, horse);
+			player.containerMenu = menu;
+		}
+	}
+	
 	@Override
 	public void handleAddObjective(ClientboundSetObjectivePacket packet) {
 		
@@ -506,11 +526,6 @@ public class HeadlessPacketListener extends ClientPacketListener {
 	
 	@Override
 	public void handleGameEvent(ClientboundGameEventPacket packet) {
-		
-	}
-	
-	@Override
-	public void handleHorseScreenOpen(ClientboundHorseScreenOpenPacket packet) {
 		
 	}
 	
