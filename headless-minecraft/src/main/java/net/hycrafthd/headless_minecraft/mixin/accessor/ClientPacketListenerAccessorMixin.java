@@ -50,4 +50,7 @@ public interface ClientPacketListenerAccessorMixin {
 	@Accessor("level")
 	void setLevel(ClientLevel level);
 	
+	@Accessor("started")
+	void setStarted(boolean started);
+	
 }
