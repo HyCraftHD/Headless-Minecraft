@@ -511,6 +511,24 @@ public class HeadlessPacketListener extends ClientPacketListener {
 		super.handleSetEquipment(packet);
 	}
 	
+	// Implemented
+	@Override
+	public void handleContainerClose(ClientboundContainerClosePacket packet) {
+		super.handleContainerClose(packet);
+	}
+	
+	// Implemented
+	@Override
+	public void handleBlockEvent(ClientboundBlockEventPacket packet) {
+		super.handleBlockEvent(packet);
+	}
+	
+	// Implemented
+	@Override
+	public void handleBlockDestruction(ClientboundBlockDestructionPacket packet) {
+		super.handleBlockDestruction(packet);
+	}
+	
 	@Override
 	public void handleAddObjective(ClientboundSetObjectivePacket packet) {
 		
@@ -532,16 +550,6 @@ public class HeadlessPacketListener extends ClientPacketListener {
 	}
 	
 	@Override
-	public void handleBlockDestruction(ClientboundBlockDestructionPacket packet) {
-		
-	}
-	
-	@Override
-	public void handleBlockEvent(ClientboundBlockEventPacket packet) {
-		
-	}
-	
-	@Override
 	public void handleBossUpdate(ClientboundBossEventPacket packet) {
 		
 	}
@@ -558,11 +566,6 @@ public class HeadlessPacketListener extends ClientPacketListener {
 	
 	@Override
 	public void handleCommands(ClientboundCommandsPacket packet) {
-		
-	}
-	
-	@Override
-	public void handleContainerClose(ClientboundContainerClosePacket packet) {
 		
 	}
 	
