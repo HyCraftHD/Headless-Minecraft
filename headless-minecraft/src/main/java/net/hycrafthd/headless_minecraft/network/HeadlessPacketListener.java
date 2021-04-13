@@ -574,6 +574,12 @@ public class HeadlessPacketListener extends ClientPacketListener {
 		super.handleCommands(packet);
 	}
 	
+	// Implemented
+	@Override
+	public void handleStopSoundEvent(ClientboundStopSoundPacket packet) {
+		// Do nothing, as we do not have sounds
+	}
+	
 	@Override
 	public void handleAddObjective(ClientboundSetObjectivePacket packet) {
 		
@@ -731,11 +737,6 @@ public class HeadlessPacketListener extends ClientPacketListener {
 	
 	@Override
 	public void handleSoundEvent(ClientboundSoundPacket packet) {
-		
-	}
-	
-	@Override
-	public void handleStopSoundEvent(ClientboundStopSoundPacket packet) {
 		
 	}
 	
