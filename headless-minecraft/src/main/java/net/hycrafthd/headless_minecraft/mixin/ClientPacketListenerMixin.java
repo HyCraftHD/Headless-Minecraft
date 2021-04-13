@@ -45,7 +45,7 @@ abstract class ClientPacketListenerMixin {
 		return false;
 	}
 	
-	@Redirect(method = { "handleAddPlayer", "handleAddMob", "handleSetTime", "handleSetSpawn", "handleExplosion" }, at = @At(value = "FIELD", opcode = Opcodes.GETFIELD, target = "Lnet/minecraft/client/Minecraft;level:Lnet/minecraft/client/multiplayer/ClientLevel;"))
+	@Redirect(method = { "handleAddPlayer", "handleAddMob", "handleSetTime", "handleSetSpawn", "handleExplosion", "handleBlockEntityData" }, at = @At(value = "FIELD", opcode = Opcodes.GETFIELD, target = "Lnet/minecraft/client/Minecraft;level:Lnet/minecraft/client/multiplayer/ClientLevel;"))
 	private ClientLevel replaceGetLevel(Minecraft minecraft) {
 		return HeadlessMinecraft.getInstance().getConnectionManager().getLevel();
 	}
@@ -105,6 +105,11 @@ abstract class ClientPacketListenerMixin {
 	
 	@ModifyVariable(method = "handleSetEntityPassengersPacket", ordinal = 1, at = @At(value = "FIELD", opcode = Opcodes.GETFIELD, target = "Lnet/minecraft/client/multiplayer/ClientPacketListener;minecraft:Lnet/minecraft/client/Minecraft;", shift = Shift.BY, by = -3, ordinal = 2))
 	public Entity removeOverlayMountMessage(Entity entity) {
+		return null;
+	}
+	
+	@Redirect(method = "handleBlockEntityData", at = @At(value = "FIELD", opcode = Opcodes.GETFIELD, target = "Lnet/minecraft/client/Minecraft;screen:Lnet/minecraft/client/gui/screens/Screen;", ordinal = 0))
+	private Screen replaceGetScreen(Minecraft minecraft) {
 		return null;
 	}
 	

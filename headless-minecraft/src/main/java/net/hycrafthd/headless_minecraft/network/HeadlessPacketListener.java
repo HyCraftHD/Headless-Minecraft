@@ -493,6 +493,12 @@ public class HeadlessPacketListener extends ClientPacketListener {
 		super.handleOpenSignEditor(packet);
 	}
 	
+	// Implemented
+	@Override
+	public void handleBlockEntityData(ClientboundBlockEntityDataPacket packet) {
+		super.handleBlockEntityData(packet);
+	}
+	
 	@Override
 	public void handleAddObjective(ClientboundSetObjectivePacket packet) {
 		
@@ -515,11 +521,6 @@ public class HeadlessPacketListener extends ClientPacketListener {
 	
 	@Override
 	public void handleBlockDestruction(ClientboundBlockDestructionPacket packet) {
-		
-	}
-	
-	@Override
-	public void handleBlockEntityData(ClientboundBlockEntityDataPacket packet) {
 		
 	}
 	
