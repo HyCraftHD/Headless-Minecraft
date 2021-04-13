@@ -17,6 +17,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.multiplayer.ClientPacketListener;
+import net.minecraft.client.multiplayer.MultiPlayerGameMode;
 import net.minecraft.client.particle.ItemPickupParticle;
 import net.minecraft.client.particle.Particle;
 import net.minecraft.client.particle.ParticleEngine;
@@ -55,7 +56,7 @@ abstract class ClientPacketListenerMixin {
 		return new HeadlessRemotePlayer(HeadlessMinecraft.getInstance().getConnectionManager().getLevel(), profile);
 	}
 	
-	@Redirect(method = { "handleSetCarriedItem", "handleMovePlayer", "handleTakeItemEntity", "handleSetEntityPassengersPacket", "handleSetHealth", "handleSetExperience", "handleExplosion", "handleContainerAck", "handleContainerContent", "handleOpenSignEditor", "handleContainerSetData", "handleContainerClose" }, at = @At(value = "FIELD", opcode = Opcodes.GETFIELD, target = "Lnet/minecraft/client/Minecraft;player:Lnet/minecraft/client/player/LocalPlayer;"))
+	@Redirect(method = { "handleSetCarriedItem", "handleMovePlayer", "handleTakeItemEntity", "handleSetEntityPassengersPacket", "handleSetHealth", "handleSetExperience", "handleExplosion", "handleContainerAck", "handleContainerContent", "handleOpenSignEditor", "handleContainerSetData", "handleContainerClose", "handleGameEvent" }, at = @At(value = "FIELD", opcode = Opcodes.GETFIELD, target = "Lnet/minecraft/client/Minecraft;player:Lnet/minecraft/client/player/LocalPlayer;"))
 	private LocalPlayer replaceGetPlayer(Minecraft minecraft) {
 		return HeadlessMinecraft.getInstance().getConnectionManager().getPlayer();
 	}
@@ -111,6 +112,11 @@ abstract class ClientPacketListenerMixin {
 	@Redirect(method = "handleBlockEntityData", at = @At(value = "FIELD", opcode = Opcodes.GETFIELD, target = "Lnet/minecraft/client/Minecraft;screen:Lnet/minecraft/client/gui/screens/Screen;", ordinal = 0))
 	private Screen replaceGetScreen(Minecraft minecraft) {
 		return null;
+	}
+	
+	@Redirect(method = "handleGameEvent", at = @At(value = "FIELD", opcode = Opcodes.GETFIELD, target = "Lnet/minecraft/client/Minecraft;gameMode:Lnet/minecraft/client/multiplayer/MultiPlayerGameMode;"))
+	private MultiPlayerGameMode replaceGetGameMode(Minecraft minecraft) {
+		return HeadlessMinecraft.getInstance().getConnectionManager().getGameMode();
 	}
 	
 }

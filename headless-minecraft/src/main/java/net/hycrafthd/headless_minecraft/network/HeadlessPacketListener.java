@@ -105,6 +105,7 @@ import net.minecraft.network.protocol.game.ClientboundUpdateAttributesPacket;
 import net.minecraft.network.protocol.game.ClientboundUpdateMobEffectPacket;
 import net.minecraft.network.protocol.game.ClientboundUpdateRecipesPacket;
 import net.minecraft.network.protocol.game.ClientboundUpdateTagsPacket;
+import net.minecraft.network.protocol.game.ServerboundClientCommandPacket;
 import net.minecraft.network.protocol.game.ServerboundCustomPayloadPacket;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.stats.StatsCounter;
@@ -529,6 +530,23 @@ public class HeadlessPacketListener extends ClientPacketListener {
 		super.handleBlockDestruction(packet);
 	}
 	
+	// Implemented
+	@Override
+	public void handleGameEvent(ClientboundGameEventPacket packet) {
+		PacketUtils.ensureRunningOnSameThread(packet, this, headlessMinecraft);
+		
+		final ClientboundGameEventPacket.Type type = packet.getEvent();
+		
+		if (type == ClientboundGameEventPacket.WIN_GAME) {
+			getConnection().send(new ServerboundClientCommandPacket(ServerboundClientCommandPacket.Action.PERFORM_RESPAWN));
+			return; // Return to not perform the super stuff (gui stuff)
+		} else if (type == ClientboundGameEventPacket.DEMO_EVENT) {
+			return; // Return to not perform the super stuff (gui stuff)
+		}
+		
+		super.handleGameEvent(packet);
+	}
+	
 	@Override
 	public void handleAddObjective(ClientboundSetObjectivePacket packet) {
 		
@@ -576,11 +594,6 @@ public class HeadlessPacketListener extends ClientPacketListener {
 	
 	@Override
 	public void handleCustomSoundEvent(ClientboundCustomSoundPacket packet) {
-		
-	}
-	
-	@Override
-	public void handleGameEvent(ClientboundGameEventPacket packet) {
 		
 	}
 	
