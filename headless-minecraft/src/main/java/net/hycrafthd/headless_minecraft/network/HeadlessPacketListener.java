@@ -558,9 +558,20 @@ public class HeadlessPacketListener extends ClientPacketListener {
 		super.handleLevelEvent(packet);
 	}
 	
-	// Skipped (advancements is null currently)
+	// Skipped (advancements is no implemented currently)
 	@Override
 	public void handleUpdateAdvancementsPacket(ClientboundUpdateAdvancementsPacket packet) {
+	}
+	
+	// Skipped (advancements is no implemented currently)
+	@Override
+	public void handleSelectAdvancementsTab(ClientboundSelectAdvancementsTabPacket packet) {
+	}
+	
+	// Implemented
+	@Override
+	public void handleCommands(ClientboundCommandsPacket packet) {
+		super.handleCommands(packet);
 	}
 	
 	@Override
@@ -595,11 +606,6 @@ public class HeadlessPacketListener extends ClientPacketListener {
 	
 	@Override
 	public void handleCommandSuggestions(ClientboundCommandSuggestionsPacket packet) {
-		
-	}
-	
-	@Override
-	public void handleCommands(ClientboundCommandsPacket packet) {
 		
 	}
 	
@@ -675,11 +681,6 @@ public class HeadlessPacketListener extends ClientPacketListener {
 	
 	@Override
 	public void handleResourcePack(ClientboundResourcePackPacket packet) {
-		
-	}
-	
-	@Override
-	public void handleSelectAdvancementsTab(ClientboundSelectAdvancementsTabPacket packet) {
 		
 	}
 	
