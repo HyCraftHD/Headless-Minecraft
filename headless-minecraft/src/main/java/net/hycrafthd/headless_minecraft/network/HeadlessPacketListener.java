@@ -116,6 +116,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.animal.horse.AbstractHorse;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.HorseInventoryMenu;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.scores.Scoreboard;
 
@@ -446,6 +447,34 @@ public class HeadlessPacketListener extends ClientPacketListener {
 		player.containerMenu = menu;
 	}
 	
+	// Implemented // TODO handle containers
+	@Override
+	public void handleContainerSetSlot(ClientboundContainerSetSlotPacket packet) {
+		PacketUtils.ensureRunningOnSameThread(packet, this, headlessMinecraft);
+		
+		final HeadlessPlayer player = connectionManager.getPlayer();
+		
+		final int containerId = packet.getContainerId();
+		final int slot = packet.getSlot();
+		final ItemStack stack = packet.getItem();
+		
+		if (containerId == -1) {
+			player.inventory.setCarried(stack);
+		} else if (containerId == -2) {
+			player.inventory.setItem(slot, stack);
+		} else if (containerId == 0 && slot >= 36 && slot < 45) {
+			if (!stack.isEmpty()) {
+				final ItemStack currentStack = player.inventoryMenu.getSlot(slot).getItem();
+				if (currentStack.isEmpty() || currentStack.getCount() < stack.getCount()) {
+					stack.setPopTime(5);
+				}
+			}
+			player.inventoryMenu.setItem(slot, stack);
+		} else if (containerId == player.containerMenu.containerId) {
+			player.containerMenu.setItem(slot, stack);
+		}
+	}
+	
 	@Override
 	public void handleAddObjective(ClientboundSetObjectivePacket packet) {
 		
@@ -518,11 +547,6 @@ public class HeadlessPacketListener extends ClientPacketListener {
 	
 	@Override
 	public void handleContainerSetData(ClientboundContainerSetDataPacket packet) {
-		
-	}
-	
-	@Override
-	public void handleContainerSetSlot(ClientboundContainerSetSlotPacket packet) {
 		
 	}
 	
