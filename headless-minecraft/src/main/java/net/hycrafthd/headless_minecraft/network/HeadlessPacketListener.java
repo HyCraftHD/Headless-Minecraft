@@ -547,6 +547,11 @@ public class HeadlessPacketListener extends ClientPacketListener {
 		super.handleGameEvent(packet);
 	}
 	
+	// Skipped
+	@Override
+	public void handleMapItemData(ClientboundMapItemDataPacket packet) {
+	}
+	
 	@Override
 	public void handleAddObjective(ClientboundSetObjectivePacket packet) {
 		
@@ -614,11 +619,6 @@ public class HeadlessPacketListener extends ClientPacketListener {
 	
 	@Override
 	public void handleLookAt(ClientboundPlayerLookAtPacket packet) {
-		
-	}
-	
-	@Override
-	public void handleMapItemData(ClientboundMapItemDataPacket packet) {
 		
 	}
 	
