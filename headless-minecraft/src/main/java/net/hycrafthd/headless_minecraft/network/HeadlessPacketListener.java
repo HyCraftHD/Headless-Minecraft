@@ -487,6 +487,12 @@ public class HeadlessPacketListener extends ClientPacketListener {
 		super.handleContainerContent(packet);
 	}
 	
+	// Implemented
+	@Override
+	public void handleOpenSignEditor(ClientboundOpenSignEditorPacket packet) {
+		super.handleOpenSignEditor(packet);
+	}
+	
 	@Override
 	public void handleAddObjective(ClientboundSetObjectivePacket packet) {
 		
@@ -604,11 +610,6 @@ public class HeadlessPacketListener extends ClientPacketListener {
 	
 	@Override
 	public void handleOpenBook(ClientboundOpenBookPacket packet) {
-		
-	}
-	
-	@Override
-	public void handleOpenSignEditor(ClientboundOpenSignEditorPacket packet) {
 		
 	}
 	
