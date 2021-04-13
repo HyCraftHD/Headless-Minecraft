@@ -594,6 +594,12 @@ public class HeadlessPacketListener extends ClientPacketListener {
 		// Skipped client recipe book
 	}
 	
+	// Implemented
+	@Override
+	public void handleLookAt(ClientboundPlayerLookAtPacket packet) {
+		super.handleLookAt(packet);
+	}
+	
 	@Override
 	public void handleAddObjective(ClientboundSetObjectivePacket packet) {
 		
@@ -641,11 +647,6 @@ public class HeadlessPacketListener extends ClientPacketListener {
 	
 	@Override
 	public void handleLightUpdatePacked(ClientboundLightUpdatePacket packet) {
-		
-	}
-	
-	@Override
-	public void handleLookAt(ClientboundPlayerLookAtPacket packet) {
 		
 	}
 	

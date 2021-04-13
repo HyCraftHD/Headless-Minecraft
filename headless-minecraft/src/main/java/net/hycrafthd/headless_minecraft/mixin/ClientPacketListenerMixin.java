@@ -56,7 +56,7 @@ abstract class ClientPacketListenerMixin {
 		return new HeadlessRemotePlayer(HeadlessMinecraft.getInstance().getConnectionManager().getLevel(), profile);
 	}
 	
-	@Redirect(method = { "handleSetCarriedItem", "handleMovePlayer", "handleTakeItemEntity", "handleSetEntityPassengersPacket", "handleSetHealth", "handleSetExperience", "handleExplosion", "handleContainerAck", "handleContainerContent", "handleOpenSignEditor", "handleContainerSetData", "handleContainerClose", "handleGameEvent" }, at = @At(value = "FIELD", opcode = Opcodes.GETFIELD, target = "Lnet/minecraft/client/Minecraft;player:Lnet/minecraft/client/player/LocalPlayer;"))
+	@Redirect(method = { "handleSetCarriedItem", "handleMovePlayer", "handleTakeItemEntity", "handleSetEntityPassengersPacket", "handleSetHealth", "handleSetExperience", "handleExplosion", "handleContainerAck", "handleContainerContent", "handleOpenSignEditor", "handleContainerSetData", "handleContainerClose", "handleGameEvent", "handleLookAt" }, at = @At(value = "FIELD", opcode = Opcodes.GETFIELD, target = "Lnet/minecraft/client/Minecraft;player:Lnet/minecraft/client/player/LocalPlayer;"))
 	private LocalPlayer replaceGetPlayer(Minecraft minecraft) {
 		return HeadlessMinecraft.getInstance().getConnectionManager().getPlayer();
 	}
