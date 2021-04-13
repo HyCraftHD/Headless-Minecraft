@@ -475,6 +475,18 @@ public class HeadlessPacketListener extends ClientPacketListener {
 		}
 	}
 	
+	// Implemented
+	@Override
+	public void handleContainerAck(ClientboundContainerAckPacket packet) {
+		super.handleContainerAck(packet);
+	}
+	
+	// Implemented
+	@Override
+	public void handleContainerContent(ClientboundContainerSetContentPacket packet) {
+		super.handleContainerContent(packet);
+	}
+	
 	@Override
 	public void handleAddObjective(ClientboundSetObjectivePacket packet) {
 		
@@ -531,17 +543,7 @@ public class HeadlessPacketListener extends ClientPacketListener {
 	}
 	
 	@Override
-	public void handleContainerAck(ClientboundContainerAckPacket packet) {
-		
-	}
-	
-	@Override
 	public void handleContainerClose(ClientboundContainerClosePacket packet) {
-		
-	}
-	
-	@Override
-	public void handleContainerContent(ClientboundContainerSetContentPacket packet) {
 		
 	}
 	
