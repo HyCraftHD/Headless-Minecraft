@@ -12,6 +12,7 @@ import net.minecraft.client.multiplayer.ClientPacketListener;
 import net.minecraft.client.multiplayer.ClientSuggestionProvider;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.world.item.crafting.RecipeManager;
 import net.minecraft.world.level.Level;
 
 @Mixin(ClientPacketListener.class)
@@ -26,6 +27,9 @@ public interface ClientPacketListenerAccessorMixin {
 	
 	@Accessor("level")
 	ClientLevel getLevel();
+	
+	@Accessor("recipeManager")
+	RecipeManager getRecipeManager();
 	
 	// Setter
 	

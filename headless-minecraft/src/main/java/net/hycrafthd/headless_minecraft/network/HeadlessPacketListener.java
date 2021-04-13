@@ -585,6 +585,15 @@ public class HeadlessPacketListener extends ClientPacketListener {
 	public void handleCommandSuggestions(ClientboundCommandSuggestionsPacket packet) {
 	}
 	
+	// Implemented
+	@Override
+	public void handleUpdateRecipes(ClientboundUpdateRecipesPacket packet) {
+		PacketUtils.ensureRunningOnSameThread(packet, this, headlessMinecraft);
+		
+		((ClientPacketListenerAccessorMixin) this).getRecipeManager().replaceRecipes(packet.getRecipes());
+		// Skipped client recipe book
+	}
+	
 	@Override
 	public void handleAddObjective(ClientboundSetObjectivePacket packet) {
 		
@@ -757,11 +766,6 @@ public class HeadlessPacketListener extends ClientPacketListener {
 	
 	@Override
 	public void handleUpdateMobEffect(ClientboundUpdateMobEffectPacket packet) {
-		
-	}
-	
-	@Override
-	public void handleUpdateRecipes(ClientboundUpdateRecipesPacket packet) {
 		
 	}
 	
