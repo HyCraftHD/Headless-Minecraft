@@ -580,6 +580,11 @@ public class HeadlessPacketListener extends ClientPacketListener {
 		// Do nothing, as we do not have sounds
 	}
 	
+	// Skipped (suggestion provider is currently not implemented)
+	@Override
+	public void handleCommandSuggestions(ClientboundCommandSuggestionsPacket packet) {
+	}
+	
 	@Override
 	public void handleAddObjective(ClientboundSetObjectivePacket packet) {
 		
@@ -607,11 +612,6 @@ public class HeadlessPacketListener extends ClientPacketListener {
 	
 	@Override
 	public void handleChangeDifficulty(ClientboundChangeDifficultyPacket packet) {
-		
-	}
-	
-	@Override
-	public void handleCommandSuggestions(ClientboundCommandSuggestionsPacket packet) {
 		
 	}
 	
