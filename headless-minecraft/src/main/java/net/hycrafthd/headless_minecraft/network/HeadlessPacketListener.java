@@ -505,6 +505,12 @@ public class HeadlessPacketListener extends ClientPacketListener {
 		super.handleContainerSetData(packet);
 	}
 	
+	// Implemented
+	@Override
+	public void handleSetEquipment(ClientboundSetEquipmentPacket packet) {
+		super.handleSetEquipment(packet);
+	}
+	
 	@Override
 	public void handleAddObjective(ClientboundSetObjectivePacket packet) {
 		
@@ -677,11 +683,6 @@ public class HeadlessPacketListener extends ClientPacketListener {
 	
 	@Override
 	public void handleSetDisplayObjective(ClientboundSetDisplayObjectivePacket packet) {
-		
-	}
-	
-	@Override
-	public void handleSetEquipment(ClientboundSetEquipmentPacket packet) {
 		
 	}
 	
