@@ -499,6 +499,12 @@ public class HeadlessPacketListener extends ClientPacketListener {
 		super.handleBlockEntityData(packet);
 	}
 	
+	// Implemented
+	@Override
+	public void handleContainerSetData(ClientboundContainerSetDataPacket packet) {
+		super.handleContainerSetData(packet);
+	}
+	
 	@Override
 	public void handleAddObjective(ClientboundSetObjectivePacket packet) {
 		
@@ -551,11 +557,6 @@ public class HeadlessPacketListener extends ClientPacketListener {
 	
 	@Override
 	public void handleContainerClose(ClientboundContainerClosePacket packet) {
-		
-	}
-	
-	@Override
-	public void handleContainerSetData(ClientboundContainerSetDataPacket packet) {
 		
 	}
 	
