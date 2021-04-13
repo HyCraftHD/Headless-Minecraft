@@ -558,6 +558,11 @@ public class HeadlessPacketListener extends ClientPacketListener {
 		super.handleLevelEvent(packet);
 	}
 	
+	// Skipped (advancements is null currently)
+	@Override
+	public void handleUpdateAdvancementsPacket(ClientboundUpdateAdvancementsPacket packet) {
+	}
+	
 	@Override
 	public void handleAddObjective(ClientboundSetObjectivePacket packet) {
 		
@@ -740,11 +745,6 @@ public class HeadlessPacketListener extends ClientPacketListener {
 	
 	@Override
 	public void handleTagQueryPacket(ClientboundTagQueryPacket packet) {
-		
-	}
-	
-	@Override
-	public void handleUpdateAdvancementsPacket(ClientboundUpdateAdvancementsPacket packet) {
 		
 	}
 	
