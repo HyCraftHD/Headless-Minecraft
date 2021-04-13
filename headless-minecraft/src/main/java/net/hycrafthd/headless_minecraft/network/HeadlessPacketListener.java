@@ -552,6 +552,12 @@ public class HeadlessPacketListener extends ClientPacketListener {
 	public void handleMapItemData(ClientboundMapItemDataPacket packet) {
 	}
 	
+	// Implemented
+	@Override
+	public void handleLevelEvent(ClientboundLevelEventPacket packet) {
+		super.handleLevelEvent(packet);
+	}
+	
 	@Override
 	public void handleAddObjective(ClientboundSetObjectivePacket packet) {
 		
@@ -604,11 +610,6 @@ public class HeadlessPacketListener extends ClientPacketListener {
 	
 	@Override
 	public void handleItemCooldown(ClientboundCooldownPacket packet) {
-		
-	}
-	
-	@Override
-	public void handleLevelEvent(ClientboundLevelEventPacket packet) {
 		
 	}
 	
