@@ -647,6 +647,12 @@ public class HeadlessPacketListener extends ClientPacketListener {
 		}
 	}
 	
+	// Implemented
+	@Override
+	public void handleChangeDifficulty(ClientboundChangeDifficultyPacket packet) {
+		super.handleChangeDifficulty(packet);
+	}
+	
 	@Override
 	public void handleAddObjective(ClientboundSetObjectivePacket packet) {
 		
@@ -659,11 +665,6 @@ public class HeadlessPacketListener extends ClientPacketListener {
 	
 	@Override
 	public void handleBossUpdate(ClientboundBossEventPacket packet) {
-		
-	}
-	
-	@Override
-	public void handleChangeDifficulty(ClientboundChangeDifficultyPacket packet) {
 		
 	}
 	
