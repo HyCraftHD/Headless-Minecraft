@@ -606,6 +606,12 @@ public class HeadlessPacketListener extends ClientPacketListener {
 		super.handleTagQueryPacket(packet);
 	}
 	
+	// Implemented
+	@Override
+	public void handleAwardStats(ClientboundAwardStatsPacket packet) {
+		super.handleAwardStats(packet);
+	}
+	
 	@Override
 	public void handleAddObjective(ClientboundSetObjectivePacket packet) {
 		
@@ -613,11 +619,6 @@ public class HeadlessPacketListener extends ClientPacketListener {
 	
 	@Override
 	public void handleAddOrRemoveRecipes(ClientboundRecipePacket packet) {
-		
-	}
-	
-	@Override
-	public void handleAwardStats(ClientboundAwardStatsPacket packet) {
 		
 	}
 	
