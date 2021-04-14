@@ -658,6 +658,12 @@ public class HeadlessPacketListener extends ClientPacketListener {
 	public void handleSetCamera(ClientboundSetCameraPacket packet) {
 	}
 	
+	// Implemented
+	@Override
+	public void handleSetBorder(ClientboundSetBorderPacket packet) {
+		super.handleSetBorder(packet);
+	}
+	
 	@Override
 	public void handleAddObjective(ClientboundSetObjectivePacket packet) {
 		
@@ -735,11 +741,6 @@ public class HeadlessPacketListener extends ClientPacketListener {
 	
 	@Override
 	public void handleResourcePack(ClientboundResourcePackPacket packet) {
-		
-	}
-	
-	@Override
-	public void handleSetBorder(ClientboundSetBorderPacket packet) {
 		
 	}
 	
