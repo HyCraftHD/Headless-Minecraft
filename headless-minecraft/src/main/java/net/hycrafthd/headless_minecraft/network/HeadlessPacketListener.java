@@ -669,6 +669,11 @@ public class HeadlessPacketListener extends ClientPacketListener {
 	public void handleSetTitles(ClientboundSetTitlesPacket packet) {
 	}
 	
+	// Skipped
+	@Override
+	public void handleTabListCustomisation(ClientboundTabListPacket packet) {
+	}
+	
 	@Override
 	public void handleAddObjective(ClientboundSetObjectivePacket packet) {
 		
@@ -781,11 +786,6 @@ public class HeadlessPacketListener extends ClientPacketListener {
 	
 	@Override
 	public void handleSoundEvent(ClientboundSoundPacket packet) {
-		
-	}
-	
-	@Override
-	public void handleTabListCustomisation(ClientboundTabListPacket packet) {
 		
 	}
 	
