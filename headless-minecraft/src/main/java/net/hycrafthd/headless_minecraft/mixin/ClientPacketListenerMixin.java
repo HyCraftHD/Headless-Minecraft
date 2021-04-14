@@ -4,7 +4,9 @@ import org.objectweb.asm.Opcodes;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.At.Shift;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.Constant;
+import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyConstant;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.Redirect;
@@ -128,6 +130,11 @@ abstract class ClientPacketListenerMixin {
 	
 	@Redirect(method = "lambda$handleAddOrRemoveRecipes$3", at = @At(value = "INVOKE", opcode = Opcodes.INVOKESTATIC, target = "Lnet/minecraft/client/gui/components/toasts/RecipeToast;addOrUpdate(Lnet/minecraft/client/gui/components/toasts/ToastComponent;Lnet/minecraft/world/item/crafting/Recipe;)V"))
 	private void replaceAddOrUpdate(ToastComponent component, Recipe<?> recipe) {
+	}
+	
+	@Inject(method = "handleUpdateTags", cancellable = true, at = @At(value = "INVOKE", opcode = Opcodes.INVOKEVIRTUAL, target = "Lnet/minecraft/client/Minecraft;getSearchTree(Lnet/minecraft/client/searchtree/SearchRegistry$Key;)Lnet/minecraft/client/searchtree/MutableSearchTree;"))
+	private void removeGetSearchTree(CallbackInfo callback) {
+		callback.cancel();
 	}
 	
 }

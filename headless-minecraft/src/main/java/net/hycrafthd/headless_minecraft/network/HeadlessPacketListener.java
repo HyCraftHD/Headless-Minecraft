@@ -624,6 +624,13 @@ public class HeadlessPacketListener extends ClientPacketListener {
 		super.handleUpdateMobEffect(packet);
 	}
 	
+	// Implemented
+	@Override
+	public void handleUpdateTags(ClientboundUpdateTagsPacket packet) {
+		super.handleUpdateTags(packet);
+		// Remove with mixin the search tree update
+	}
+	
 	@Override
 	public void handleAddObjective(ClientboundSetObjectivePacket packet) {
 		
@@ -771,11 +778,6 @@ public class HeadlessPacketListener extends ClientPacketListener {
 	
 	@Override
 	public void handleUpdateAttributes(ClientboundUpdateAttributesPacket packet) {
-		
-	}
-	
-	@Override
-	public void handleUpdateTags(ClientboundUpdateTagsPacket packet) {
 		
 	}
 	
