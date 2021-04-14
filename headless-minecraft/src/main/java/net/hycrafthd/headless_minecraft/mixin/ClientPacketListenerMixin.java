@@ -91,12 +91,12 @@ abstract class ClientPacketListenerMixin {
 	
 	@ModifyConstant(method = "handleAnimate", constant = @Constant(intValue = 4, ordinal = 0))
 	public int removeAnimation4(int value) {
-		return 555555; // Must not be blow 5
+		return 555555; // Must not be below 5
 	}
 	
 	@ModifyConstant(method = "handleAnimate", constant = @Constant(intValue = 5, ordinal = 0))
 	public int removeAnimation5(int value) {
-		return 555555; // Must not be blow 5
+		return 555555; // Must not be below 5
 	}
 	
 	@ModifyConstant(method = "handleAddMob", constant = @Constant(classValue = Bee.class, ordinal = 0))
