@@ -111,7 +111,7 @@ abstract class ClientPacketListenerMixin {
 		return null;
 	}
 	
-	@Redirect(method = { "handleBlockEntityData", "handleAwardStats", "handleAddOrRemoveRecipes" }, at = @At(value = "FIELD", opcode = Opcodes.GETFIELD, target = "Lnet/minecraft/client/Minecraft;screen:Lnet/minecraft/client/gui/screens/Screen;", ordinal = 0))
+	@Redirect(method = { "handleBlockEntityData", "handleAwardStats", "handleAddOrRemoveRecipes" }, at = @At(value = "FIELD", opcode = Opcodes.GETFIELD, target = "Lnet/minecraft/client/Minecraft;screen:Lnet/minecraft/client/gui/screens/Screen;"))
 	private Screen replaceGetScreen(Minecraft minecraft) {
 		return null;
 	}
