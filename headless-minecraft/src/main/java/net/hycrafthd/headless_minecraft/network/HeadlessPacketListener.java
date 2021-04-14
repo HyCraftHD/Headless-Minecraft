@@ -674,6 +674,12 @@ public class HeadlessPacketListener extends ClientPacketListener {
 	public void handleTabListCustomisation(ClientboundTabListPacket packet) {
 	}
 	
+	// Implemented
+	@Override
+	public void handleRemoveMobEffect(ClientboundRemoveMobEffectPacket packet) {
+		super.handleRemoveMobEffect(packet);
+	}
+	
 	@Override
 	public void handleAddObjective(ClientboundSetObjectivePacket packet) {
 		
@@ -741,11 +747,6 @@ public class HeadlessPacketListener extends ClientPacketListener {
 	
 	@Override
 	public void handlePlayerInfo(ClientboundPlayerInfoPacket packet) {
-		
-	}
-	
-	@Override
-	public void handleRemoveMobEffect(ClientboundRemoveMobEffectPacket packet) {
 		
 	}
 	
