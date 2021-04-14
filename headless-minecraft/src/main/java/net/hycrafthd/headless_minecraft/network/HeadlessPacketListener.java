@@ -653,6 +653,11 @@ public class HeadlessPacketListener extends ClientPacketListener {
 		super.handleChangeDifficulty(packet);
 	}
 	
+	// Skipped
+	@Override
+	public void handleSetCamera(ClientboundSetCameraPacket packet) {
+	}
+	
 	@Override
 	public void handleAddObjective(ClientboundSetObjectivePacket packet) {
 		
@@ -735,11 +740,6 @@ public class HeadlessPacketListener extends ClientPacketListener {
 	
 	@Override
 	public void handleSetBorder(ClientboundSetBorderPacket packet) {
-		
-	}
-	
-	@Override
-	public void handleSetCamera(ClientboundSetCameraPacket packet) {
 		
 	}
 	
