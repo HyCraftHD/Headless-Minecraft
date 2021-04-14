@@ -618,6 +618,12 @@ public class HeadlessPacketListener extends ClientPacketListener {
 		super.handleAddOrRemoveRecipes(packet);
 	}
 	
+	// Implemented
+	@Override
+	public void handleUpdateMobEffect(ClientboundUpdateMobEffectPacket packet) {
+		super.handleUpdateMobEffect(packet);
+	}
+	
 	@Override
 	public void handleAddObjective(ClientboundSetObjectivePacket packet) {
 		
@@ -765,11 +771,6 @@ public class HeadlessPacketListener extends ClientPacketListener {
 	
 	@Override
 	public void handleUpdateAttributes(ClientboundUpdateAttributesPacket packet) {
-		
-	}
-	
-	@Override
-	public void handleUpdateMobEffect(ClientboundUpdateMobEffectPacket packet) {
 		
 	}
 	
