@@ -14,6 +14,7 @@ import com.mojang.authlib.GameProfile;
 import net.hycrafthd.headless_minecraft.HeadlessMinecraft;
 import net.hycrafthd.headless_minecraft.impl.HeadlessRemotePlayer;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.components.toasts.ToastComponent;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.multiplayer.ClientPacketListener;
@@ -32,6 +33,7 @@ import net.minecraft.util.thread.BlockableEventLoop;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.animal.Bee;
 import net.minecraft.world.entity.vehicle.AbstractMinecart;
+import net.minecraft.world.item.crafting.Recipe;
 
 @Mixin(ClientPacketListener.class)
 abstract class ClientPacketListenerMixin {
@@ -56,7 +58,7 @@ abstract class ClientPacketListenerMixin {
 		return new HeadlessRemotePlayer(HeadlessMinecraft.getInstance().getConnectionManager().getLevel(), profile);
 	}
 	
-	@Redirect(method = { "handleSetCarriedItem", "handleMovePlayer", "handleTakeItemEntity", "handleSetEntityPassengersPacket", "handleSetHealth", "handleSetExperience", "handleExplosion", "handleContainerAck", "handleContainerContent", "handleOpenSignEditor", "handleContainerSetData", "handleContainerClose", "handleGameEvent", "handleLookAt", "handleAwardStats" }, at = @At(value = "FIELD", opcode = Opcodes.GETFIELD, target = "Lnet/minecraft/client/Minecraft;player:Lnet/minecraft/client/player/LocalPlayer;"))
+	@Redirect(method = { "handleSetCarriedItem", "handleMovePlayer", "handleTakeItemEntity", "handleSetEntityPassengersPacket", "handleSetHealth", "handleSetExperience", "handleExplosion", "handleContainerAck", "handleContainerContent", "handleOpenSignEditor", "handleContainerSetData", "handleContainerClose", "handleGameEvent", "handleLookAt", "handleAwardStats", "handleAddOrRemoveRecipes" }, at = @At(value = "FIELD", opcode = Opcodes.GETFIELD, target = "Lnet/minecraft/client/Minecraft;player:Lnet/minecraft/client/player/LocalPlayer;"))
 	private LocalPlayer replaceGetPlayer(Minecraft minecraft) {
 		return HeadlessMinecraft.getInstance().getConnectionManager().getPlayer();
 	}
@@ -109,7 +111,7 @@ abstract class ClientPacketListenerMixin {
 		return null;
 	}
 	
-	@Redirect(method = { "handleBlockEntityData", "handleAwardStats" }, at = @At(value = "FIELD", opcode = Opcodes.GETFIELD, target = "Lnet/minecraft/client/Minecraft;screen:Lnet/minecraft/client/gui/screens/Screen;", ordinal = 0))
+	@Redirect(method = { "handleBlockEntityData", "handleAwardStats", "handleAddOrRemoveRecipes" }, at = @At(value = "FIELD", opcode = Opcodes.GETFIELD, target = "Lnet/minecraft/client/Minecraft;screen:Lnet/minecraft/client/gui/screens/Screen;", ordinal = 0))
 	private Screen replaceGetScreen(Minecraft minecraft) {
 		return null;
 	}
@@ -117,6 +119,15 @@ abstract class ClientPacketListenerMixin {
 	@Redirect(method = "handleGameEvent", at = @At(value = "FIELD", opcode = Opcodes.GETFIELD, target = "Lnet/minecraft/client/Minecraft;gameMode:Lnet/minecraft/client/multiplayer/MultiPlayerGameMode;"))
 	private MultiPlayerGameMode replaceGetGameMode(Minecraft minecraft) {
 		return HeadlessMinecraft.getInstance().getConnectionManager().getGameMode();
+	}
+	
+	@Redirect(method = "lambda$handleAddOrRemoveRecipes$3", at = @At(value = "INVOKE", opcode = Opcodes.INVOKEVIRTUAL, target = "Lnet/minecraft/client/Minecraft;getToasts()Lnet/minecraft/client/gui/components/toasts/ToastComponent;"))
+	private ToastComponent replaceGetToasts(Minecraft minecraft) {
+		return null;
+	}
+	
+	@Redirect(method = "lambda$handleAddOrRemoveRecipes$3", at = @At(value = "INVOKE", opcode = Opcodes.INVOKESTATIC, target = "Lnet/minecraft/client/gui/components/toasts/RecipeToast;addOrUpdate(Lnet/minecraft/client/gui/components/toasts/ToastComponent;Lnet/minecraft/world/item/crafting/Recipe;)V"))
+	private void replaceAddOrUpdate(ToastComponent component, Recipe<?> recipe) {
 	}
 	
 }
