@@ -600,6 +600,12 @@ public class HeadlessPacketListener extends ClientPacketListener {
 		super.handleLookAt(packet);
 	}
 	
+	// Implemented
+	@Override
+	public void handleTagQueryPacket(ClientboundTagQueryPacket packet) {
+		super.handleTagQueryPacket(packet);
+	}
+	
 	@Override
 	public void handleAddObjective(ClientboundSetObjectivePacket packet) {
 		
@@ -752,11 +758,6 @@ public class HeadlessPacketListener extends ClientPacketListener {
 	
 	@Override
 	public void handleTabListCustomisation(ClientboundTabListPacket packet) {
-		
-	}
-	
-	@Override
-	public void handleTagQueryPacket(ClientboundTagQueryPacket packet) {
 		
 	}
 	
