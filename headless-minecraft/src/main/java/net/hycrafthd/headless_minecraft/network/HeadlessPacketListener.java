@@ -10,6 +10,7 @@ import net.hycrafthd.headless_minecraft.impl.HeadlessMultiPlayerGameMode;
 import net.hycrafthd.headless_minecraft.impl.HeadlessPlayer;
 import net.hycrafthd.headless_minecraft.mixin.accessor.ClientPacketListenerAccessorMixin;
 import net.minecraft.client.ClientRecipeBook;
+import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.multiplayer.ClientLevel.ClientLevelData;
 import net.minecraft.client.multiplayer.ClientPacketListener;
 import net.minecraft.network.Connection;
@@ -631,6 +632,21 @@ public class HeadlessPacketListener extends ClientPacketListener {
 		// Remove with mixin the search tree update
 	}
 	
+	// Implemented
+	@Override
+	public void handlePlayerCombat(ClientboundPlayerCombatPacket packet) {
+		PacketUtils.ensureRunningOnSameThread(packet, this, headlessMinecraft);
+		
+		if (packet.event == ClientboundPlayerCombatPacket.Event.ENTITY_DIED) {
+			final ClientLevel level = ((ClientPacketListenerAccessorMixin) this).getLevel();
+			final HeadlessPlayer player = connectionManager.getPlayer();
+			
+			if (level.getEntity(packet.playerId) == player) {
+				player.respawn();
+			}
+		}
+	}
+	
 	@Override
 	public void handleAddObjective(ClientboundSetObjectivePacket packet) {
 		
@@ -698,11 +714,6 @@ public class HeadlessPacketListener extends ClientPacketListener {
 	
 	@Override
 	public void handlePlayerAbilities(ClientboundPlayerAbilitiesPacket packet) {
-		
-	}
-	
-	@Override
-	public void handlePlayerCombat(ClientboundPlayerCombatPacket packet) {
 		
 	}
 	
