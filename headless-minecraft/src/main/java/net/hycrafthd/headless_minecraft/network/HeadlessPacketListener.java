@@ -664,6 +664,11 @@ public class HeadlessPacketListener extends ClientPacketListener {
 		super.handleSetBorder(packet);
 	}
 	
+	// Skipped (probably chat output?)
+	@Override
+	public void handleSetTitles(ClientboundSetTitlesPacket packet) {
+	}
+	
 	@Override
 	public void handleAddObjective(ClientboundSetObjectivePacket packet) {
 		
@@ -766,11 +771,6 @@ public class HeadlessPacketListener extends ClientPacketListener {
 	
 	@Override
 	public void handleSetScore(ClientboundSetScorePacket packet) {
-		
-	}
-	
-	@Override
-	public void handleSetTitles(ClientboundSetTitlesPacket packet) {
 		
 	}
 	
