@@ -760,9 +760,10 @@ public class HeadlessPacketListener extends ClientPacketListener {
 		}
 	}
 	
+	// Implemented
 	@Override
 	public void handleAddObjective(ClientboundSetObjectivePacket packet) {
-		
+		super.handleAddObjective(packet);
 	}
 	
 	@Override
