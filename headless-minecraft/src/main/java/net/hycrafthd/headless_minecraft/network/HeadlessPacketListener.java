@@ -718,6 +718,12 @@ public class HeadlessPacketListener extends ClientPacketListener {
 		getConnection().send(new ServerboundResourcePackPacket(ServerboundResourcePackPacket.Action.DECLINED));
 	}
 	
+	// Implemented
+	@Override
+	public void handleBossUpdate(ClientboundBossEventPacket packet) {
+		// Ignore boss bar
+	}
+	
 	@Override
 	public void handleAddObjective(ClientboundSetObjectivePacket packet) {
 		
@@ -725,11 +731,6 @@ public class HeadlessPacketListener extends ClientPacketListener {
 	
 	@Override
 	public void handleBlockBreakAck(ClientboundBlockBreakAckPacket packet) {
-		
-	}
-	
-	@Override
-	public void handleBossUpdate(ClientboundBossEventPacket packet) {
 		
 	}
 	
