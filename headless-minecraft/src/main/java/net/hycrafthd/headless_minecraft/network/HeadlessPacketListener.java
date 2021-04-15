@@ -796,6 +796,12 @@ public class HeadlessPacketListener extends ClientPacketListener {
 		super.handleUpdateAttributes(packet);
 	}
 	
+	// Implemented
+	@Override
+	public void handlePlaceRecipe(ClientboundPlaceGhostRecipePacket packet) {
+		// Do nothing, we will not use the recipe book for now
+	}
+	
 	@Override
 	public void handleBlockBreakAck(ClientboundBlockBreakAckPacket packet) {
 		
@@ -808,11 +814,6 @@ public class HeadlessPacketListener extends ClientPacketListener {
 	
 	@Override
 	public void handleMerchantOffers(ClientboundMerchantOffersPacket packet) {
-		
-	}
-	
-	@Override
-	public void handlePlaceRecipe(ClientboundPlaceGhostRecipePacket packet) {
 		
 	}
 	
