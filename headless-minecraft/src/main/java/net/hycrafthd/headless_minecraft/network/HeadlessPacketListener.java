@@ -784,6 +784,12 @@ public class HeadlessPacketListener extends ClientPacketListener {
 		super.handleSetPlayerTeamPacket(packet);
 	}
 	
+	// Implemented
+	@Override
+	public void handleParticleEvent(ClientboundLevelParticlesPacket packet) {
+		super.handleParticleEvent(packet);
+	}
+	
 	@Override
 	public void handleBlockBreakAck(ClientboundBlockBreakAckPacket packet) {
 		
@@ -796,11 +802,6 @@ public class HeadlessPacketListener extends ClientPacketListener {
 	
 	@Override
 	public void handleMerchantOffers(ClientboundMerchantOffersPacket packet) {
-		
-	}
-	
-	@Override
-	public void handleParticleEvent(ClientboundLevelParticlesPacket packet) {
 		
 	}
 	
