@@ -814,6 +814,12 @@ public class HeadlessPacketListener extends ClientPacketListener {
 		super.handleMerchantOffers(packet);
 	}
 	
+	// Implemented
+	@Override
+	public void handleSetChunkCacheRadius(ClientboundSetChunkCacheRadiusPacket packet) {
+		super.handleSetChunkCacheRadius(packet);
+	}
+	
 	@Override
 	public void handleBlockBreakAck(ClientboundBlockBreakAckPacket packet) {
 		
@@ -821,11 +827,6 @@ public class HeadlessPacketListener extends ClientPacketListener {
 	
 	@Override
 	public void handleSetChunkCacheCenter(ClientboundSetChunkCacheCenterPacket packet) {
-		
-	}
-	
-	@Override
-	public void handleSetChunkCacheRadius(ClientboundSetChunkCacheRadiusPacket packet) {
 		
 	}
 	
