@@ -772,6 +772,12 @@ public class HeadlessPacketListener extends ClientPacketListener {
 		super.handleSetScore(packet);
 	}
 	
+	// Implemented
+	@Override
+	public void handleSetDisplayObjective(ClientboundSetDisplayObjectivePacket packet) {
+		super.handleSetDisplayObjective(packet);
+	}
+	
 	@Override
 	public void handleBlockBreakAck(ClientboundBlockBreakAckPacket packet) {
 		
@@ -804,11 +810,6 @@ public class HeadlessPacketListener extends ClientPacketListener {
 	
 	@Override
 	public void handleSetChunkCacheRadius(ClientboundSetChunkCacheRadiusPacket packet) {
-		
-	}
-	
-	@Override
-	public void handleSetDisplayObjective(ClientboundSetDisplayObjectivePacket packet) {
 		
 	}
 	
