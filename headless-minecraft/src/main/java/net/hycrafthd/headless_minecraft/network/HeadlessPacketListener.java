@@ -741,6 +741,25 @@ public class HeadlessPacketListener extends ClientPacketListener {
 	public void handleOpenBook(ClientboundOpenBookPacket packet) {
 	}
 	
+	// Implemented
+	@Override
+	public void handleCustomPayload(ClientboundCustomPayloadPacket packet) {
+		PacketUtils.ensureRunningOnSameThread(packet, this, headlessMinecraft);
+		
+		FriendlyByteBuf buffer = null;
+		
+		try {
+			buffer = packet.getData();
+			if (ClientboundCustomPayloadPacket.BRAND.equals(packet.getIdentifier())) {
+				connectionManager.getPlayer().setServerBrand(buffer.readUtf(32767));
+			}
+		} finally {
+			if (buffer != null) {
+				buffer.release();
+			}
+		}
+	}
+	
 	@Override
 	public void handleAddObjective(ClientboundSetObjectivePacket packet) {
 		
@@ -748,11 +767,6 @@ public class HeadlessPacketListener extends ClientPacketListener {
 	
 	@Override
 	public void handleBlockBreakAck(ClientboundBlockBreakAckPacket packet) {
-		
-	}
-	
-	@Override
-	public void handleCustomPayload(ClientboundCustomPayloadPacket packet) {
 		
 	}
 	
