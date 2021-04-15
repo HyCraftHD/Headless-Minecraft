@@ -680,6 +680,12 @@ public class HeadlessPacketListener extends ClientPacketListener {
 		super.handleRemoveMobEffect(packet);
 	}
 	
+	// Implemented
+	@Override
+	public void handlePlayerInfo(ClientboundPlayerInfoPacket packet) {
+		super.handlePlayerInfo(packet);
+	}
+	
 	@Override
 	public void handleAddObjective(ClientboundSetObjectivePacket packet) {
 		
@@ -742,11 +748,6 @@ public class HeadlessPacketListener extends ClientPacketListener {
 	
 	@Override
 	public void handlePlayerAbilities(ClientboundPlayerAbilitiesPacket packet) {
-		
-	}
-	
-	@Override
-	public void handlePlayerInfo(ClientboundPlayerInfoPacket packet) {
 		
 	}
 	

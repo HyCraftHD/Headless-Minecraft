@@ -130,6 +130,10 @@ public class HeadlessMinecraft extends ReentrantBlockableEventLoop<Runnable> {
 		return sessionService;
 	}
 	
+	public HeadlessPlayerSocialManager getSocialManager() {
+		return socialManager;
+	}
+	
 	public ConnectionManager getConnectionManager() {
 		return connectionManager;
 	}

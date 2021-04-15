@@ -18,6 +18,7 @@ import net.hycrafthd.headless_minecraft.impl.HeadlessRemotePlayer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.toasts.ToastComponent;
 import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.gui.screens.social.PlayerSocialManager;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.multiplayer.ClientPacketListener;
 import net.minecraft.client.multiplayer.MultiPlayerGameMode;
@@ -135,6 +136,11 @@ abstract class ClientPacketListenerMixin {
 	@Inject(method = "handleUpdateTags", cancellable = true, at = @At(value = "INVOKE", opcode = Opcodes.INVOKEVIRTUAL, target = "Lnet/minecraft/client/Minecraft;getSearchTree(Lnet/minecraft/client/searchtree/SearchRegistry$Key;)Lnet/minecraft/client/searchtree/MutableSearchTree;"))
 	private void removeGetSearchTree(CallbackInfo callback) {
 		callback.cancel();
+	}
+	
+	@Redirect(method = "handlePlayerInfo", at = @At(value = "INVOKE", opcode = Opcodes.INVOKEVIRTUAL, target = "Lnet/minecraft/client/Minecraft;getPlayerSocialManager()Lnet/minecraft/client/gui/screens/social/PlayerSocialManager;"))
+	private PlayerSocialManager replaceGetSocialManager(Minecraft minecraft) {
+		return HeadlessMinecraft.getInstance().getSocialManager();
 	}
 	
 }
