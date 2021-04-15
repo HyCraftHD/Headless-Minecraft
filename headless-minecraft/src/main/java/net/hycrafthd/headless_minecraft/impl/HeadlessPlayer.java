@@ -83,7 +83,7 @@ public class HeadlessPlayer extends LocalPlayer {
 	
 	@Override
 	protected boolean isControlledCamera() {
-		return false;
+		return true; // TODO
 	}
 	
 	@Override
