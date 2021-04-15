@@ -730,6 +730,12 @@ public class HeadlessPacketListener extends ClientPacketListener {
 		super.handleItemCooldown(packet);
 	}
 	
+	// Implemented
+	@Override
+	public void handleMoveVehicle(ClientboundMoveVehiclePacket packet) {
+		super.handleMoveVehicle(packet);
+	}
+	
 	@Override
 	public void handleAddObjective(ClientboundSetObjectivePacket packet) {
 		
@@ -752,11 +758,6 @@ public class HeadlessPacketListener extends ClientPacketListener {
 	
 	@Override
 	public void handleMerchantOffers(ClientboundMerchantOffersPacket packet) {
-		
-	}
-	
-	@Override
-	public void handleMoveVehicle(ClientboundMoveVehiclePacket packet) {
 		
 	}
 	
