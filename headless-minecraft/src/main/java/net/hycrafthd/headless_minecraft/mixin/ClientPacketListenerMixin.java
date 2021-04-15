@@ -119,7 +119,7 @@ abstract class ClientPacketListenerMixin {
 		return null;
 	}
 	
-	@Redirect(method = "handleGameEvent", at = @At(value = "FIELD", opcode = Opcodes.GETFIELD, target = "Lnet/minecraft/client/Minecraft;gameMode:Lnet/minecraft/client/multiplayer/MultiPlayerGameMode;"))
+	@Redirect(method = { "handleGameEvent", "handleBlockBreakAck" }, at = @At(value = "FIELD", opcode = Opcodes.GETFIELD, target = "Lnet/minecraft/client/Minecraft;gameMode:Lnet/minecraft/client/multiplayer/MultiPlayerGameMode;"))
 	private MultiPlayerGameMode replaceGetGameMode(Minecraft minecraft) {
 		return HeadlessMinecraft.getInstance().getConnectionManager().getGameMode();
 	}

@@ -820,14 +820,16 @@ public class HeadlessPacketListener extends ClientPacketListener {
 		super.handleSetChunkCacheRadius(packet);
 	}
 	
-	@Override
-	public void handleBlockBreakAck(ClientboundBlockBreakAckPacket packet) {
-		
-	}
-	
+	// Implemented
 	@Override
 	public void handleSetChunkCacheCenter(ClientboundSetChunkCacheCenterPacket packet) {
-		
+		super.handleSetChunkCacheCenter(packet);
+	}
+	
+	// Implemented
+	@Override
+	public void handleBlockBreakAck(ClientboundBlockBreakAckPacket packet) {
+		super.handleBlockBreakAck(packet);
 	}
 	
 }
