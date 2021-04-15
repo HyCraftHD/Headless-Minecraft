@@ -108,6 +108,7 @@ import net.minecraft.network.protocol.game.ClientboundUpdateRecipesPacket;
 import net.minecraft.network.protocol.game.ClientboundUpdateTagsPacket;
 import net.minecraft.network.protocol.game.ServerboundClientCommandPacket;
 import net.minecraft.network.protocol.game.ServerboundCustomPayloadPacket;
+import net.minecraft.network.protocol.game.ServerboundResourcePackPacket;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.stats.StatsCounter;
 import net.minecraft.tags.StaticTags;
@@ -710,6 +711,13 @@ public class HeadlessPacketListener extends ClientPacketListener {
 		// Do nothing currently. Sounds are useless for us
 	}
 	
+	// Implemented
+	@Override
+	public void handleResourcePack(ClientboundResourcePackPacket packet) {
+		// Currently decline custom resource packs
+		getConnection().send(new ServerboundResourcePackPacket(ServerboundResourcePackPacket.Action.DECLINED));
+	}
+	
 	@Override
 	public void handleAddObjective(ClientboundSetObjectivePacket packet) {
 		
@@ -762,11 +770,6 @@ public class HeadlessPacketListener extends ClientPacketListener {
 	
 	@Override
 	public void handlePlaceRecipe(ClientboundPlaceGhostRecipePacket packet) {
-		
-	}
-	
-	@Override
-	public void handleResourcePack(ClientboundResourcePackPacket packet) {
 		
 	}
 	
