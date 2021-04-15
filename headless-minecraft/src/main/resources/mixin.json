@@ -12,7 +12,8 @@
 		"accessor.ClientPacketListenerAccessorMixin",
 		"ClientPacketListenerMixin",
 		"MultiPlayerGameModeMixin",
-		"AbstractClientPlayerMixin"
+		"AbstractClientPlayerMixin",
+		"PlayerSocialManagerMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1
