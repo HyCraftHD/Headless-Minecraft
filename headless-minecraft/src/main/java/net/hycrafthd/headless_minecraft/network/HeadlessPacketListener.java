@@ -5,6 +5,7 @@ import com.mojang.authlib.GameProfile;
 import io.netty.buffer.Unpooled;
 import net.hycrafthd.headless_minecraft.Constants;
 import net.hycrafthd.headless_minecraft.HeadlessMinecraft;
+import net.hycrafthd.headless_minecraft.impl.HeadlessInput;
 import net.hycrafthd.headless_minecraft.impl.HeadlessLevel;
 import net.hycrafthd.headless_minecraft.impl.HeadlessMultiPlayerGameMode;
 import net.hycrafthd.headless_minecraft.impl.HeadlessPlayer;
@@ -177,7 +178,7 @@ public class HeadlessPacketListener extends ClientPacketListener {
 		
 		player.resetPos();
 		level.addPlayer(packet.getPlayerId(), player);
-		// TODO player.input = new KeyboardInput(xyz);
+		player.input = new HeadlessInput();
 		gameMode.adjustPlayer(player);
 		player.setId(packet.getPlayerId());
 		player.setReducedDebugInfo(packet.isReducedDebugInfo());
@@ -399,7 +400,7 @@ public class HeadlessPacketListener extends ClientPacketListener {
 		level.addPlayer(previousPlayer.getId(), player);
 		
 		player.yRot = -180;
-		// TODO player.input = new KeyboardInput(this.minecraft.options);
+		player.input = new HeadlessInput();
 		player.setReducedDebugInfo(previousPlayer.isReducedDebugInfo());
 		player.setShowDeathScreen(previousPlayer.shouldShowDeathScreen());
 		
