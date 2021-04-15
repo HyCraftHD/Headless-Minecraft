@@ -692,6 +692,18 @@ public class HeadlessPacketListener extends ClientPacketListener {
 		super.handlePlayerAbilities(packet);
 	}
 	
+	// Implemented
+	@Override
+	public void handleSoundEvent(ClientboundSoundPacket packet) {
+		super.handleSoundEvent(packet);
+	}
+	
+	// Implemented
+	@Override
+	public void handleSoundEntityEvent(ClientboundSoundEntityPacket packet) {
+		super.handleSoundEntityEvent(packet);
+	}
+	
 	@Override
 	public void handleAddObjective(ClientboundSetObjectivePacket packet) {
 		
@@ -779,16 +791,6 @@ public class HeadlessPacketListener extends ClientPacketListener {
 	
 	@Override
 	public void handleSetScore(ClientboundSetScorePacket packet) {
-		
-	}
-	
-	@Override
-	public void handleSoundEntityEvent(ClientboundSoundEntityPacket packet) {
-		
-	}
-	
-	@Override
-	public void handleSoundEvent(ClientboundSoundPacket packet) {
 		
 	}
 	
