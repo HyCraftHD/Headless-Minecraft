@@ -724,6 +724,12 @@ public class HeadlessPacketListener extends ClientPacketListener {
 		// Ignore boss bar
 	}
 	
+	// Implemented
+	@Override
+	public void handleItemCooldown(ClientboundCooldownPacket packet) {
+		super.handleItemCooldown(packet);
+	}
+	
 	@Override
 	public void handleAddObjective(ClientboundSetObjectivePacket packet) {
 		
@@ -736,11 +742,6 @@ public class HeadlessPacketListener extends ClientPacketListener {
 	
 	@Override
 	public void handleCustomPayload(ClientboundCustomPayloadPacket packet) {
-		
-	}
-	
-	@Override
-	public void handleItemCooldown(ClientboundCooldownPacket packet) {
 		
 	}
 	
