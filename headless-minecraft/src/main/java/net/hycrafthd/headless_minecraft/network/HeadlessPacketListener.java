@@ -704,6 +704,12 @@ public class HeadlessPacketListener extends ClientPacketListener {
 		super.handleSoundEntityEvent(packet);
 	}
 	
+	// Implemented
+	@Override
+	public void handleCustomSoundEvent(ClientboundCustomSoundPacket packet) {
+		// Do nothing currently. Sounds are useless for us
+	}
+	
 	@Override
 	public void handleAddObjective(ClientboundSetObjectivePacket packet) {
 		
@@ -721,11 +727,6 @@ public class HeadlessPacketListener extends ClientPacketListener {
 	
 	@Override
 	public void handleCustomPayload(ClientboundCustomPayloadPacket packet) {
-		
-	}
-	
-	@Override
-	public void handleCustomSoundEvent(ClientboundCustomSoundPacket packet) {
 		
 	}
 	
