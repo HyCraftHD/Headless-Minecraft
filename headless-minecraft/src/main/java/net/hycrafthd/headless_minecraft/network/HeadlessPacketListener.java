@@ -686,6 +686,12 @@ public class HeadlessPacketListener extends ClientPacketListener {
 		super.handleKeepAlive(packet);
 	}
 	
+	// Implemented
+	@Override
+	public void handlePlayerAbilities(ClientboundPlayerAbilitiesPacket packet) {
+		super.handlePlayerAbilities(packet);
+	}
+	
 	@Override
 	public void handleAddObjective(ClientboundSetObjectivePacket packet) {
 		
@@ -743,11 +749,6 @@ public class HeadlessPacketListener extends ClientPacketListener {
 	
 	@Override
 	public void handlePlaceRecipe(ClientboundPlaceGhostRecipePacket packet) {
-		
-	}
-	
-	@Override
-	public void handlePlayerAbilities(ClientboundPlayerAbilitiesPacket packet) {
 		
 	}
 	
