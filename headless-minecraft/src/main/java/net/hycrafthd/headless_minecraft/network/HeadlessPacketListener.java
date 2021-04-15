@@ -225,12 +225,6 @@ public class HeadlessPacketListener extends ClientPacketListener {
 	
 	// Implemented
 	@Override
-	public void handleKeepAlive(ClientboundKeepAlivePacket packet) {
-		super.handleKeepAlive(packet);
-	}
-	
-	// Implemented
-	@Override
 	public void handleTeleportEntity(ClientboundTeleportEntityPacket packet) {
 		super.handleTeleportEntity(packet);
 	}
@@ -684,6 +678,12 @@ public class HeadlessPacketListener extends ClientPacketListener {
 	@Override
 	public void handlePlayerInfo(ClientboundPlayerInfoPacket packet) {
 		super.handlePlayerInfo(packet);
+	}
+	
+	// Implemented
+	@Override
+	public void handleKeepAlive(ClientboundKeepAlivePacket packet) {
+		super.handleKeepAlive(packet);
 	}
 	
 	@Override
