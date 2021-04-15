@@ -802,13 +802,14 @@ public class HeadlessPacketListener extends ClientPacketListener {
 		// Do nothing, we will not use the recipe book for now
 	}
 	
+	// Implemented
 	@Override
-	public void handleBlockBreakAck(ClientboundBlockBreakAckPacket packet) {
-		
+	public void handleLightUpdatePacked(ClientboundLightUpdatePacket packet) {
+		super.handleLightUpdatePacked(packet);
 	}
 	
 	@Override
-	public void handleLightUpdatePacked(ClientboundLightUpdatePacket packet) {
+	public void handleBlockBreakAck(ClientboundBlockBreakAckPacket packet) {
 		
 	}
 	
