@@ -808,13 +808,14 @@ public class HeadlessPacketListener extends ClientPacketListener {
 		super.handleLightUpdatePacked(packet);
 	}
 	
+	// Implemented
 	@Override
-	public void handleBlockBreakAck(ClientboundBlockBreakAckPacket packet) {
-		
+	public void handleMerchantOffers(ClientboundMerchantOffersPacket packet) {
+		super.handleMerchantOffers(packet);
 	}
 	
 	@Override
-	public void handleMerchantOffers(ClientboundMerchantOffersPacket packet) {
+	public void handleBlockBreakAck(ClientboundBlockBreakAckPacket packet) {
 		
 	}
 	
