@@ -3,9 +3,13 @@ package net.hycrafthd.headless_minecraft;
 import java.io.File;
 import java.net.Proxy;
 
+import com.mojang.authlib.exceptions.AuthenticationException;
 import com.mojang.authlib.minecraft.MinecraftSessionService;
+import com.mojang.authlib.minecraft.OfflineSocialInteractions;
+import com.mojang.authlib.minecraft.SocialInteractionsService;
 import com.mojang.authlib.yggdrasil.YggdrasilAuthenticationService;
 
+import net.hycrafthd.headless_minecraft.impl.HeadlessPlayerSocialManager;
 import net.hycrafthd.headless_minecraft.network.ConnectionManager;
 import net.hycrafthd.headless_minecraft.script.ScriptManager;
 import net.minecraft.CrashReport;
@@ -44,6 +48,7 @@ public class HeadlessMinecraft extends ReentrantBlockableEventLoop<Runnable> {
 	
 	private final User user;
 	private final MinecraftSessionService sessionService;
+	private final HeadlessPlayerSocialManager socialManager;
 	
 	private final ConnectionManager connectionManager;
 	
@@ -55,7 +60,18 @@ public class HeadlessMinecraft extends ReentrantBlockableEventLoop<Runnable> {
 		timer = new Timer(20, 0);
 		
 		user = new User(authName, authUuid, authToken, authType);
-		sessionService = new YggdrasilAuthenticationService(Proxy.NO_PROXY).createMinecraftSessionService();
+		
+		final YggdrasilAuthenticationService service = new YggdrasilAuthenticationService(Proxy.NO_PROXY);
+		sessionService = service.createMinecraftSessionService();
+		
+		SocialInteractionsService socialInteractionService;
+		try {
+			socialInteractionService = service.createSocialInteractionsService(authToken);
+		} catch (AuthenticationException ex) {
+			socialInteractionService = new OfflineSocialInteractions();
+		}
+		
+		socialManager = new HeadlessPlayerSocialManager(socialInteractionService);
 		
 		connectionManager = new ConnectionManager(this);
 		
