@@ -766,6 +766,12 @@ public class HeadlessPacketListener extends ClientPacketListener {
 		super.handleAddObjective(packet);
 	}
 	
+	// Implemented
+	@Override
+	public void handleSetScore(ClientboundSetScorePacket packet) {
+		super.handleSetScore(packet);
+	}
+	
 	@Override
 	public void handleBlockBreakAck(ClientboundBlockBreakAckPacket packet) {
 		
@@ -808,11 +814,6 @@ public class HeadlessPacketListener extends ClientPacketListener {
 	
 	@Override
 	public void handleSetPlayerTeamPacket(ClientboundSetPlayerTeamPacket packet) {
-		
-	}
-	
-	@Override
-	public void handleSetScore(ClientboundSetScorePacket packet) {
 		
 	}
 	
