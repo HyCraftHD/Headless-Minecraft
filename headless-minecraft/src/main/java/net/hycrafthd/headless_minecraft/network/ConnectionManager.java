@@ -40,8 +40,12 @@ public class ConnectionManager {
 	}
 	
 	public void tick() {
-		if (connection != null) {
+		if (connection != null && gameMode == null) {
 			connection.tick();
+		}
+		
+		if (gameMode != null) {
+			gameMode.tick();
 		}
 		
 		if (level != null) {
