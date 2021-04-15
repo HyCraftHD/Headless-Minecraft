@@ -9,6 +9,9 @@ import net.hycrafthd.headless_minecraft.HeadlessMinecraft;
 import net.hycrafthd.headless_minecraft.impl.HeadlessLevel;
 import net.hycrafthd.headless_minecraft.impl.HeadlessMultiPlayerGameMode;
 import net.hycrafthd.headless_minecraft.impl.HeadlessPlayer;
+import net.minecraft.CrashReport;
+import net.minecraft.CrashReportCategory;
+import net.minecraft.ReportedException;
 import net.minecraft.client.multiplayer.ServerAddress;
 import net.minecraft.client.multiplayer.ServerData;
 import net.minecraft.network.Connection;
@@ -39,6 +42,27 @@ public class ConnectionManager {
 	public void tick() {
 		if (connection != null) {
 			connection.tick();
+		}
+		
+		if (level != null) {
+			if (level.getSkyFlashTime() > 0) {
+				level.setSkyFlashTime(level.getSkyFlashTime() - 1);
+			}
+			
+			level.tickEntities();
+			try {
+				level.tick(() -> true);
+			} catch (Throwable throwable) {
+				final CrashReport report = CrashReport.forThrowable(throwable, "Exception in world tick");
+				if (level == null) {
+					final CrashReportCategory category = report.addCategory("Affected level");
+					category.setDetail("Problem", (Object) "Level is null!");
+				} else {
+					level.fillReportDetails(report);
+				}
+				
+				throw new ReportedException(report);
+			}
 		}
 	}
 	
