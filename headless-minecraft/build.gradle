@@ -16,26 +16,31 @@ repositories {
 	}
 }
 
+configurations {
+    asm
+    implementation.extendsFrom asm
+    annotationProcessor.extendsFrom asm
+}
+
 dependencies {
 	compileOnly project(":Mapped-Minecraft")
+			
+	asm "org.ow2.asm:asm:9.0"
+    asm "org.ow2.asm:asm-commons:9.0"
+    asm "org.ow2.asm:asm-tree:9.0"
+	asm "org.ow2.asm:asm-analysis:9.0"
+	asm "org.ow2.asm:asm-util:9.0"
 	
-	implementation ("org.spongepowered:mixin:0.8.2") {
-		transitive = false
-	}
-	
-	implementation "org.ow2.asm:asm:9.0"
-    implementation "org.ow2.asm:asm-commons:9.0"
-    implementation "org.ow2.asm:asm-tree:9.0"
-	implementation "org.ow2.asm:asm-analysis:9.0"
-	implementation "org.ow2.asm:asm-util:9.0"
-	
+	implementation "org.spongepowered:mixin:0.8.2"	
 	annotationProcessor "org.spongepowered:mixin:0.8.2:processor"
-	
-	annotationProcessor "org.ow2.asm:asm:9.0"
-    annotationProcessor "org.ow2.asm:asm-commons:9.0"
-    annotationProcessor "org.ow2.asm:asm-tree:9.0"
-	annotationProcessor "org.ow2.asm:asm-analysis:9.0"
-	annotationProcessor "org.ow2.asm:asm-util:9.0"
+}
+
+tasks.withType(JavaCompile) {
+    options.compilerArgs += "-AdefaultObfuscationEnv=searge"
+    options.compilerArgs += "-AmappingTypes=tsrg"
+	options.compilerArgs += "-AreobfTsrgFile=${mapping_to_obf}"
+	options.compilerArgs += "-AoutTsrgFile=D:\\Programmieren\\Java\\Forge\\U Team\\1.16.5 Projects\\Headless-Minecraft\\Headless-Minecraft\\headless-minecraft\\build\\gen\\out.tsrg"
+	options.compilerArgs += "-AoutRefMapFile=D:\\Programmieren\\Java\\Forge\\U Team\\1.16.5 Projects\\Headless-Minecraft\\Headless-Minecraft\\headless-minecraft\\build\\gen\\out.refmap.json"
 }
 
 jar {
