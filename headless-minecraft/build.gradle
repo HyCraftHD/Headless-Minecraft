@@ -35,12 +35,18 @@ dependencies {
 	annotationProcessor "org.spongepowered:mixin:0.8.2:processor"
 }
 
+def mixin_ap = file("$buildDir/mixin_ap")
+def mixin_tsrg = file("${mixin_ap}/out.tsrg")
+def mixin_refmap = file("${mixin_ap}/refmap.json")
+
+mixin_ap.mkdirs()
+
 tasks.withType(JavaCompile) {
-    options.compilerArgs += "-AdefaultObfuscationEnv=searge"
+	options.compilerArgs += "-AdefaultObfuscationEnv=searge"
     options.compilerArgs += "-AmappingTypes=tsrg"
-	options.compilerArgs += "-AreobfTsrgFile=${mapping_to_obf}"
-	options.compilerArgs += "-AoutTsrgFile=D:\\Programmieren\\Java\\Forge\\U Team\\1.16.5 Projects\\Headless-Minecraft\\Headless-Minecraft\\headless-minecraft\\build\\gen\\out.tsrg"
-	options.compilerArgs += "-AoutRefMapFile=D:\\Programmieren\\Java\\Forge\\U Team\\1.16.5 Projects\\Headless-Minecraft\\Headless-Minecraft\\headless-minecraft\\build\\gen\\out.refmap.json"
+	options.compilerArgs += "-AreobfTsrgFile=${mapping_to_obf.canonicalPath}"
+	options.compilerArgs += "-AoutTsrgFile=${mixin_tsrg.canonicalPath}"
+	options.compilerArgs += "-AoutRefMapFile=${mixin_refmap.canonicalPath}"
 }
 
 jar {
