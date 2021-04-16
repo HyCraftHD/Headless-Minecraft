@@ -54,7 +54,7 @@ abstract class LocalPlayerMixin {
 		callback.cancel();
 	}
 	
-	@Inject(method = "onSyncedDataUpdated", cancellable = true, at = @At(value = "FIELD", opcode = Opcodes.GETFIELD, target = "minecraft"))
+	@Inject(method = "onSyncedDataUpdated", cancellable = true, at = @At(value = "FIELD", opcode = Opcodes.GETFIELD, target = "Lnet/minecraft/client/player/LocalPlayer;minecraft:Lnet/minecraft/client/Minecraft;", ordinal = 0))
 	private void elytraSoundDisable(CallbackInfo callback) {
 		callback.cancel();
 	}
