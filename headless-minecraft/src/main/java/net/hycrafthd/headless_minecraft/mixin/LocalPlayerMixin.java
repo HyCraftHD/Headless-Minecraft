@@ -59,7 +59,7 @@ abstract class LocalPlayerMixin {
 		callback.cancel();
 	}
 	
-	@Redirect(method = "handleNetherPortalClient", at = @At(value = "FIELD", opcode = Opcodes.GETFIELD, target = "screen", ordinal = 0))
+	@Redirect(method = "handleNetherPortalClient", at = @At(value = "FIELD", opcode = Opcodes.GETFIELD, target = "Lnet/minecraft/client/Minecraft;screen:Lnet/minecraft/client/gui/screens/Screen;", ordinal = 0))
 	private Screen removeCloseScreenAndContainer(Minecraft minecraft) {
 		return null;
 	}
