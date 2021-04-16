@@ -74,12 +74,12 @@ abstract class LocalPlayerMixin {
 		return FakeTutorial.INSTANCE;
 	}
 	
-	@Redirect(method = "aiStep", at = @At(value = "FIELD", opcode = Opcodes.GETFIELD, target = "options"))
+	@Redirect(method = "aiStep", at = @At(value = "FIELD", opcode = Opcodes.GETFIELD, target = "Lnet/minecraft/client/Minecraft;options:Lnet/minecraft/client/Options;"))
 	private Options removeOptionsFieldAccess(Minecraft minecraft) {
 		return null;
 	}
 	
-	@Redirect(method = "aiStep", at = @At(value = "FIELD", opcode = Opcodes.GETFIELD, target = "keySprint"))
+	@Redirect(method = "aiStep", at = @At(value = "FIELD", opcode = Opcodes.GETFIELD, target = "Lnet/minecraft/client/Options;keySprint:Lnet/minecraft/client/KeyMapping;"))
 	private KeyMapping removeKeySprintFieldAccess(Options minecraft) {
 		return null;
 	}
@@ -89,7 +89,7 @@ abstract class LocalPlayerMixin {
 		return false; // TODO return variable value
 	}
 	
-	@Redirect(method = "aiStep", at = @At(value = "FIELD", opcode = Opcodes.GETFIELD, target = "gameMode"))
+	@Redirect(method = "aiStep", at = @At(value = "FIELD", opcode = Opcodes.GETFIELD, target = "Lnet/minecraft/client/Minecraft;gameMode:Lnet/minecraft/client/multiplayer/MultiPlayerGameMode;"))
 	private MultiPlayerGameMode gameModeFieldAccess(Minecraft minecraft) {
 		return HeadlessMinecraft.getInstance().getConnectionManager().getGameMode();
 	}
