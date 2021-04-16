@@ -1,3 +1,13 @@
+buildscript {
+    repositories {
+	    mavenCentral()
+	}
+
+    dependencies {
+        classpath "net.md-5:SpecialSource:1.9.0"
+    }
+}
+
 plugins {
     id "java-library"
     id "eclipse"
