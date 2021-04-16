@@ -49,7 +49,7 @@ abstract class LocalPlayerMixin {
 		return false;
 	}
 	
-	@Inject(method = "sendPosition", cancellable = true, at = @At(value = "FIELD", opcode = Opcodes.GETFIELD, target = "minecraft"))
+	@Inject(method = "sendPosition", cancellable = true, at = @At(value = "FIELD", opcode = Opcodes.GETFIELD, target = "Lnet/minecraft/client/player/LocalPlayer;minecraft:Lnet/minecraft/client/Minecraft;", ordinal = 0))
 	private void autoJumpDisable(CallbackInfo callback) {
 		callback.cancel();
 	}
