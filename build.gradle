@@ -10,17 +10,9 @@ buildscript {
 
     repositories {
 	    mavenCentral()
-	    maven {
-	    	url "https://files.minecraftforge.net/maven"
-	    }
-		maven {
-			url "https://repo.u-team.info"
-    	}
 	}
 
     dependencies {
-		classpath group: "net.hycrafthd", name: "minecraft_downloader", version: config.minecraft_downloader.version
-		classpath group: "net.minecraftforge", name: "srgutils", version: config.srgutils.version
 		classpath group: "net.md-5", name: "SpecialSource", version: config.special_source.version
     }
 }
