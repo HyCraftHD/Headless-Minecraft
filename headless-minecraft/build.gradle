@@ -28,11 +28,20 @@ dependencies {
 	annotationProcessor group: "org.spongepowered", name: "mixin", version: config.mixin.version, classifier: "processor"
 }
 
+jar {
+	
+}
+
 def mixin_ap = file("${buildDir}/mixin_ap")
+def reobf = file("${buildDir}/reobf")
+
 def mixin_tsrg = file("${mixin_ap}/out.tsrg")
 def mixin_refmap = file("${mixin_ap}/refmap.json")
 
+def reobf_jar = file("${reobf}/output.jar")
+
 mixin_ap.mkdirs()
+reobf.mkdirs()
 
 tasks.withType(JavaCompile) {
 	options.compilerArgs += "-AdefaultObfuscationEnv=searge"
@@ -42,22 +51,31 @@ tasks.withType(JavaCompile) {
     options.compilerArgs += "-AoutRefMapFile=${mixin_refmap}"
 }
 
-jar {
+task putRefmapToJar(dependsOn: compileJava) {
+	jar.dependsOn putRefmapToJar
+	
+	doLast {
+		jar.from(mixin_refmap)
+	}	
 }
 
 task reobfJar(type: JavaExec, dependsOn: jar) {
-	assemble.dependsOn reobfJar
-	
-	def run = new File("${buildDir}/reobf")
-	if(!run.exists()) {
-		run.mkdirs()
-	}
-	
 	println rootProject.buildscript.configurations.classpath
 
 	classpath rootProject.buildscript.configurations.classpath
 	main "net.md_5.specialsource.SpecialSource"
-	args "--in-jar", jar.archivePath , "--out-jar", file("$run/output.jar"), "--srg-in", mapping_name_to_obf, "--srg-in", mixin_tsrg, "--live"
+	args "--in-jar", jar.archivePath , "--out-jar", reobf_jar, "--srg-in", mapping_name_to_obf, "--srg-in", mixin_tsrg, "--live"
 	
-	workingDir run
+	workingDir reobf
+}
+
+import java.nio.file.Files
+import java.nio.file.StandardCopyOption
+
+task replaceWithReobfJar(dependsOn: reobfJar) {
+	assemble.dependsOn replaceWithReobfJar
+	
+	doLast {
+		Files.copy(reobf_jar.toPath(), jar.archivePath.toPath(), StandardCopyOption.REPLACE_EXISTING)
+	}
 }
