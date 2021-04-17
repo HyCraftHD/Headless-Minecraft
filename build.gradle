@@ -58,24 +58,36 @@ repositories {
 	}
 }
 
+subprojects {
+	configurations {
+	    asm {
+			transitive = false
+		}
+	}
+	
+	dependencies {
+		asm group: "org.ow2.asm", name: "asm", version: config.asm.version
+	    asm group: "org.ow2.asm", name: "asm-commons", version: config.asm.version
+	    asm group: "org.ow2.asm", name: "asm-tree", version: config.asm.version
+	    asm group: "org.ow2.asm", name: "asm-analysis", version: config.asm.version
+	    asm group: "org.ow2.asm", name: "asm-util", version: config.asm.version
+	}
+}
+
 configurations {
 	headlessMinecraftImplementation
 	
 	packedDependencies {
 		transitive = false
 	}
-	
-	asm {
-		transitive = false
-	}
-	
+		
 	packedDependencies.extendsFrom asm
 	implementation.extendsFrom packedDependencies
 }
 
 dependencies {
 	headlessMinecraftImplementation project(":Headless-Minecraft-Implementation")
-		
+
 	packedDependencies group: "net.hycrafthd", name: "minecraft_downloader", version: config.minecraft_downloader.version
 	packedDependencies group: "net.hycrafthd", name: "logging_util", version: config.logging_util.version
 	
@@ -92,12 +104,6 @@ dependencies {
 		
 	packedDependencies group: "com.google.guava", name: "guava", version: config.guava.version
 	packedDependencies group: "com.google.code.gson", name: "gson", version: config.gson.version
-    
-    asm group: "org.ow2.asm", name: "asm", version: config.asm.version
-    asm group: "org.ow2.asm", name: "asm-commons", version: config.asm.version
-    asm group: "org.ow2.asm", name: "asm-tree", version: config.asm.version
-    asm group: "org.ow2.asm", name: "asm-analysis", version: config.asm.version
-    asm group: "org.ow2.asm", name: "asm-util", version: config.asm.version
 }
 
 group = "net.hycrafthd"
