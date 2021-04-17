@@ -42,7 +42,6 @@ import net.minecraftforge.srgutils.IMappingFile.Format
 
 // Create directories
 minecraft_files.mkdirs()
-minecraft_downloader.mkdirs()
 mappings.mkdirs()
 mapped.mkdirs()
 
@@ -52,7 +51,7 @@ javaexec { java ->
 	main "net.hycrafthd.minecraft_downloader.Main"
 	args "--version", minecraft_version, "--output", minecraft_files, "--skip-assets", "--extra-information", "--library-list", libraryList
 
-	workingDir minecraft_downloader
+	workingDir minecraft_files
 }.rethrowFailure().assertNormalExitValue()
 	
 // Generate tsrg files from official mappings
