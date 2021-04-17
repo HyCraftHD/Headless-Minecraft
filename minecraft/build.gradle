@@ -12,9 +12,6 @@ java {
 	}
 }
 
-jar {
-}
-
 configurations {
 	minecraft
 	compile.extendsFrom(minecraft)
