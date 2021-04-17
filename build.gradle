@@ -75,29 +75,29 @@ configurations {
 
 dependencies {
 	headlessMinecraftImplementation project(":Headless-Minecraft-Implementation")
+		
+	packedDependencies group: "net.hycrafthd", name: "minecraft_downloader", version: config.minecraft_downloader.version
+	packedDependencies group: "net.hycrafthd", name: "logging_util", version: config.logging_util.version
 	
-	packedDependencies "net.hycrafthd:minecraft_downloader:${config.minecraft_downloader.version}"
-	packedDependencies "net.hycrafthd:logging_util:${config.logging_util.version}"
+	packedDependencies group: "org.apache.logging.log4j", name: "log4j-api", version: config.log4j.version
+	packedDependencies group: "org.apache.logging.log4j", name: "log4j-core", version: config.log4j.version
+	packedDependencies group: "org.apache.logging.log4j", name: "log4j-iostreams", version: config.log4j.version
+		
+	packedDependencies group: "net.sf.jopt-simple", name: "jopt-simple", version: config.jopt_simple.version
+		
+	packedDependencies group: "org.spongepowered", name: "mixin", version: config.mixin.version
 	
-	packedDependencies "org.apache.logging.log4j:log4j-api:${config.log4j.version}"
-	packedDependencies "org.apache.logging.log4j:log4j-core:${config.log4j.version}"
-	packedDependencies "org.apache.logging.log4j:log4j-iostreams:${config.log4j.version}"
-	
-	packedDependencies "net.sf.jopt-simple:jopt-simple:${config.jopt_simple.version}"
-	
-	packedDependencies "org.spongepowered:mixin:${config.mixin.version}"
-	
-	packedDependencies "cpw.mods:modlauncher:${config.mod_launcher.version}"
-	packedDependencies "cpw.mods:grossjava9hacks:${config.gross_java9_hacks.version}"
-	
-    packedDependencies "com.google.guava:guava:${config.guava.version}"
-    packedDependencies "com.google.code.gson:gson:${config.gson.version}"
+	packedDependencies group: "cpw.mods", name: "modlauncher", version: config.mod_launcher.version
+	packedDependencies group: "cpw.mods", name: "grossjava9hacks", version: config.gross_java9_hacks.version
+		
+	packedDependencies group: "com.google.guava", name: "guava", version: config.guava.version
+	packedDependencies group: "com.google.code.gson", name: "gson", version: config.gson.version
     
-    asm "org.ow2.asm:asm:${config.asm.version}"
-    asm "org.ow2.asm:asm-commons:${config.asm.version}"
-    asm "org.ow2.asm:asm-tree:${config.asm.version}"
-	asm "org.ow2.asm:asm-analysis:${config.asm.version}"
-	asm "org.ow2.asm:asm-util:${config.asm.version}"
+    asm group: "org.ow2.asm", name: "asm", version: config.asm.version
+    asm group: "org.ow2.asm", name: "asm-commons", version: config.asm.version
+    asm group: "org.ow2.asm", name: "asm-tree", version: config.asm.version
+    asm group: "org.ow2.asm", name: "asm-analysis", version: config.asm.version
+    asm group: "org.ow2.asm", name: "asm-util", version: config.asm.version
 }
 
 configurations.packedDependencies.each { println it }
