@@ -35,10 +35,12 @@ ext {
 	minecraft_version = config.minecraft.version
 
 	// Directories
-	minecraft_files = file "${buildDir}/minecraft_files"
-	mappings = file "${buildDir}/mappings"
+	minecraft_files = file "${buildDir}/minecraft/files"
+	minecraft_files_working_directory = file "${buildDir}/minecraft"
+	mappings = file "${buildDir}/minecraft/mappings"
 	
 	minecraft_files.mkdirs()
+	minecraft_files_working_directory.mkdirs()
 	mappings.mkdirs()
 	
 	// Files

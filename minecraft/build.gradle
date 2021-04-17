@@ -2,6 +2,47 @@ plugins {
    id "java-library"
 }
 
+// Setup project
+
+import net.minecraftforge.srgutils.IMappingFile
+import net.minecraftforge.srgutils.IMappingFile.Format
+
+def shouldGenerate() {
+	if(project.gradle.startParameter.refreshDependencies) {
+		return true
+	}
+
+	return ![minecraft_mappings, minecraft_jar, library_list, mapping_obf_to_name, mapping_name_to_obf, mapped_minecraft_jar].every { file ->
+		return file.exists()
+	}
+}
+
+if(shouldGenerate()) {
+	
+	// Download minecraft
+	javaexec { java ->
+		classpath rootProject.buildscript.configurations.classpath
+		main "net.hycrafthd.minecraft_downloader.Main"
+		args "--version", minecraft_version, "--output", minecraft_files, "--skip-assets", "--extra-information", "--library-list", library_list
+		workingDir minecraft_files_working_directory
+	}.rethrowFailure().assertNormalExitValue()
+		
+	// Generate tsrg files from official mappings
+	def mappingFile = IMappingFile.load(minecraft_mappings)
+	mappingFile.write(mapping_obf_to_name.toPath(), Format.TSRG, true)
+	mappingFile.write(mapping_name_to_obf.toPath(), Format.TSRG, false)
+		
+	// Remap the minecraft jar
+	javaexec { java ->
+		classpath rootProject.buildscript.configurations.classpath
+		main "net.md_5.specialsource.SpecialSource"
+		args "--in-jar", minecraft_jar, "--out-jar", mapped_minecraft_jar, "--srg-in", mapping_obf_to_name
+		workingDir minecraft_files
+	}.rethrowFailure().assertNormalExitValue()
+}
+
+// Configure project
+
 java {
 	toolchain {
 		languageVersion = JavaLanguageVersion.of(8)
@@ -15,33 +56,6 @@ configurations {
 	minecraft
 	compile.extendsFrom(minecraft)
 }
-
-// Setup project
-
-// Imports
-import net.minecraftforge.srgutils.IMappingFile
-import net.minecraftforge.srgutils.IMappingFile.Format
-
-// Download minecraft
-javaexec { java ->
-	classpath rootProject.buildscript.configurations.classpath
-	main "net.hycrafthd.minecraft_downloader.Main"
-	args "--version", minecraft_version, "--output", minecraft_files, "--skip-assets", "--extra-information", "--library-list", library_list
-	workingDir minecraft_files
-}.rethrowFailure().assertNormalExitValue()
-	
-// Generate tsrg files from official mappings
-def mappingFile = IMappingFile.load(minecraft_mappings)
-mappingFile.write(mapping_obf_to_name.toPath(), Format.TSRG, true)
-mappingFile.write(mapping_name_to_obf.toPath(), Format.TSRG, false)
-	
-// Remap the minecraft jar
-javaexec { java ->
-	classpath rootProject.buildscript.configurations.classpath
-	main "net.md_5.specialsource.SpecialSource"
-	args "--in-jar", minecraft_jar, "--out-jar", mapped_minecraft_jar, "--srg-in", mapping_obf_to_name
-	workingDir minecraft_files
-}.rethrowFailure().assertNormalExitValue()
 
 dependencies {
 	minecraft files(mapped_minecraft_jar)
