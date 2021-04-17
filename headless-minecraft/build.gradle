@@ -37,9 +37,9 @@ mixin_ap.mkdirs()
 tasks.withType(JavaCompile) {
 	options.compilerArgs += "-AdefaultObfuscationEnv=searge"
     options.compilerArgs += "-AmappingTypes=tsrg"
-    options.compilerArgs += "-AreobfTsrgFile=${mapping_to_obf.canonicalPath}"
-    options.compilerArgs += "-AoutTsrgFile=${mixin_tsrg.canonicalPath}"
-    options.compilerArgs += "-AoutRefMapFile=${mixin_refmap.canonicalPath}"
+    options.compilerArgs += "-AreobfTsrgFile=${mapping_to_obf}"
+    options.compilerArgs += "-AoutTsrgFile=${mixin_tsrg}"
+    options.compilerArgs += "-AoutRefMapFile=${mixin_refmap}"
 }
 
 jar {

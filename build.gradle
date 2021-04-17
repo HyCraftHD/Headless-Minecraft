@@ -33,19 +33,23 @@ plugins {
 
 ext {
 	minecraft_version = config.minecraft.version
-	
+
 	// Directories
-	minecraft_files = file "$buildDir/minecraft_files"
-	mappings = file "$buildDir/mappings"
-	mapped = file "$buildDir/mapped"
+	minecraft_files = file "${buildDir}/minecraft_files"
+	mappings = file "${buildDir}/mappings"
+	
+	minecraft_files.mkdirs()
+	mappings.mkdirs()
 	
 	// Files
-	official_mappings_file = file "$minecraft_files/$minecraft_version-client.txt"
-	obf_to_mapping = file "$mappings/obf_to_mapping.srg"
-	mapping_to_obf = file "$mappings/mapping_to_obf.srg"
-	minecraftJar = file "$minecraft_files/$minecraft_version-client.jar"
-	mappedMinecraftJar = file "$mapped/mapped-minecraft.jar"
-	libraryList = file "$minecraft_files/libraries.txt"
+	official_mappings_file = file "${minecraft_files}/${minecraft_version}-client.txt"
+	minecraft_jar = file "${minecraft_files}/${minecraft_version}-client.jar"
+	library_list = file "${minecraft_files}/${minecraft_version}-libraries.txt"
+	
+	obf_to_mapping = file "${mappings}/obf_to_mapping.tsrg"
+	mapping_to_obf = file "${mappings}/mapping_to_obf.tsrg"
+	
+	mapped_minecraft_jar = file "${minecraft_files}/${minecraft_version}-client-mapped.jar"
 }
 
 repositories {
@@ -137,8 +141,8 @@ tasks.named("jar") {
 }
 
 task runHeadlessMinecraft(type: JavaExec) {
-	def run = new File("$rootDir/run")
-	if(!run.exists() ) {
+	def run = new File("${rootDir}/run")
+	if(!run.exists()) {
 		run.mkdirs()
 	}
 
@@ -147,7 +151,7 @@ task runHeadlessMinecraft(type: JavaExec) {
 	systemProperties = [
 		"headless-minecraft.development": "true",
 		"headless-minecraft.development.download": "\"$minecraft_files\"",
-		"headless-minecraft.development.mapped-minecraft": "\"$mappedMinecraftJar\"",
+		"headless-minecraft.development.mapped-minecraft": "\"$mapped_minecraft_jar\"",
 		"headless-minecraft.development.implementation-build": "\"" + file(project(":Headless-Minecraft-Implementation").projectDir.toString() + "/bin/main") +"\"",
 	]
 	workingDir run
