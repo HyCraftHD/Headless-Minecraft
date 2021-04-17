@@ -51,3 +51,20 @@ tasks.withType(JavaCompile) {
 
 jar {
 }
+
+task reobfJar(type: JavaExec, dependsOn: jar) {
+	assemble.dependsOn reobfJar
+	
+	def run = new File("$buildDir/reobf")
+	if(!run.exists()) {
+		run.mkdirs()
+	}
+	
+	println rootProject.buildscript.configurations.classpath
+
+	classpath rootProject.buildscript.configurations.classpath
+	main "net.md_5.specialsource.SpecialSource"
+	args "--in-jar", jar.archivePath , "--out-jar", file("$run/output.jar"), "--srg-in", mapping_to_obf, "--srg-in", mixin_tsrg, "--live"
+	
+	workingDir run
+}
