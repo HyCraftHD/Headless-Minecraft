@@ -19,9 +19,9 @@ buildscript {
 	}
 
     dependencies {
-		classpath "net.hycrafthd:minecraft_downloader:${config.minecraft_downloader.version}"
-        classpath "net.minecraftforge:srgutils:${config.srgutils.version}"
-        classpath "net.md-5:SpecialSource:${config.special_source.version}"
+		classpath group: "net.hycrafthd", name: "minecraft_downloader", version: config.minecraft_downloader.version
+		classpath group: "net.minecraftforge", name: "srgutils", version: config.srgutils.version
+		classpath group: "net.md-5", name: "SpecialSource", version: config.special_source.version
     }
 }
 
@@ -99,8 +99,6 @@ dependencies {
     asm group: "org.ow2.asm", name: "asm-analysis", version: config.asm.version
     asm group: "org.ow2.asm", name: "asm-util", version: config.asm.version
 }
-
-configurations.packedDependencies.each { println it }
 
 group = "net.hycrafthd"
 archivesBaseName = "headless_minecraft-" + minecraft_version
