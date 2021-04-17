@@ -28,7 +28,7 @@ dependencies {
 	annotationProcessor group: "org.spongepowered", name: "mixin", version: config.mixin.version, classifier: "processor"
 }
 
-def mixin_ap = file("$buildDir/mixin_ap")
+def mixin_ap = file("${buildDir}/mixin_ap")
 def mixin_tsrg = file("${mixin_ap}/out.tsrg")
 def mixin_refmap = file("${mixin_ap}/refmap.json")
 
@@ -48,7 +48,7 @@ jar {
 task reobfJar(type: JavaExec, dependsOn: jar) {
 	assemble.dependsOn reobfJar
 	
-	def run = new File("$buildDir/reobf")
+	def run = new File("${buildDir}/reobf")
 	if(!run.exists()) {
 		run.mkdirs()
 	}
