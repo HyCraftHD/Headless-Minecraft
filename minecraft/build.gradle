@@ -2,7 +2,7 @@ plugins {
    id "java-library"
 }
 
-apply from: "mapper.gradle"
+apply from: "setup_minecraft.gradle"
 
 setupMinecraft()
 
