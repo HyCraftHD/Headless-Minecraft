@@ -65,6 +65,11 @@ configurations {
 		transitive = false
 	}
 	
+	asm {
+		transitive = false
+	}
+	
+	packedDependencies.extendsFrom asm
 	implementation.extendsFrom packedDependencies
 }
 
@@ -72,20 +77,30 @@ dependencies {
 	headlessMinecraftImplementation project(":Headless-Minecraft-Implementation")
 	
 	packedDependencies "net.hycrafthd:minecraft_downloader:${config.minecraft_downloader.version}"
+	packedDependencies "net.hycrafthd:logging_util:${config.logging_util.version}"
+	
+	packedDependencies "org.apache.logging.log4j:log4j-api:${config.log4j.version}"
+	packedDependencies "org.apache.logging.log4j:log4j-core:${config.log4j.version}"
+	packedDependencies "org.apache.logging.log4j:log4j-iostreams:${config.log4j.version}"
+	
+	packedDependencies "net.sf.jopt-simple:jopt-simple:${config.jopt_simple.version}"
 	
 	packedDependencies "org.spongepowered:mixin:${config.mixin.version}"
 	
 	packedDependencies "cpw.mods:modlauncher:${config.mod_launcher.version}"
 	packedDependencies "cpw.mods:grossjava9hacks:${config.gross_java9_hacks.version}"
 	
-	packedDependencies "org.ow2.asm:asm:${config.asm.version}"
-    packedDependencies "org.ow2.asm:asm-commons:${config.asm.version}"
-    packedDependencies "org.ow2.asm:asm-tree:${config.asm.version}"
-	packedDependencies "org.ow2.asm:asm-analysis:${config.asm.version}"
-	packedDependencies "org.ow2.asm:asm-util:${config.asm.version}"
-	
     packedDependencies "com.google.guava:guava:${config.guava.version}"
+    packedDependencies "com.google.code.gson:gson:${config.gson.version}"
+    
+    asm "org.ow2.asm:asm:${config.asm.version}"
+    asm "org.ow2.asm:asm-commons:${config.asm.version}"
+    asm "org.ow2.asm:asm-tree:${config.asm.version}"
+	asm "org.ow2.asm:asm-analysis:${config.asm.version}"
+	asm "org.ow2.asm:asm-util:${config.asm.version}"
 }
+
+configurations.packedDependencies.each { println it }
 
 group = "net.hycrafthd"
 archivesBaseName = "headless_minecraft-" + minecraft_version
