@@ -123,7 +123,10 @@ java {
 tasks.named("jar") {
 	archiveClassifier = ""
 	
+	jar.dependsOn ":Headless-Minecraft-Implementation:build"
+	
 	from "LICENSE"
+	from project(":Headless-Minecraft-Implementation").jar.outputs.files
 		
 	manifest {
 		attributes(
