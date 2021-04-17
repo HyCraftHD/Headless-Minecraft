@@ -1,10 +1,27 @@
 buildscript {
+
+	ext.buildProps = file "build.properties"
+
+	buildProps.withReader {
+		def prop = new Properties()
+		prop.load(it)
+		ext.config = new ConfigSlurper().parse prop
+	}
+
     repositories {
 	    mavenCentral()
+	    maven {
+	    	url "https://files.minecraftforge.net/maven"
+	    }
+		maven {
+			url "https://repo.u-team.info"
+    	}
 	}
 
     dependencies {
-        classpath "net.md-5:SpecialSource:1.9.0"
+		classpath "net.hycrafthd:minecraft_downloader:${config.minecraft_downloader.version}"
+        classpath "net.minecraftforge:srgutils:${config.srgutils.version}"
+        classpath "net.md-5:SpecialSource:${config.special_source.version}"
     }
 }
 
@@ -14,16 +31,8 @@ plugins {
     id "com.palantir.launch-config" version "1.2.0"
 }
 
-ext.buildProps = file "build.properties"
-
-buildProps.withReader {
-	def prop = new Properties()
-	prop.load(it)
-	ext.config = new ConfigSlurper().parse prop
-}
-
 ext {
-	minecraft_version = config.minecraft_version
+	minecraft_version = config.minecraft.version
 	
 	// Directories
 	minecraft_files = file "$buildDir/minecraft_files"
