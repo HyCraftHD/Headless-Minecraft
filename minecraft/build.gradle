@@ -31,15 +31,15 @@ javaexec { java ->
 }.rethrowFailure().assertNormalExitValue()
 	
 // Generate tsrg files from official mappings
-def mappingFile = IMappingFile.load(official_mappings_file)
-mappingFile.write(obf_to_mapping.toPath(), Format.TSRG, true)
-mappingFile.write(mapping_to_obf.toPath(), Format.TSRG, false)
+def mappingFile = IMappingFile.load(minecraft_mappings)
+mappingFile.write(mapping_obf_to_name.toPath(), Format.TSRG, true)
+mappingFile.write(mapping_name_to_obf.toPath(), Format.TSRG, false)
 	
 // Remap the minecraft jar
 javaexec { java ->
 	classpath rootProject.buildscript.configurations.classpath
 	main "net.md_5.specialsource.SpecialSource"
-	args "--in-jar", minecraft_jar, "--out-jar", mapped_minecraft_jar, "--srg-in", obf_to_mapping
+	args "--in-jar", minecraft_jar, "--out-jar", mapped_minecraft_jar, "--srg-in", mapping_obf_to_name
 	workingDir minecraft_files
 }.rethrowFailure().assertNormalExitValue()
 

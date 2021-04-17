@@ -42,12 +42,12 @@ ext {
 	mappings.mkdirs()
 	
 	// Files
-	official_mappings_file = file "${minecraft_files}/${minecraft_version}-client.txt"
+	minecraft_mappings = file "${minecraft_files}/${minecraft_version}-client.txt"
 	minecraft_jar = file "${minecraft_files}/${minecraft_version}-client.jar"
 	library_list = file "${minecraft_files}/${minecraft_version}-libraries.txt"
 	
-	obf_to_mapping = file "${mappings}/obf_to_mapping.tsrg"
-	mapping_to_obf = file "${mappings}/mapping_to_obf.tsrg"
+	mapping_obf_to_name = file "${mappings}/obf_to_name.tsrg"
+	mapping_name_to_obf = file "${mappings}/name_to_obf.tsrg"
 	
 	mapped_minecraft_jar = file "${minecraft_files}/${minecraft_version}-client-mapped.jar"
 }
