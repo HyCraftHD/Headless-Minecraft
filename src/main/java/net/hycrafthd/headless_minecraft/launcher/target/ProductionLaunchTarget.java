@@ -1,7 +1,6 @@
 package net.hycrafthd.headless_minecraft.launcher.target;
 
 import java.net.URISyntaxException;
-import java.net.URL;
 import java.nio.file.Paths;
 
 import cpw.mods.modlauncher.api.ITransformingClassLoaderBuilder;
