@@ -116,13 +116,14 @@ tasks.named("jar") {
 	jar.dependsOn ":Headless-Minecraft-Implementation:build"
 	
 	from "LICENSE"
-	from project(":Headless-Minecraft-Implementation").jar.outputs.files
+	from project(":Headless-Minecraft-Implementation").jar.outputs.files.singleFile
 		
 	manifest {
 		attributes(
 			"Implementation-Version": project.version,
 			"Implementation-Vendor": "HyCraftHD, Luc_ZZ",
-	        "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
+	        "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ"),
+	        "Headless-Minecraft-Implementation-Jar": project(":Headless-Minecraft-Implementation").jar.outputs.files.singleFile.name
         )
 	}
 }
