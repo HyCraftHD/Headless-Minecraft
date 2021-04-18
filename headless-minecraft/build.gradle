@@ -16,16 +16,22 @@ repositories {
 	}
 }
 
-configurations {
-    implementation.extendsFrom asm
-    annotationProcessor.extendsFrom asm
-}
-
 dependencies {
 	compileOnly project(":Mapped-Minecraft")
 			
 	implementation group: "org.spongepowered", name: "mixin", version: config.mixin.version
+	implementation group: "org.ow2.asm", name: "asm", version: config.asm.version
+	implementation group: "org.ow2.asm", name: "asm-commons", version: config.asm.version
+	implementation group: "org.ow2.asm", name: "asm-tree", version: config.asm.version
+	implementation group: "org.ow2.asm", name: "asm-analysis", version: config.asm.version
+	implementation group: "org.ow2.asm", name: "asm-util", version: config.asm.version
+	
 	annotationProcessor group: "org.spongepowered", name: "mixin", version: config.mixin.version, classifier: "processor"
+	annotationProcessor group: "org.ow2.asm", name: "asm", version: config.asm.version
+	annotationProcessor group: "org.ow2.asm", name: "asm-commons", version: config.asm.version
+	annotationProcessor group: "org.ow2.asm", name: "asm-tree", version: config.asm.version
+	annotationProcessor group: "org.ow2.asm", name: "asm-analysis", version: config.asm.version
+	annotationProcessor group: "org.ow2.asm", name: "asm-util", version: config.asm.version
 }
 
 archivesBaseName = "headless_minecraft_implementation-" + minecraft_version

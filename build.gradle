@@ -21,6 +21,7 @@ plugins {
     id "java-library"
     id "eclipse"
     id "com.palantir.launch-config" version "1.2.0"
+    id "application"
 }
 
 ext {
@@ -56,30 +57,13 @@ repositories {
 	}
 }
 
-subprojects {
-	configurations {
-	    asm {
-			transitive = false
-		}
-	}
-	
-	dependencies {
-		asm group: "org.ow2.asm", name: "asm", version: config.asm.version
-	    asm group: "org.ow2.asm", name: "asm-commons", version: config.asm.version
-	    asm group: "org.ow2.asm", name: "asm-tree", version: config.asm.version
-	    asm group: "org.ow2.asm", name: "asm-analysis", version: config.asm.version
-	    asm group: "org.ow2.asm", name: "asm-util", version: config.asm.version
-	}
-}
-
 configurations {
 	headlessMinecraftImplementation
 	
 	packedDependencies {
 		transitive = false
 	}
-		
-	packedDependencies.extendsFrom asm
+	
 	implementation.extendsFrom packedDependencies
 }
 
@@ -102,6 +86,12 @@ dependencies {
 		
 	packedDependencies group: "com.google.guava", name: "guava", version: config.guava.version
 	packedDependencies group: "com.google.code.gson", name: "gson", version: config.gson.version
+	
+	packedDependencies group: "org.ow2.asm", name: "asm", version: config.asm.version
+	packedDependencies group: "org.ow2.asm", name: "asm-commons", version: config.asm.version
+	packedDependencies group: "org.ow2.asm", name: "asm-tree", version: config.asm.version
+	packedDependencies group: "org.ow2.asm", name: "asm-analysis", version: config.asm.version
+	packedDependencies group: "org.ow2.asm", name: "asm-util", version: config.asm.version
 }
 
 group = "net.hycrafthd"
@@ -152,4 +142,9 @@ task runHeadlessMinecraft(type: JavaExec) {
 		"headless-minecraft.development.implementation-build": "\"" + file(project(":Headless-Minecraft-Implementation").projectDir.toString() + "/bin/main") +"\"",
 	]
 	workingDir run
+}
+
+application {
+	mainClassName = "net.hycrafthd.headless_minecraft.launcher.Main"
+	applicationName = "Headless Minecraft"
 }
