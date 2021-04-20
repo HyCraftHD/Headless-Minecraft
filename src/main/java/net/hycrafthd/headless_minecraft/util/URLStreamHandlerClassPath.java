@@ -22,9 +22,28 @@ public class URLStreamHandlerClassPath extends URLStreamHandler {
 			
 			@Override
 			public InputStream getInputStream() throws IOException {
-				final String resource = URLDecoder.decode(url.getHost() + url.getPath(), "UTF-8");
+				final String resource = URLDecoder.decode(url.getFile(), "UTF-8");
+				
+				// System.out.println("-------------- Try to get " + resource + " for url " + url);
+				
 				return Optional.ofNullable(currentClassLoader.getResourceAsStream(resource)).orElseThrow(() -> new IOException("Resource " + resource + " was not found"));
 			}
 		};
+	}
+	
+	@Override
+	protected void parseURL(URL url, String spec, int start, int limit) {
+		String file;
+		if (spec.startsWith("classpath:"))
+			file = spec.substring(10);
+		else if ("./".equals(url.getFile()))
+			file = spec;
+		else if (url.getFile().endsWith("/"))
+			file = url.getFile() + spec;
+		else if ("#runtime".equals(spec))
+			file = url.getFile();
+		else
+			file = spec;
+		setURL(url, "classpath", "", -1, null, null, file, null, null);
 	}
 }
