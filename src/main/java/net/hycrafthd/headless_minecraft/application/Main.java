@@ -13,7 +13,7 @@ public class Main {
 		// Set url stream handler to handle classpath urls (used for jar in jars)
 		URL.setURLStreamHandlerFactory(protocol -> "classpath".equals(protocol) ? new URLStreamHandlerClassPath() : null);
 		
-		// TODO load jars
+		// TODO launch packed jars
 		
 		// Launch the launcher jar
 		try {
