@@ -58,7 +58,9 @@ repositories {
 }
 
 configurations {
-	headlessMinecraftImplementation
+	headlessMinecraftImplementation {
+		transitive = false
+	}
 	
 	packedDependencies {
 		transitive = false
@@ -113,20 +115,24 @@ java {
 tasks.named("jar") {
 	archiveClassifier = ""
 	
-	jar.dependsOn ":Headless-Minecraft-Implementation:build"
+	dependsOn ":Headless-Minecraft-Implementation:build"
+	
+	def implementation = configurations.headlessMinecraftImplementation.singleFile
 	
 	from "LICENSE"
-	from project(":Headless-Minecraft-Implementation").jar.outputs.files.singleFile
+	from implementation
 		
 	manifest {
 		attributes(
 			"Implementation-Version": project.version,
 			"Implementation-Vendor": "HyCraftHD, Luc_ZZ",
-	        "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ"),
-	        "Headless-Minecraft-Implementation-Jar": project(":Headless-Minecraft-Implementation").jar.outputs.files.singleFile.name
-        )
+			"Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ"),
+			"Headless-Minecraft-Implementation-Jar": implementation.name
+		)
 	}
 }
+
+
 
 task runHeadlessMinecraft(type: JavaExec) {
 	def run = new File("${rootDir}/run")
