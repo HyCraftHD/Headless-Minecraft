@@ -3,7 +3,7 @@ package net.hycrafthd.headless_minecraft.application;
 import java.net.URL;
 
 import net.hycrafthd.headless_minecraft.application.classloader.ApplicationClassLoader;
-import net.hycrafthd.headless_minecraft.url.URLStreamHandlerClassPath;
+import net.hycrafthd.headless_minecraft.util.URLStreamHandlerClassPath;
 
 public class Main {
 	
