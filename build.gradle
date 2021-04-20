@@ -159,6 +159,7 @@ tasks.register("applicationJar", Jar) {
 			"Headless-Minecraft-Implementation-Jar": implementation.name,
 			"Application-Classpath-Directory": "classpath/",
 			"Application-Classpath-Names": names
+			"Main-Class": "net.hycrafthd.headless_minecraft.application.Main"
 		)
 	}
 }
