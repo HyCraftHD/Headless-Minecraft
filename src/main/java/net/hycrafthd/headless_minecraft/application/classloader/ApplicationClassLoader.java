@@ -13,4 +13,9 @@ public class ApplicationClassLoader extends URLClassLoader {
 		super(new URL[] {}, ApplicationClassLoader.class.getClassLoader());
 	}
 	
+	@Override
+	public void addURL(URL url) {
+		super.addURL(url);
+	}
+	
 }
