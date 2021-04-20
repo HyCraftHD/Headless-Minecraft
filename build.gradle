@@ -132,7 +132,18 @@ tasks.named("jar") {
 	}
 }
 
+tasks.register("applicationJar", Jar) {
+	archiveClassifier = "application"
+	
+	dependsOn ":jar"
+	
+	with tasks.named("jar").get()
+}
 
+artifacts {
+	archives tasks.named("jar").get()
+	archives tasks.named("applicationJar").get()
+}
 
 task runHeadlessMinecraft(type: JavaExec) {
 	def run = new File("${rootDir}/run")
