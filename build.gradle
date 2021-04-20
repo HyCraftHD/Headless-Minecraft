@@ -158,7 +158,7 @@ tasks.register("applicationJar", Jar) {
 			"Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ"),
 			"Headless-Minecraft-Implementation-Jar": implementation.name,
 			"Application-Classpath-Directory": "classpath/",
-			"Application-Classpath-Names": names
+			"Application-Classpath-Names": names,
 			"Main-Class": "net.hycrafthd.headless_minecraft.application.Main"
 		)
 	}
