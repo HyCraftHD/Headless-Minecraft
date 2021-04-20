@@ -1,9 +1,12 @@
 package net.hycrafthd.headless_minecraft.launcher.target;
 
-import java.net.URISyntaxException;
-import java.nio.file.Paths;
+import java.io.IOException;
+import java.net.URL;
+import java.net.URLClassLoader;
 
 import cpw.mods.modlauncher.api.ITransformingClassLoaderBuilder;
+import net.hycrafthd.headless_minecraft.application.Main;
+import net.hycrafthd.headless_minecraft.application.util.ManifestReader;
 import net.hycrafthd.headless_minecraft.launcher.setup.MinecraftSetup;
 import net.hycrafthd.minecraft_downloader.settings.ProvidedSettings;
 
@@ -21,13 +24,23 @@ public class ProductionLaunchTarget extends BaseLaunchTarget {
 		// Add minecraft jar
 		builder.addTransformationPath(settings.getClientJarFile().toPath());
 		
-		// TODO only wip for testing
-		
 		// Add headless minecraft implementation
+		
+		final String implementationJar = ManifestReader.readManifest(Main.class).getMainAttributes().getValue("Headless-Minecraft-Implementation-Jar");
+		
 		try {
-			builder.addTransformationPath(Paths.get(this.getClass().getResource("/headless_minecraft_implementation-1.16.5-1.0.0-SNAPSHOT.jar").toURI()));
-		} catch (URISyntaxException ex) {
-			throw new IllegalStateException(ex);
+			final URLClassLoader implementationLoader = new URLClassLoader(new URL[] { new URL("classpath://" + implementationJar) });
+			
+			builder.setResourceEnumeratorLocator(resource -> {
+				try {
+					return implementationLoader.findResources(implementationJar);
+				} catch (IOException ex) {
+					throw new RuntimeException("A resource find threw an exception", ex);
+				}
+			});
+			
+		} catch (IOException ex) {
+			throw new RuntimeException("An error occured to load headless minecraft implementation jar to the classpath", ex);
 		}
 	}
 }
