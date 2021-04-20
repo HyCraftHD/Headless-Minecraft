@@ -31,9 +31,10 @@ public class ProductionLaunchTarget extends BaseLaunchTarget {
 		
 		try {
 			final URLClassLoader implementationLoader = new URLClassLoader(new URL[] { new URL("classpath://" + implementationJar) });
+			
 			builder.setResourceEnumeratorLocator(resource -> {
 				try {
-					return implementationLoader.findResources(implementationJar);
+					return implementationLoader.findResources(resource);
 				} catch (IOException ex) {
 					throw new RuntimeException("A resource find threw an exception", ex);
 				}
