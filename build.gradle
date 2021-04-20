@@ -145,12 +145,20 @@ tasks.register("applicationJar", Jar) {
 	
 	def implementation = configurations.headlessMinecraftImplementation.singleFile
 	
+	def names = configurations.packedDependencies.files.collect { file ->
+		return file.getName()
+	}.join(": ")
+	
+	println names
+	
 	manifest {
 		attributes(
 			"Implementation-Version": project.version,
 			"Implementation-Vendor": "HyCraftHD, Luc_ZZ",
 			"Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ"),
-			"Headless-Minecraft-Implementation-Jar": implementation.name
+			"Headless-Minecraft-Implementation-Jar": implementation.name,
+			"Application-Classpath-Directory": "classpath/",
+			"Application-Classpath-Names": names
 		)
 	}
 }
