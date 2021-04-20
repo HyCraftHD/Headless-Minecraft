@@ -5,8 +5,8 @@ import java.net.URL;
 import java.net.URLClassLoader;
 
 import cpw.mods.modlauncher.api.ITransformingClassLoaderBuilder;
-import net.hycrafthd.headless_minecraft.application.Main;
 import net.hycrafthd.headless_minecraft.application.util.ManifestReader;
+import net.hycrafthd.headless_minecraft.launcher.Main;
 import net.hycrafthd.headless_minecraft.launcher.setup.MinecraftSetup;
 import net.hycrafthd.minecraft_downloader.settings.ProvidedSettings;
 
@@ -25,12 +25,12 @@ public class ProductionLaunchTarget extends BaseLaunchTarget {
 		builder.addTransformationPath(settings.getClientJarFile().toPath());
 		
 		// Add headless minecraft implementation
-		
 		final String implementationJar = ManifestReader.readManifest(Main.class).getMainAttributes().getValue("Headless-Minecraft-Implementation-Jar");
+		
+		Main.LOGGER.info("Implementation jar is {}", implementationJar);
 		
 		try {
 			final URLClassLoader implementationLoader = new URLClassLoader(new URL[] { new URL("classpath://" + implementationJar) });
-			
 			builder.setResourceEnumeratorLocator(resource -> {
 				try {
 					return implementationLoader.findResources(implementationJar);
