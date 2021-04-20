@@ -9,7 +9,7 @@ public class Main {
 	
 	public static final ApplicationClassLoader CLASSLOADER = new ApplicationClassLoader();
 	
-	public static void main(String[] args) throws Throwable {
+	public static void main(String[] args) {
 		// Set url stream handler to handle classpath urls (used for jar in jars)
 		URL.setURLStreamHandlerFactory(protocol -> "classpath".equals(protocol) ? new URLStreamHandlerClassPath() : null);
 		
