@@ -134,7 +134,7 @@ task runHeadlessMinecraft(type: JavaExec) {
 		run.mkdirs()
 	}
 
-	main "net.hycrafthd.headless_minecraft.launcher.Main"
+	main "net.hycrafthd.headless_minecraft.application.Main"
 	args "--run", "\"$run\"", "--username", "xyz", "--password", "xyz"
 	systemProperties = [
 		"headless-minecraft.development": "true",
@@ -146,6 +146,6 @@ task runHeadlessMinecraft(type: JavaExec) {
 }
 
 application {
-	mainClassName = "net.hycrafthd.headless_minecraft.launcher.Main"
+	mainClassName = "net.hycrafthd.headless_minecraft.application.Main"
 	applicationName = "Headless Minecraft"
 }
