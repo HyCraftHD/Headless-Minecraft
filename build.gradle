@@ -149,8 +149,6 @@ tasks.register("applicationJar", Jar) {
 		return file.getName()
 	}.join(": ")
 	
-	println names
-	
 	manifest {
 		attributes(
 			"Implementation-Version": project.version,
