@@ -139,9 +139,9 @@ tasks.register("applicationJar", Jar) {
 	
 	with tasks.named("jar").get()
 	
-	/*into("dependencies") {
+	into("classpath") {
 		from configurations.packedDependencies
-	}*/
+	}
 	
 	def implementation = configurations.headlessMinecraftImplementation.singleFile
 	
