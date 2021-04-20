@@ -31,7 +31,6 @@ public class ManifestReader {
 					if (inputStream == null) {
 						return;
 					}
-					System.out.println("FIND manifest add: " + url);
 					manifests.add(new Manifest(inputStream));
 				} catch (IOException ex) {
 					throw new IllegalStateException("Could not open manifest input stream", ex);
