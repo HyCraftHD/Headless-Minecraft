@@ -1,6 +1,9 @@
 package net.hycrafthd.headless_minecraft.application;
 
 import java.net.URL;
+import java.util.Optional;
+import java.util.jar.Attributes;
+import java.util.jar.Manifest;
 
 import net.hycrafthd.headless_minecraft.application.classloader.ApplicationClassLoader;
 import net.hycrafthd.headless_minecraft.util.ManifestReader;
@@ -14,8 +17,12 @@ public class Main {
 		// Set url stream handler to handle classpath urls (used for jar in jars)
 		URL.setURLStreamHandlerFactory(protocol -> "classpath".equals(protocol) ? new URLStreamHandlerClassPath() : null);
 		
-		// TODO launch packed jars
-		ManifestReader.findManifests();
+		// Find our manifest
+		final Manifest manifest = ManifestReader.findManifests().stream().filter(manifestToCheck -> {
+			final Attributes mainAttributes = manifestToCheck.getMainAttributes();
+			
+			return mainAttributes.containsKey(Constants.CLASSPATH_DIRECTORY) && mainAttributes.containsKey(Constants.CLASSPATH_NAMES);
+		}).findAny().orElseThrow(() -> new IllegalStateException("Cannot find our manifest file"));
 		
 		// Launch the launcher jar
 		try {
