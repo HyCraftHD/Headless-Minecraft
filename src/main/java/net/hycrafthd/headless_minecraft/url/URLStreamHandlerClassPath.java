@@ -1,4 +1,4 @@
-package net.hycrafthd.headless_minecraft.generic;
+package net.hycrafthd.headless_minecraft.url;
 
 import java.io.IOException;
 import java.io.InputStream;
