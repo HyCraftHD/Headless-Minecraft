@@ -3,6 +3,7 @@ package net.hycrafthd.headless_minecraft.application;
 import java.net.URL;
 
 import net.hycrafthd.headless_minecraft.application.classloader.ApplicationClassLoader;
+import net.hycrafthd.headless_minecraft.util.ManifestReader;
 import net.hycrafthd.headless_minecraft.util.URLStreamHandlerClassPath;
 
 public class Main {
@@ -14,6 +15,7 @@ public class Main {
 		URL.setURLStreamHandlerFactory(protocol -> "classpath".equals(protocol) ? new URLStreamHandlerClassPath() : null);
 		
 		// TODO launch packed jars
+		ManifestReader.findManifests();
 		
 		// Launch the launcher jar
 		try {
