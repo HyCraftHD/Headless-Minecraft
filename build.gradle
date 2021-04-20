@@ -146,6 +146,6 @@ task runHeadlessMinecraft(type: JavaExec) {
 }
 
 application {
-	mainClassName = "net.hycrafthd.headless_minecraft.application.Main"
+	mainClassName = "net.hycrafthd.headless_minecraft.launcher.Main"
 	applicationName = "Headless Minecraft"
 }
