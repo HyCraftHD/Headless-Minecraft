@@ -2,6 +2,7 @@ package net.hycrafthd.headless_minecraft.launcher;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,6 +16,7 @@ import joptsimple.OptionParser;
 import joptsimple.OptionSet;
 import joptsimple.OptionSpec;
 import net.hycrafthd.headless_minecraft.launcher.setup.MinecraftSetup;
+import net.hycrafthd.headless_minecraft.url.URLStreamHandlerClassPath;
 import net.hycrafthd.logging_util.LoggingUtil;
 import net.hycrafthd.minecraft_downloader.settings.LauncherVariables;
 import net.hycrafthd.minecraft_downloader.settings.ProvidedSettings;
@@ -64,6 +66,12 @@ public class Main {
 		
 		// Minecraft setup
 		final MinecraftSetup setup = MinecraftSetup.launch(run, username, password);
+		
+		// Setup url classpath url stream handler if not already been set by the application launcher
+		try {
+			URL.setURLStreamHandlerFactory(protocol -> "classpath".equals(protocol) ? new URLStreamHandlerClassPath() : null);
+		} catch (final Error ex) {
+		}
 		
 		// Setup args
 		final ProvidedSettings settings = setup.getSettings();
