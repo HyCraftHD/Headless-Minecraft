@@ -2,12 +2,26 @@ package net.hycrafthd.headless_minecraft.application;
 
 import java.net.URL;
 
-import net.hycrafthd.headless_minecraft.application.util.URLStreamHandlerClassPath;
+import net.hycrafthd.headless_minecraft.application.classloader.ApplicationClassLoader;
+import net.hycrafthd.headless_minecraft.application.classloader.URLStreamHandlerClassPath;
 
 public class Main {
 	
-	public static void main(String[] args) {
+	public static final ApplicationClassLoader CLASSLOADER = new ApplicationClassLoader();
+	
+	public static void main(String[] args) throws Throwable {
+		// Set url stream handler to handle classpath urls (used for jar in jars)
 		URL.setURLStreamHandlerFactory(protocol -> "classpath".equals(protocol) ? new URLStreamHandlerClassPath() : null);
+		
+		// TODO load jars
+		
+		// Launch the launcher jar
+		try {
+			final Class<?> entryClass = Class.forName("net.hycrafthd.headless_minecraft.launcher.Main", true, CLASSLOADER);
+			entryClass.getMethod("main", String[].class).invoke(null, (Object) args);
+		} catch (Throwable ex) {
+			throw new IllegalStateException("An error has occured while launching headless minecraft", ex);
+		}
 	}
 	
 }

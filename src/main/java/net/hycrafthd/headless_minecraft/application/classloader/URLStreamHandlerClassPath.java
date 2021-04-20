@@ -1,4 +1,4 @@
-package net.hycrafthd.headless_minecraft.application;
+package net.hycrafthd.headless_minecraft.application.classloader;
 
 import java.io.IOException;
 import java.io.InputStream;
