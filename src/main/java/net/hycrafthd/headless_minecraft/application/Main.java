@@ -1,17 +1,11 @@
 package net.hycrafthd.headless_minecraft.application;
 
-import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.net.URLClassLoader;
-import java.util.Arrays;
 import java.util.jar.Attributes;
-import java.util.jar.JarFile;
-import java.util.jar.Manifest;
 
 import net.hycrafthd.headless_minecraft.application.classloader.ApplicationClassLoader;
 import net.hycrafthd.headless_minecraft.util.ManifestReader;
-import net.hycrafthd.headless_minecraft.util.StreamUtil;
 import net.hycrafthd.headless_minecraft.util.URLStreamHandlerClassPath;
 
 public class Main {
@@ -22,68 +16,31 @@ public class Main {
 		// Set url stream handler to handle classpath urls (used for jar in jars)
 		URL.setURLStreamHandlerFactory(protocol -> "classpath".equals(protocol) ? new URLStreamHandlerClassPath() : null);
 		
-		// Find our manifest
+		// Find our manifest and get the values
 		final Attributes attributes = ManifestReader.findManifests().stream().filter(manifest -> {
 			final Attributes mainAttributes = manifest.getMainAttributes();
 			
 			return mainAttributes.containsKey(Constants.CLASSPATH_DIRECTORY) && mainAttributes.containsKey(Constants.CLASSPATH_NAMES);
 		}).findAny().orElseThrow(() -> new IllegalStateException("Cannot find our manifest file")).getMainAttributes();
 		
-		// Build urls for classpath
 		final String directory = attributes.getValue(Constants.CLASSPATH_DIRECTORY);
-		final String allNames = attributes.getValue(Constants.CLASSPATH_NAMES);
+		final String[] names = attributes.getValue(Constants.CLASSPATH_NAMES).split(": ");
 		
-		final String[] names = allNames.split(": ");
-		
-		URL[] rsrcUrls = new URL[names.length + 1];
-		for (int i = 0; i < names.length; i++) {
-			String rsrcPath = names[i];
-			try {
-				rsrcUrls[i] = new URL("jar:classpath:" + directory + rsrcPath + "!/");
-			} catch (MalformedURLException e) {
-				e.printStackTrace();
+		// Add urls to classpath
+		try {
+			// Add all classpath name jars to the classloader
+			for (String name : names) {
+				CLASSLOADER.addURL(new URL("jar:classpath:" + directory + name + "!/"));
 			}
+			
+			// Add current jar to the classpath
+			CLASSLOADER.addURL(new URL("classpath:./"));
+		} catch (MalformedURLException ex) {
+			throw new IllegalStateException("Could not create url for packed classpath jar", ex);
 		}
 		
-		try {
-			System.out.println(rsrcUrls[rsrcUrls.length - 1]);
-			rsrcUrls[rsrcUrls.length - 1] = new URL("classpath:" + "./");
-		} catch (MalformedURLException e) {
-			e.printStackTrace();
-		}
-		
-		Arrays.asList(rsrcUrls).forEach(s -> System.out.println(s));
-		
-		ClassLoader jceClassLoader = new URLClassLoader(rsrcUrls, null);
-		
-		System.out.println(jceClassLoader.getResource("net/hycrafthd/headless_minecraft/launcher/Constants.class"));
-		System.out.println(jceClassLoader.getResource("org/objectweb/asm/Constants.class"));
-		
-		System.out.println("_____________________________________");
-		
-		try {
-			StreamUtil.toStream(jceClassLoader.getResources(JarFile.MANIFEST_NAME)).forEach(s -> {
-				try {
-					System.out.println(s);
-					Manifest manifest = new Manifest(s.openStream());
-					System.out.println(manifest);
-					System.out.println(manifest.getMainAttributes().keySet());
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			});
-			System.out.println(":::::::::::::::::::::::::::::::::::::::::::");
-		} catch (IOException e1) {
-			e1.printStackTrace();
-		}
-		
-		try {
-			Class<?> clazz = Class.forName("net.hycrafthd.headless_minecraft.launcher.Constants", true, jceClassLoader);
-			System.out.println(clazz);
-			System.out.println(clazz.getClassLoader());
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		}
+		// Set context classloader
+		Thread.currentThread().setContextClassLoader(CLASSLOADER);
 		
 		// Launch the launcher jar
 		try {
