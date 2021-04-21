@@ -36,6 +36,16 @@ dependencies {
 archivesBaseName = "headless_minecraft_implementation-" + minecraft_version
 version = rootProject.version
 
+sourceSets {
+    main {
+        java {
+            srcDirs += "src/api/java"
+        }
+        resources {
+        }
+    }
+}
+
 jar {
 	archiveClassifier = ""
 
