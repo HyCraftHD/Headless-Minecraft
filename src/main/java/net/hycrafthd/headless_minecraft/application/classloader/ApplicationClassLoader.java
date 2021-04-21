@@ -37,7 +37,7 @@ public class ApplicationClassLoader extends URLClassLoader {
 				throw new IllegalStateException("Method getPlatformClassLoader could not be invoked", ex);
 			}
 		} catch (NoSuchMethodException ex) {
-			// Okay as the method is only usefull for jdk9+. For jdk8 we return null
+			// Okay as the method is only useful for jdk9+. For jdk8 we return null
 			return null;
 		}
 	}
