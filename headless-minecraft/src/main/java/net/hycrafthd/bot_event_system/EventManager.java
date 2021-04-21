@@ -7,7 +7,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class EventManager {
+import net.hycrafthd.headless_minecraft.plugin.HeadlessEvent;
+import net.hycrafthd.headless_minecraft.plugin.HeadlessEventBus;
+
+public class EventManager implements HeadlessEventBus {
 	
 	/**
 	 * Key: EventType Value: Method with object
@@ -18,6 +21,7 @@ public class EventManager {
 		listenerMethodLists = new HashMap<>();
 	}
 	
+	@Override
 	public void registerEvent(Object listener) {
 		if (listener == null) {
 			return;
@@ -61,4 +65,5 @@ public class EventManager {
 			}
 		});
 	}
+	
 }

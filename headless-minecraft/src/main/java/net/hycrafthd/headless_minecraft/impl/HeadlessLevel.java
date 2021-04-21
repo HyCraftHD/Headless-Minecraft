@@ -4,6 +4,7 @@ import java.util.Random;
 import java.util.function.Supplier;
 
 import net.hycrafthd.headless_minecraft.network.HeadlessPacketListener;
+import net.hycrafthd.headless_minecraft.plugin.HeadlessWorld;
 import net.minecraft.CrashReport;
 import net.minecraft.CrashReportCategory;
 import net.minecraft.client.multiplayer.ClientLevel;
@@ -22,7 +23,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.dimension.DimensionType;
 
-public class HeadlessLevel extends ClientLevel {
+public class HeadlessLevel extends ClientLevel implements HeadlessWorld {
 	
 	private final HeadlessPacketListener packetListener;
 	
@@ -131,5 +132,12 @@ public class HeadlessLevel extends ClientLevel {
 	@Override
 	public int calculateBlockTint(BlockPos pos, ColorResolver resolver) {
 		return 0;
+	}
+	
+	// ----------------------------------------------------------------------------------------------
+	
+	@Override
+	public String getBlock(int x, int y, int z) {
+		return getBlockState(new BlockPos(x, y, z)).getBlock().getDescriptionId();
 	}
 }
