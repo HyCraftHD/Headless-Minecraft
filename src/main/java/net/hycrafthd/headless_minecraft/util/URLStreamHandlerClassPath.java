@@ -23,9 +23,6 @@ public class URLStreamHandlerClassPath extends URLStreamHandler {
 			@Override
 			public InputStream getInputStream() throws IOException {
 				final String resource = URLDecoder.decode(url.getFile(), "UTF-8");
-				
-				// System.out.println("-------------- Try to get " + resource + " for url " + url);
-				
 				return Optional.ofNullable(currentClassLoader.getResourceAsStream(resource)).orElseThrow(() -> new IOException("Resource " + resource + " was not found"));
 			}
 		};
