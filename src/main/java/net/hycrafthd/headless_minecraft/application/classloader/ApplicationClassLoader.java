@@ -1,8 +1,9 @@
 package net.hycrafthd.headless_minecraft.application.classloader;
 
-import java.lang.reflect.Method;
 import java.net.URL;
 import java.net.URLClassLoader;
+
+import net.hycrafthd.headless_minecraft.general_launcher.ClassloaderUtil;
 
 public class ApplicationClassLoader extends URLClassLoader {
 	
@@ -10,8 +11,10 @@ public class ApplicationClassLoader extends URLClassLoader {
 		ClassLoader.registerAsParallelCapable();
 	}
 	
+	private final ClassLoader currentClassLoader = getClass().getClassLoader();
+	
 	public ApplicationClassLoader() {
-		super(new URL[0], getPlatformClassLoader());
+		super(new URL[0], ClassloaderUtil.getPlatformClassLoaderOrNull());
 	}
 	
 	@Override
@@ -21,24 +24,14 @@ public class ApplicationClassLoader extends URLClassLoader {
 	
 	@Override
 	protected Class<?> loadClass(String name, boolean resolve) throws ClassNotFoundException {
-		if (name.startsWith("net.hycrafthd.headless_minecraft.application")) {
+		if (name.equalsIgnoreCase("net.hycrafthd.headless_minecraft.application.classloader.ApplicationClassLoader")) {
+			return this.getClass();
+		} else if (name.startsWith("net.hycrafthd.headless_minecraft.application")) {
 			throw new ClassNotFoundException("net.hycrafthd.headless_minecraft.application package should not be accessed with the application classloader");
-		}
-		return super.loadClass(name, resolve);
-	}
-	
-	private static ClassLoader getPlatformClassLoader() {
-		try {
-			final Method method = ClassLoader.class.getMethod("getPlatformClassLoader");
-			
-			try {
-				return (ClassLoader) method.invoke(null);
-			} catch (Exception ex) {
-				throw new IllegalStateException("Method getPlatformClassLoader could not be invoked", ex);
-			}
-		} catch (NoSuchMethodException ex) {
-			// Okay as the method is only useful for jdk9+. For jdk8 we return null
-			return null;
+		} else if (name.startsWith("net.hycrafthd.headless_minecraft.general_launcher")) {
+			return currentClassLoader.loadClass(name);
+		} else {
+			return super.loadClass(name, resolve);
 		}
 	}
 }
