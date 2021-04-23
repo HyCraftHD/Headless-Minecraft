@@ -163,8 +163,8 @@ tasks.register("applicationJar", Jar) {
 }
 
 artifacts {
-	archives tasks.named("jar").get()
-	archives tasks.named("applicationJar").get()
+	archives tasks.named("jar")
+	archives tasks.named("applicationJar")
 }
 
 task runHeadlessMinecraft(type: JavaExec) {
