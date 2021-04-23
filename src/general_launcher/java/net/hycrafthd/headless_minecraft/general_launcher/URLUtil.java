@@ -11,7 +11,11 @@ public class URLUtil {
 		
 		final String handlerPackage = handlerClass.getPackage().getName();
 		final int endIndex = handlerPackage.lastIndexOf('.');
+		final String packageToAdd = handlerPackage.substring(0, endIndex);
 		
+		if (property.contains(packageToAdd)) {
+			return;
+		}
 		System.setProperty(PACKAGE_HANDLER_PROPERTY, handlerPackage.substring(0, endIndex) + (property.isEmpty() ? "" : "|" + property));
 	}
 	
