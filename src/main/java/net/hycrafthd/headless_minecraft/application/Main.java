@@ -5,9 +5,9 @@ import java.net.URL;
 import java.util.jar.Attributes;
 
 import net.hycrafthd.headless_minecraft.application.classloader.ApplicationClassLoader;
+import net.hycrafthd.headless_minecraft.general_launcher.ManifestReader;
 import net.hycrafthd.headless_minecraft.general_launcher.URLUtil;
 import net.hycrafthd.headless_minecraft.general_launcher.url.classpath.Handler;
-import net.hycrafthd.headless_minecraft.util.ManifestReader;
 
 public class Main {
 	

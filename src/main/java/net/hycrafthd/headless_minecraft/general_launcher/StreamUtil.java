@@ -1,4 +1,4 @@
-package net.hycrafthd.headless_minecraft.util;
+package net.hycrafthd.headless_minecraft.general_launcher;
 
 import java.util.Enumeration;
 import java.util.Spliterator;

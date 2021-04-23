@@ -15,8 +15,8 @@ import cpw.mods.modlauncher.Launcher;
 import joptsimple.OptionParser;
 import joptsimple.OptionSet;
 import joptsimple.OptionSpec;
+import net.hycrafthd.headless_minecraft.general_launcher.url.classpath.Handler;
 import net.hycrafthd.headless_minecraft.launcher.setup.MinecraftSetup;
-import net.hycrafthd.headless_minecraft.util.URLStreamHandlerClassPath;
 import net.hycrafthd.logging_util.LoggingUtil;
 import net.hycrafthd.minecraft_downloader.settings.LauncherVariables;
 import net.hycrafthd.minecraft_downloader.settings.ProvidedSettings;
@@ -69,7 +69,7 @@ public class Main {
 		
 		// Setup url classpath url stream handler if not already been set by the application launcher
 		try {
-			URL.setURLStreamHandlerFactory(protocol -> "classpath".equals(protocol) ? new URLStreamHandlerClassPath() : null);
+			URL.setURLStreamHandlerFactory(protocol -> "classpath".equals(protocol) ? new Handler() : null);
 		} catch (final Error ex) {
 		}
 		
