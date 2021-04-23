@@ -11,7 +11,8 @@ import net.hycrafthd.headless_minecraft.general_launcher.url.classpath.Handler;
 
 public class Main {
 	
-	public static final ApplicationClassLoader CLASSLOADER = new ApplicationClassLoader();
+	public static final ClassLoader CURRENT_CLASSLOADER = Main.class.getClassLoader();
+	public static final ApplicationClassLoader APPLICATION_CLASSLOADER = new ApplicationClassLoader();
 	
 	public static void main(String[] args) {
 		// Add classpath url stream handler to handle classpath urls (used for jar in jars)
@@ -31,21 +32,21 @@ public class Main {
 		try {
 			// Add all classpath name jars to the classloader
 			for (String name : names) {
-				CLASSLOADER.addURL(new URL("jar:classpath:" + directory + name + "!/"));
+				APPLICATION_CLASSLOADER.addURL(new URL("jar:classpath:" + directory + name + "!/"));
 			}
 			
 			// Add current jar to the classpath
-			CLASSLOADER.addURL(new URL("classpath:./"));
+			APPLICATION_CLASSLOADER.addURL(new URL("classpath:./"));
 		} catch (MalformedURLException ex) {
 			throw new IllegalStateException("Could not create url for packed classpath jar", ex);
 		}
 		
 		// Set context classloader
-		Thread.currentThread().setContextClassLoader(CLASSLOADER);
+		Thread.currentThread().setContextClassLoader(APPLICATION_CLASSLOADER);
 		
 		// Launch the launcher jar
 		try {
-			final Class<?> entryClass = Class.forName("net.hycrafthd.headless_minecraft.launcher.Main", true, CLASSLOADER);
+			final Class<?> entryClass = Class.forName("net.hycrafthd.headless_minecraft.launcher.Main", true, APPLICATION_CLASSLOADER);
 			entryClass.getMethod("main", String[].class).invoke(null, (Object) args);
 		} catch (Throwable ex) {
 			throw new IllegalStateException("An error has occured while launching headless minecraft", ex);

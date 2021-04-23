@@ -8,9 +8,9 @@ import java.net.URLDecoder;
 import java.net.URLStreamHandler;
 import java.util.Optional;
 
+import net.hycrafthd.headless_minecraft.application.Main;
+
 public class Handler extends URLStreamHandler {
-	
-	private final ClassLoader currentClassLoader = getClass().getClassLoader();
 	
 	@Override
 	protected URLConnection openConnection(URL url) throws IOException {
@@ -23,7 +23,7 @@ public class Handler extends URLStreamHandler {
 			@Override
 			public InputStream getInputStream() throws IOException {
 				final String resource = URLDecoder.decode(url.getFile(), "UTF-8");
-				return Optional.ofNullable(currentClassLoader.getResourceAsStream(resource)).orElseThrow(() -> new IOException("Resource " + resource + " was not found"));
+				return Optional.ofNullable(Main.CURRENT_CLASSLOADER.getResourceAsStream(resource)).orElseThrow(() -> new IOException("Resource " + resource + " was not found"));
 			}
 		};
 	}

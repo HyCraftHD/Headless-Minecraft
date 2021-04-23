@@ -3,6 +3,7 @@ package net.hycrafthd.headless_minecraft.application.classloader;
 import java.net.URL;
 import java.net.URLClassLoader;
 
+import net.hycrafthd.headless_minecraft.application.Main;
 import net.hycrafthd.headless_minecraft.general_launcher.ClassloaderUtil;
 
 public class ApplicationClassLoader extends URLClassLoader {
@@ -10,8 +11,6 @@ public class ApplicationClassLoader extends URLClassLoader {
 	static {
 		ClassLoader.registerAsParallelCapable();
 	}
-	
-	private final ClassLoader currentClassLoader = getClass().getClassLoader();
 	
 	public ApplicationClassLoader() {
 		super(new URL[0], ClassloaderUtil.getPlatformClassLoaderOrNull());
@@ -29,7 +28,7 @@ public class ApplicationClassLoader extends URLClassLoader {
 		} else if (name.startsWith("net.hycrafthd.headless_minecraft.application")) {
 			throw new ClassNotFoundException("net.hycrafthd.headless_minecraft.application package should not be accessed with the application classloader");
 		} else if (name.startsWith("net.hycrafthd.headless_minecraft.general_launcher")) {
-			return currentClassLoader.loadClass(name);
+			return Main.CURRENT_CLASSLOADER.loadClass(name);
 		} else {
 			return super.loadClass(name, resolve);
 		}
