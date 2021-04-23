@@ -112,6 +112,17 @@ java {
 	withJavadocJar()
 }
 
+sourceSets {
+    main {
+        java {
+            srcDirs += "src/application/java"
+            srcDirs += "src/general_launcher/java"
+        }
+        resources {
+        }
+    }
+}
+
 tasks.named("jar") {
 	archiveClassifier = ""
 	
