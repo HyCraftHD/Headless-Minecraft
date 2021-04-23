@@ -21,7 +21,7 @@ import net.minecraft.world.level.block.entity.SignBlockEntity;
 import net.minecraft.world.level.block.entity.StructureBlockEntity;
 import net.minecraft.world.phys.Vec3;
 
-public class HeadlessPlayer extends LocalPlayer {
+public class HeadlessPlayer extends LocalPlayer implements net.hycrafthd.headless_minecraft.plugin.HeadlessPlayer {
 	
 	private final HeadlessPacketListener packetListener;
 	
@@ -94,5 +94,17 @@ public class HeadlessPlayer extends LocalPlayer {
 	@Override
 	public Vec3 getRopeHoldPosition(float f) {
 		return new Vec3(0, 0, 0);
+	}
+	
+	// ------------------------------------------------------------------------------------------------------------------------
+	
+	@Override
+	public void setYaw(float yaw) {
+		this.xRot = yaw;
+	}
+	
+	@Override
+	public void setPitch(float pitch) {
+		this.yRot = pitch;
 	}
 }
