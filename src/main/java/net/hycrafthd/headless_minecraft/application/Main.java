@@ -5,16 +5,17 @@ import java.net.URL;
 import java.util.jar.Attributes;
 
 import net.hycrafthd.headless_minecraft.application.classloader.ApplicationClassLoader;
+import net.hycrafthd.headless_minecraft.general_launcher.URLUtil;
+import net.hycrafthd.headless_minecraft.general_launcher.url.classpath.Handler;
 import net.hycrafthd.headless_minecraft.util.ManifestReader;
-import net.hycrafthd.headless_minecraft.util.URLStreamHandlerClassPath;
 
 public class Main {
 	
 	public static final ApplicationClassLoader CLASSLOADER = new ApplicationClassLoader();
 	
 	public static void main(String[] args) {
-		// Set url stream handler to handle classpath urls (used for jar in jars)
-		URL.setURLStreamHandlerFactory(protocol -> "classpath".equals(protocol) ? new URLStreamHandlerClassPath() : null);
+		// Add classpath url stream handler to handle classpath urls (used for jar in jars)
+		URLUtil.addUrlHandler(Handler.class);
 		
 		// Find our manifest and get the values
 		final Attributes attributes = ManifestReader.findManifests().stream().filter(manifest -> {
