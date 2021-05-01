@@ -22,6 +22,8 @@ public class PluginManager {
 			throw new IllegalStateException(ex);
 		}
 		
+		LOADED_SCRIPTS.forEach(HeadlessPlugin::load);
+		
 		LOGGER.info("Finished loading scripts");
 	}
 	
