@@ -10,10 +10,14 @@ buildscript {
 
     repositories {
 	    mavenCentral()
+	    maven {
+			url = "https://plugins.gradle.org/m2/"
+		}
 	}
 
     dependencies {
 		classpath group: "net.md-5", name: "SpecialSource", version: config.special_source.version
+		classpath group: "com.github.jengelman.gradle.plugins", name: "shadow", version: "6.1.0"
     }
 }
 
@@ -22,6 +26,7 @@ plugins {
     id "eclipse"
     id "com.palantir.launch-config" version "1.2.0"
     id "application"
+	id "com.github.johnrengelman.shadow" version "6.1.0"
 }
 
 ext {
