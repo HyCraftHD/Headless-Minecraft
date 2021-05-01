@@ -12,16 +12,6 @@ import java.util.stream.Stream;
 
 public class ManifestReader {
 	
-	public static Manifest readManifest(Class<?> clazz) {
-		final URL url = clazz.getResource("/" + JarFile.MANIFEST_NAME);
-		
-		try (final InputStream inputStream = url.openStream()) {
-			return new Manifest(inputStream);
-		} catch (final IOException ex) {
-			throw new IllegalStateException("Cannot read manifest", ex);
-		}
-	}
-	
 	public static Collection<Manifest> findManifests() {
 		final List<Manifest> manifests = new ArrayList<>();
 		
