@@ -10,6 +10,7 @@ import net.hycrafthd.headless_minecraft.impl.HeadlessLevel;
 import net.hycrafthd.headless_minecraft.impl.HeadlessMultiPlayerGameMode;
 import net.hycrafthd.headless_minecraft.impl.HeadlessPlayer;
 import net.hycrafthd.headless_minecraft.plugin.newstuff.IConnectionManager;
+import net.hycrafthd.headless_minecraft.plugin.newstuff.IHeadlessLevel;
 import net.minecraft.CrashReport;
 import net.minecraft.CrashReportCategory;
 import net.minecraft.ReportedException;
@@ -138,7 +139,9 @@ public class ConnectionManager implements IConnectionManager {
 	public void setGameMode(HeadlessMultiPlayerGameMode gameMode) {
 		this.gameMode = gameMode;
 	}
-	
-	// ----------------------------
-	
+
+	@Override
+	public IHeadlessLevel getWorldHandle() {
+		return level.getHandle();
+	}
 }

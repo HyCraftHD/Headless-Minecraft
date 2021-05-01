@@ -6,4 +6,6 @@ public interface IConnectionManager {
 	
 	void connectToServer();
 	
+	IHeadlessLevel getWorldHandle();
+	
 }

@@ -3,6 +3,7 @@ package net.hycrafthd.headless_minecraft.impl;
 import java.util.Random;
 import java.util.function.Supplier;
 
+import net.hycrafthd.headless_minecraft.impl.handle.HeadlessLevelImpl;
 import net.hycrafthd.headless_minecraft.network.HeadlessPacketListener;
 import net.minecraft.CrashReport;
 import net.minecraft.CrashReportCategory;
@@ -26,9 +27,12 @@ public class HeadlessLevel extends ClientLevel {
 	
 	private final HeadlessPacketListener packetListener;
 	
+	private HeadlessLevelImpl handle;
+	
 	public HeadlessLevel(HeadlessPacketListener packetListener, ClientLevelData levelData, ResourceKey<Level> dimension, DimensionType dimensionType, int viewDistance, Supplier<ProfilerFiller> profiler, boolean isDebug, long seed) {
 		super(packetListener, levelData, dimension, dimensionType, viewDistance, profiler, null, isDebug, seed);
 		this.packetListener = packetListener;
+		handle = new HeadlessLevelImpl(this);
 	}
 	
 	@Override
@@ -131,5 +135,9 @@ public class HeadlessLevel extends ClientLevel {
 	@Override
 	public int calculateBlockTint(BlockPos pos, ColorResolver resolver) {
 		return 0;
+	}
+	
+	public HeadlessLevelImpl getHandle() {
+		return handle;
 	}
 }
