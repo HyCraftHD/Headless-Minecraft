@@ -13,7 +13,7 @@ public class PluginManager {
 	private static final List<HeadlessPlugin> LOADED_SCRIPTS = new ArrayList<>();
 	
 	public static void load() {
-		LOGGER.info("Started to load scripts");
+		LOGGER.info("Started to load plugins");
 		
 		// TODO currently hardcoded the the main plugin
 		try {
@@ -24,11 +24,11 @@ public class PluginManager {
 		
 		LOADED_SCRIPTS.forEach(HeadlessPlugin::load);
 		
-		LOGGER.info("Finished loading scripts");
+		LOGGER.info("Finished loading plugins");
 	}
 	
 	public static void enable() {
-		LOGGER.info("Finished loading minecraft. Call script finished loading methods");
+		LOGGER.info("Finished loading minecraft. Call plugin finished loading methods");
 		LOADED_SCRIPTS.forEach(HeadlessPlugin::enable);
 	}
 }
