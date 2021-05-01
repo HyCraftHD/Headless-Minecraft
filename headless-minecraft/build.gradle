@@ -38,21 +38,10 @@ dependencies {
 archivesBaseName = "headless_minecraft_implementation-" + minecraft_version
 version = rootProject.version
 
-sourceSets {
-    main {
-        java {
-            srcDirs += "src/api/java"
-        }
-        resources {
-        }
-    }
-    api
-}
-
 jar {
 	archiveClassifier = ""
 
-	from sourceSets.api.output
+	from project(":Headless-Minecraft-Api").sourceSets.main.output
 	
 	manifest {
 		attributes(
@@ -60,17 +49,6 @@ jar {
 	        "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
         )
 	}
-}
-
-task apiJar(type: Jar) {
-    classifier = "api"
-
-    from sourceSets.api.output
-}
-
-artifacts {
-	archives jar
-	archives apiJar	
 }
 
 def mixin_ap = file("${buildDir}/mixin_ap")
