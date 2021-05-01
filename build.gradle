@@ -144,39 +144,9 @@ tasks.named("jar") {
 	}
 }
 
-tasks.register("applicationJar", Jar) {
-	archiveClassifier = "application"
-	
-	dependsOn ":jar"
-	
-	with tasks.named("jar").get()
-	
-	into("classpath") {
-		from configurations.packedDependencies
-	}
-	
-	def implementation = configurations.headlessMinecraftImplementation.singleFile
-	
-	def names = configurations.packedDependencies.files.collect { file ->
-		return file.getName()
-	}.join(": ")
-	
-	manifest {
-		attributes(
-			"Implementation-Version": project.version,
-			"Implementation-Vendor": "HyCraftHD, Luc_ZZ",
-			"Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ"),
-			"Headless-Minecraft-Implementation-Jar": implementation.name,
-			"Application-Classpath-Directory": "classpath/",
-			"Application-Classpath-Names": names,
-			"Main-Class": "net.hycrafthd.headless_minecraft.application.Main"
-		)
-	}
-}
-
-artifacts {
-	archives tasks.named("jar")
-	archives tasks.named("applicationJar")
+shadowJar {
+   archiveClassifier.set("application")
+   configurations = [project.configurations.packedDependencies]
 }
 
 task runHeadlessMinecraft(type: JavaExec) {
