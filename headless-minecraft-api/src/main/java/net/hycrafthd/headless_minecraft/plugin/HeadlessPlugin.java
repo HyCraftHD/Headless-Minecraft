@@ -4,6 +4,8 @@ public interface HeadlessPlugin {
 	
 	void load();
 	
+	void enable();
+	
 	void register(HeadlessEventBus eventBus);
 	
 }

@@ -10,6 +10,10 @@ public class TestPlugin implements HeadlessPlugin {
 	}
 	
 	@Override
+	public void enable() {
+	}
+	
+	@Override
 	public void register(HeadlessEventBus eventBus) {
 	}
 	
