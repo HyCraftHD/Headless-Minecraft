@@ -11,6 +11,7 @@ public class Constants {
 	// Development mode values
 	public static final String DEVELOPMENT_DOWNLOAD_DIRECTORY = System.getProperty("headless-minecraft.development.download");
 	public static final String DEVELOPMENT_MAPPED_MINECRAFT = System.getProperty("headless-minecraft.development.mapped-minecraft");
+	public static final String DEVELOPMENT_API_BUILD = System.getProperty("headless-minecraft.development.api-build");
 	public static final String DEVELOPMENT_IMPLEMENTATION_BUILD = System.getProperty("headless-minecraft.development.implementation-build");
 	public static final String DEVELOPMENT_TEST_PLUGIN_BUILD = System.getProperty("headless-minecraft.development.test-plugin-build");
 	
