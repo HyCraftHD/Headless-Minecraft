@@ -11,7 +11,7 @@ import com.mojang.authlib.yggdrasil.YggdrasilAuthenticationService;
 
 import net.hycrafthd.headless_minecraft.impl.HeadlessPlayerSocialManager;
 import net.hycrafthd.headless_minecraft.network.ConnectionManager;
-import net.hycrafthd.headless_minecraft.script.ScriptManager;
+import net.hycrafthd.headless_minecraft.plugin.PluginManager;
 import net.minecraft.CrashReport;
 import net.minecraft.Util;
 import net.minecraft.client.Timer;
@@ -24,11 +24,11 @@ public class HeadlessMinecraft extends ReentrantBlockableEventLoop<Runnable> {
 	private static HeadlessMinecraft INSTANCE;
 	
 	static void launch(File run, String authName, String authUuid, String authToken, String authType) {
-		ScriptManager.load();
+		PluginManager.load();
 		
 		INSTANCE = new HeadlessMinecraft(run, authName, authUuid, authToken, authType);
 		
-		ScriptManager.enable();
+		PluginManager.enable();
 		
 		while (INSTANCE.isRunning()) {
 			INSTANCE.run();

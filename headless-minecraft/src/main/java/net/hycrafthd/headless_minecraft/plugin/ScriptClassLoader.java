@@ -1,4 +1,4 @@
-package net.hycrafthd.headless_minecraft.script;
+package net.hycrafthd.headless_minecraft.plugin;
 
 import java.net.URL;
 import java.net.URLClassLoader;

@@ -1,4 +1,4 @@
-package net.hycrafthd.headless_minecraft.script;
+package net.hycrafthd.headless_minecraft.plugin;
 
 import java.io.File;
 import java.io.IOException;
@@ -12,7 +12,7 @@ import org.apache.commons.io.FilenameUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-public class ScriptManager {
+public class PluginManager {
 	
 	private static Logger LOGGER = LogManager.getLogger();
 	

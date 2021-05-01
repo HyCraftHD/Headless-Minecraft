@@ -1,4 +1,4 @@
-package net.hycrafthd.headless_minecraft.script;
+package net.hycrafthd.headless_minecraft.plugin;
 
 public interface IScript {
 	

@@ -5,7 +5,7 @@ import org.apache.logging.log4j.Logger;
 
 import net.hycrafthd.headless_minecraft.HeadlessMinecraft;
 import net.hycrafthd.headless_minecraft.network.ConnectionManager;
-import net.hycrafthd.headless_minecraft.script.IScript;
+import net.hycrafthd.headless_minecraft.plugin.IScript;
 
 /**
  * This is just a test script to test some stuff.
