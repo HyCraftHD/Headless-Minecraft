@@ -12,6 +12,8 @@ import com.mojang.authlib.yggdrasil.YggdrasilAuthenticationService;
 import net.hycrafthd.headless_minecraft.impl.HeadlessPlayerSocialManager;
 import net.hycrafthd.headless_minecraft.network.ConnectionManager;
 import net.hycrafthd.headless_minecraft.plugin.PluginManager;
+import net.hycrafthd.headless_minecraft.plugin.newstuff.IConnectionManager;
+import net.hycrafthd.headless_minecraft.plugin.newstuff.IHeadlessMinecraft;
 import net.minecraft.CrashReport;
 import net.minecraft.Util;
 import net.minecraft.client.Timer;
@@ -19,7 +21,7 @@ import net.minecraft.client.User;
 import net.minecraft.server.Bootstrap;
 import net.minecraft.util.thread.ReentrantBlockableEventLoop;
 
-public class HeadlessMinecraft extends ReentrantBlockableEventLoop<Runnable> {
+public class HeadlessMinecraft extends ReentrantBlockableEventLoop<Runnable> implements IHeadlessMinecraft {
 	
 	private static HeadlessMinecraft INSTANCE;
 	
@@ -131,8 +133,8 @@ public class HeadlessMinecraft extends ReentrantBlockableEventLoop<Runnable> {
 		return socialManager;
 	}
 	
+	@Override
 	public ConnectionManager getConnectionManager() {
 		return connectionManager;
 	}
-	
 }
