@@ -24,6 +24,8 @@ import net.hycrafthd.minecraft_downloader.util.FileUtil;
 
 public class Main {
 	
+	public static final ClassLoader CURRENT_CLASSLOADER = Main.class.getClassLoader();
+	
 	public static final Logger LOGGER = LogManager.getLogger("Headless Minecraft Launcher");
 	
 	public static void main(String[] args) throws IOException {
@@ -67,7 +69,7 @@ public class Main {
 		// Minecraft setup
 		final MinecraftSetup setup = MinecraftSetup.launch(run, username, password);
 		
-		// Setup url classpath url stream handler if not already been set by the application launcher
+		// Setup url classpath url stream handler
 		URLUtil.addUrlHandler(Handler.class);
 		
 		// Setup args
