@@ -40,6 +40,7 @@ sourceSets {
     main {
         java {
             srcDirs += "src/test_plugin/java"
+            srcDirs += "src/api/java"
         }
         resources {
         }
@@ -50,6 +51,8 @@ sourceSets {
 jar {
 	archiveClassifier = ""
 
+	from sourceSets.api.output
+	
 	manifest {
 		attributes(
 			"Implementation-Version": version,
@@ -61,7 +64,7 @@ jar {
 task apiJar(type: Jar) {
     classifier = "api"
 
-    from sourceSets.api.allJava
+    from sourceSets.api.output
 }
 
 artifacts {
