@@ -39,12 +39,12 @@ version = rootProject.version
 sourceSets {
     main {
         java {
-            srcDirs += "src/api/java"
             srcDirs += "src/test_plugin/java"
         }
         resources {
         }
     }
+    api
 }
 
 jar {
@@ -56,6 +56,17 @@ jar {
 	        "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
         )
 	}
+}
+
+task apiJar(type: Jar) {
+    classifier = "api"
+
+    from sourceSets.api.allJava
+}
+
+artifacts {
+	archives jar
+	archives apiJar	
 }
 
 def mixin_ap = file("${buildDir}/mixin_ap")
