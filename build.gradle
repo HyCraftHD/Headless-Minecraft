@@ -162,6 +162,7 @@ task runHeadlessMinecraft(type: JavaExec) {
 		"headless-minecraft.development.download": "\"$minecraft_files\"",
 		"headless-minecraft.development.mapped-minecraft": "\"$mapped_minecraft_jar\"",
 		"headless-minecraft.development.implementation-build": "\"" + file(project(":Headless-Minecraft-Implementation").projectDir.toString() + "/bin/main") +"\"",
+		"headless-minecraft.development.test-plugin-build": "\"" + file(project(":Test-Plugin").projectDir.toString() + "/bin/main") +"\"",
 	]
 	workingDir run
 }

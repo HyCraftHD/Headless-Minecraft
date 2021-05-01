@@ -19,5 +19,8 @@ public class DevelopmentLaunchTarget extends BaseLaunchTarget {
 		
 		// Add headless minecraft implementation
 		builder.addTransformationPath(Paths.get(Constants.DEVELOPMENT_IMPLEMENTATION_BUILD));
+		
+		// Add test plugin build
+		builder.addTransformationPath(Paths.get(Constants.DEVELOPMENT_TEST_PLUGIN_BUILD));
 	}
 }
