@@ -1,0 +1,13 @@
+plugins {
+   id "java-library" 
+}
+
+java {
+	toolchain {
+		languageVersion = JavaLanguageVersion.of(8)
+	}
+}
+
+dependencies {
+	implementation project(":Headless-Minecraft-Api")
+}

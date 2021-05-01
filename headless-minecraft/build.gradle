@@ -17,6 +17,8 @@ repositories {
 
 dependencies {
 	compileOnly project(":Mapped-Minecraft")
+	
+	implementation project(":Headless-Minecraft-Api")
 			
 	implementation group: "org.spongepowered", name: "mixin", version: config.mixin.version
 	implementation group: "org.ow2.asm", name: "asm", version: config.asm.version
@@ -39,7 +41,6 @@ version = rootProject.version
 sourceSets {
     main {
         java {
-            srcDirs += "src/test_plugin/java"
             srcDirs += "src/api/java"
         }
         resources {
