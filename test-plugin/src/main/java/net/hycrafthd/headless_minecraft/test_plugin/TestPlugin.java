@@ -1,4 +1,4 @@
-package xyz;
+package net.hycrafthd.headless_minecraft.test_plugin;
 
 import net.hycrafthd.headless_minecraft.plugin.HeadlessEventBus;
 import net.hycrafthd.headless_minecraft.plugin.HeadlessPlugin;
