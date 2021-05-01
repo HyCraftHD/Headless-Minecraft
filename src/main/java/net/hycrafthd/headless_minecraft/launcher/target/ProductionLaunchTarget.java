@@ -5,9 +5,9 @@ import java.net.URL;
 import java.net.URLClassLoader;
 
 import cpw.mods.modlauncher.api.ITransformingClassLoaderBuilder;
-import net.hycrafthd.headless_minecraft.general_launcher.ManifestReader;
 import net.hycrafthd.headless_minecraft.launcher.Main;
 import net.hycrafthd.headless_minecraft.launcher.setup.MinecraftSetup;
+import net.hycrafthd.headless_minecraft.launcher.util.ManifestReader;
 import net.hycrafthd.minecraft_downloader.settings.ProvidedSettings;
 
 public class ProductionLaunchTarget extends BaseLaunchTarget {

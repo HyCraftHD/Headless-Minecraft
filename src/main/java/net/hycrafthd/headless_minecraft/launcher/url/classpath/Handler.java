@@ -1,4 +1,4 @@
-package net.hycrafthd.headless_minecraft.general_launcher.url.classpath;
+package net.hycrafthd.headless_minecraft.launcher.url.classpath;
 
 import java.io.IOException;
 import java.io.InputStream;

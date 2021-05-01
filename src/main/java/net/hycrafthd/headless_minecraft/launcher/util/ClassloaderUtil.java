@@ -1,4 +1,4 @@
-package net.hycrafthd.headless_minecraft.general_launcher;
+package net.hycrafthd.headless_minecraft.launcher.util;
 
 import java.lang.reflect.Method;
 
