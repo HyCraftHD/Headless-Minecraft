@@ -14,15 +14,17 @@ import cpw.mods.modlauncher.Launcher;
 import joptsimple.OptionParser;
 import joptsimple.OptionSet;
 import joptsimple.OptionSpec;
-import net.hycrafthd.headless_minecraft.general_launcher.URLUtil;
-import net.hycrafthd.headless_minecraft.general_launcher.url.classpath.Handler;
 import net.hycrafthd.headless_minecraft.launcher.setup.MinecraftSetup;
+import net.hycrafthd.headless_minecraft.launcher.url.classpath.Handler;
+import net.hycrafthd.headless_minecraft.launcher.util.URLUtil;
 import net.hycrafthd.logging_util.LoggingUtil;
 import net.hycrafthd.minecraft_downloader.settings.LauncherVariables;
 import net.hycrafthd.minecraft_downloader.settings.ProvidedSettings;
 import net.hycrafthd.minecraft_downloader.util.FileUtil;
 
 public class Main {
+	
+	public static final ClassLoader CURRENT_CLASSLOADER = Main.class.getClassLoader();
 	
 	public static final Logger LOGGER = LogManager.getLogger("Headless Minecraft Launcher");
 	
@@ -67,7 +69,7 @@ public class Main {
 		// Minecraft setup
 		final MinecraftSetup setup = MinecraftSetup.launch(run, username, password);
 		
-		// Setup url classpath url stream handler if not already been set by the application launcher
+		// Setup url classpath url stream handler
 		URLUtil.addUrlHandler(Handler.class);
 		
 		// Setup args

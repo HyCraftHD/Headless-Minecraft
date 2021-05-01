@@ -1,4 +1,4 @@
-package net.hycrafthd.headless_minecraft.general_launcher.url.classpath;
+package net.hycrafthd.headless_minecraft.launcher.url.classpath;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -8,7 +8,7 @@ import java.net.URLDecoder;
 import java.net.URLStreamHandler;
 import java.util.Optional;
 
-import net.hycrafthd.headless_minecraft.application.Main;
+import net.hycrafthd.headless_minecraft.launcher.Main;
 
 public class Handler extends URLStreamHandler {
 	
@@ -22,24 +22,9 @@ public class Handler extends URLStreamHandler {
 			
 			@Override
 			public InputStream getInputStream() throws IOException {
-				final String resource = URLDecoder.decode(url.getFile(), "UTF-8");
+				final String resource = URLDecoder.decode(url.getPath(), "UTF-8");
 				return Optional.ofNullable(Main.CURRENT_CLASSLOADER.getResourceAsStream(resource)).orElseThrow(() -> new IOException("Resource " + resource + " was not found"));
 			}
 		};
-	}
-	
-	@Override
-	protected void parseURL(URL url, String spec, int start, int limit) {
-		final String file;
-		if (spec.startsWith("classpath:")) {
-			file = spec.substring(10);
-		} else if ("./".equals(url.getFile())) {
-			file = spec;
-		} else if (url.getFile().endsWith("/")) {
-			file = url.getFile() + spec;
-		} else {
-			file = spec;
-		}
-		setURL(url, "classpath", "", -1, null, null, file, null, null);
 	}
 }

@@ -3,11 +3,13 @@ package net.hycrafthd.headless_minecraft.launcher.target;
 import java.io.IOException;
 import java.net.URL;
 import java.net.URLClassLoader;
+import java.util.jar.Attributes;
 
 import cpw.mods.modlauncher.api.ITransformingClassLoaderBuilder;
-import net.hycrafthd.headless_minecraft.general_launcher.ManifestReader;
+import net.hycrafthd.headless_minecraft.launcher.Constants;
 import net.hycrafthd.headless_minecraft.launcher.Main;
 import net.hycrafthd.headless_minecraft.launcher.setup.MinecraftSetup;
+import net.hycrafthd.headless_minecraft.launcher.util.ManifestReader;
 import net.hycrafthd.minecraft_downloader.settings.ProvidedSettings;
 
 public class ProductionLaunchTarget extends BaseLaunchTarget {
@@ -25,7 +27,12 @@ public class ProductionLaunchTarget extends BaseLaunchTarget {
 		builder.addTransformationPath(settings.getClientJarFile().toPath());
 		
 		// Add headless minecraft implementation
-		final String implementationJar = ManifestReader.readManifest(Main.class).getMainAttributes().getValue("Headless-Minecraft-Implementation-Jar");
+		
+		final Attributes attributes = ManifestReader.findManifests().stream().filter(manifest -> {
+			return manifest.getMainAttributes().containsKey(Constants.PRODUCTION_IMPLEMENTATION_JAR);
+		}).findAny().orElseThrow(() -> new IllegalStateException("Cannot find our manifest file")).getMainAttributes();
+		
+		final String implementationJar = attributes.getValue(Constants.PRODUCTION_IMPLEMENTATION_JAR);
 		
 		Main.LOGGER.info("Implementation jar is {}", implementationJar);
 		
