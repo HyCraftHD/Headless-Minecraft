@@ -171,3 +171,7 @@ application {
 	mainClassName = "net.hycrafthd.headless_minecraft.launcher.Main"
 	applicationName = "Headless Minecraft"
 }
+
+launchConfig {
+	includedTasks "runHeadlessMinecraft"
+}
