@@ -17,9 +17,6 @@ public class DevelopmentLaunchTarget extends BaseLaunchTarget {
 		// Add mapped minecraft jar
 		builder.addTransformationPath(Paths.get(Constants.DEVELOPMENT_MAPPED_MINECRAFT));
 		
-		// Add headless minecraft api
-		builder.addTransformationPath(Paths.get(Constants.DEVELOPMENT_API_BUILD));
-		
 		// Add headless minecraft implementation
 		builder.addTransformationPath(Paths.get(Constants.DEVELOPMENT_IMPLEMENTATION_BUILD));
 		
