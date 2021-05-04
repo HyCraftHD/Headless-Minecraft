@@ -31,7 +31,7 @@ public class ProductionLaunchTarget extends BaseLaunchTarget {
 		
 		// Add headless minecraft implementation
 		
-		final Attributes attributes = ManifestUtil.findManifests().stream().filter(manifest -> {
+		final Attributes attributes = ManifestUtil.findClassPathManifests().stream().filter(manifest -> {
 			return manifest.getMainAttributes().containsKey(Constants.PRODUCTION_IMPLEMENTATION_JAR);
 		}).findAny().orElseThrow(() -> new IllegalStateException("Cannot find our manifest file")).getMainAttributes();
 		

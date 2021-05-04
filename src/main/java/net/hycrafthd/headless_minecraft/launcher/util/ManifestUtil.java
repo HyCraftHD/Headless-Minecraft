@@ -12,7 +12,7 @@ import java.util.stream.Stream;
 
 public class ManifestUtil {
 	
-	public static Collection<Manifest> findManifests() {
+	public static Collection<Manifest> findClassPathManifests() {
 		final List<Manifest> manifests = new ArrayList<>();
 		
 		try (final Stream<URL> stream = StreamUtil.toStream(Thread.currentThread().getContextClassLoader().getResources(JarFile.MANIFEST_NAME))) {
