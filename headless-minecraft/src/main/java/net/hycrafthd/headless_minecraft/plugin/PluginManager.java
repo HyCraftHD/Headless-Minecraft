@@ -6,8 +6,6 @@ import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import net.hycrafthd.headless_minecraft.HeadlessMinecraft;
-
 public class PluginManager {
 	
 	private static Logger LOGGER = LogManager.getLogger();
@@ -31,6 +29,6 @@ public class PluginManager {
 	
 	public static void enable() {
 		LOGGER.info("Finished loading minecraft. Call plugin finished loading methods");
-		LOADED_SCRIPTS.forEach(e -> e.enable(HeadlessMinecraft.getInstance()));
+		LOADED_SCRIPTS.forEach(e -> e.enable());
 	}
 }
