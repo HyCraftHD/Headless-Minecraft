@@ -22,7 +22,7 @@ public class Handler extends URLStreamHandler {
 			
 			@Override
 			public InputStream getInputStream() throws IOException {
-				final String resource = URLDecoder.decode(url.getPath(), "UTF-8");
+				final String resource = URLDecoder.decode(url.getFile(), "UTF-8");
 				return Optional.ofNullable(Main.CURRENT_CLASSLOADER.getResourceAsStream(resource)).orElseThrow(() -> new IOException("Resource " + resource + " was not found"));
 			}
 		};

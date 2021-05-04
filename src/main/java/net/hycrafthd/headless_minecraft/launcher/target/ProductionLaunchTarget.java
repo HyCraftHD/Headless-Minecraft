@@ -4,12 +4,15 @@ import java.io.IOException;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.jar.Attributes;
+import java.util.jar.JarFile;
+
+import com.google.common.io.ByteStreams;
 
 import cpw.mods.modlauncher.api.ITransformingClassLoaderBuilder;
 import net.hycrafthd.headless_minecraft.launcher.Constants;
 import net.hycrafthd.headless_minecraft.launcher.Main;
 import net.hycrafthd.headless_minecraft.launcher.setup.MinecraftSetup;
-import net.hycrafthd.headless_minecraft.launcher.util.ManifestReader;
+import net.hycrafthd.headless_minecraft.launcher.util.ManifestUtil;
 import net.hycrafthd.minecraft_downloader.settings.ProvidedSettings;
 
 public class ProductionLaunchTarget extends BaseLaunchTarget {
@@ -28,16 +31,23 @@ public class ProductionLaunchTarget extends BaseLaunchTarget {
 		
 		// Add headless minecraft implementation
 		
-		final Attributes attributes = ManifestReader.findManifests().stream().filter(manifest -> {
+		final Attributes attributes = ManifestUtil.findManifests().stream().filter(manifest -> {
 			return manifest.getMainAttributes().containsKey(Constants.PRODUCTION_IMPLEMENTATION_JAR);
 		}).findAny().orElseThrow(() -> new IllegalStateException("Cannot find our manifest file")).getMainAttributes();
 		
 		final String implementationJar = attributes.getValue(Constants.PRODUCTION_IMPLEMENTATION_JAR);
 		
-		Main.LOGGER.info("Implementation jar is {}", implementationJar);
-		
 		try {
-			final URLClassLoader implementationLoader = new URLClassLoader(new URL[] { new URL("classpath://" + implementationJar) });
+			final URL url = new URL("classpath:" + implementationJar);
+			
+			Main.LOGGER.info("Implementation jar is {}", url);
+			
+			final URLClassLoader implementationLoader = new URLClassLoader(new URL[] { url }, null);
+			
+			System.out.println(implementationLoader);
+			System.out.println(implementationLoader.getResource(JarFile.MANIFEST_NAME));
+			
+			System.out.println(new String(ByteStreams.toByteArray(implementationLoader.getResource(JarFile.MANIFEST_NAME).openStream())));
 			
 			builder.setResourceEnumeratorLocator(resource -> {
 				try {

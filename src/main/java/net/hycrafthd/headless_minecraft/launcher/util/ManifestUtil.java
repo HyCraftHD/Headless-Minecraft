@@ -10,7 +10,7 @@ import java.util.jar.JarFile;
 import java.util.jar.Manifest;
 import java.util.stream.Stream;
 
-public class ManifestReader {
+public class ManifestUtil {
 	
 	public static Collection<Manifest> findManifests() {
 		final List<Manifest> manifests = new ArrayList<>();
