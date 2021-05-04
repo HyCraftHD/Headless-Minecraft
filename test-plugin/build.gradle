@@ -13,9 +13,5 @@ repositories {
 }
 
 dependencies {
-	implementation project(":Headless-Minecraft-Api")
-	
-	implementation group: "org.apache.logging.log4j", name: "log4j-api", version: config.log4j.version
-	implementation group: "org.apache.logging.log4j", name: "log4j-core", version: config.log4j.version
-	implementation group: "org.apache.logging.log4j", name: "log4j-iostreams", version: config.log4j.version
+	implementation project(":Headless-Minecraft-Implementation")
 }

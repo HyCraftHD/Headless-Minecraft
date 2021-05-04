@@ -9,8 +9,6 @@ import net.hycrafthd.headless_minecraft.HeadlessMinecraft;
 import net.hycrafthd.headless_minecraft.impl.HeadlessLevel;
 import net.hycrafthd.headless_minecraft.impl.HeadlessMultiPlayerGameMode;
 import net.hycrafthd.headless_minecraft.impl.HeadlessPlayer;
-import net.hycrafthd.headless_minecraft.plugin.newstuff.IConnectionManager;
-import net.hycrafthd.headless_minecraft.plugin.newstuff.IHeadlessLevel;
 import net.minecraft.CrashReport;
 import net.minecraft.CrashReportCategory;
 import net.minecraft.ReportedException;
@@ -23,7 +21,7 @@ import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.protocol.handshake.ClientIntentionPacket;
 import net.minecraft.network.protocol.login.ServerboundHelloPacket;
 
-public class ConnectionManager implements IConnectionManager {
+public class ConnectionManager {
 	
 	public static final Logger LOGGER = LogManager.getLogger();
 	
@@ -72,12 +70,10 @@ public class ConnectionManager implements IConnectionManager {
 		}
 	}
 	
-	@Override
 	public void updateServerData(String ip) {
 		serverData = new ServerData("Server with ip: " + ip, ip, false);
 	}
 	
-	@Override
 	public void connectToServer() {
 		final ServerAddress serverAddress = ServerAddress.parseString(serverData.ip);
 		
@@ -139,9 +135,5 @@ public class ConnectionManager implements IConnectionManager {
 	public void setGameMode(HeadlessMultiPlayerGameMode gameMode) {
 		this.gameMode = gameMode;
 	}
-
-	@Override
-	public IHeadlessLevel getWorldHandle() {
-		return level.getHandle();
-	}
+	
 }

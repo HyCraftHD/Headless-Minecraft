@@ -1,10 +1,8 @@
 include "minecraft"
-include "headless-minecraft-api"
 include "headless-minecraft"
 include "test-plugin"
 
 rootProject.name = "Headless-Minecraft"
 project(":minecraft").name = "Mapped-Minecraft"
-project(":headless-minecraft-api").name = "Headless-Minecraft-Api"
 project(":headless-minecraft").name = "Headless-Minecraft-Implementation"
 project(":test-plugin").name = "Test-Plugin"
