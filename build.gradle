@@ -147,6 +147,8 @@ tasks.named("jar") {
 tasks.named("shadowJar") {
    archiveClassifier.set("application")
    configurations = [project.configurations.packedDependencies]
+   
+   transform(com.github.jengelman.gradle.plugins.shadow.transformers.Log4j2PluginsCacheFileTransformer)
 }
 
 task runHeadlessMinecraft(type: JavaExec) {
