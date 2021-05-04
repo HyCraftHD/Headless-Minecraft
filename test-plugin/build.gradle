@@ -13,5 +13,6 @@ repositories {
 }
 
 dependencies {
+	compileOnly project(":Mapped-Minecraft")
 	implementation project(":Headless-Minecraft-Implementation")
 }
