@@ -37,10 +37,7 @@ public class EnumerationUtil {
 			
 			@Override
 			public boolean hasMoreElements() {
-				if (moreEntries) {
-					return true;
-				}
-				return false;
+				return moreEntries;
 			}
 			
 			@Override
