@@ -1,17 +1,16 @@
 package net.hycrafthd.headless_minecraft.launcher.target;
 
 import java.io.IOException;
+import java.net.JarURLConnection;
 import java.net.URL;
-import java.net.URLClassLoader;
-import java.util.jar.Attributes;
+import java.net.URLConnection;
+import java.util.Collections;
 import java.util.jar.JarFile;
-
-import com.google.common.io.ByteStreams;
 
 import cpw.mods.modlauncher.api.ITransformingClassLoaderBuilder;
 import net.hycrafthd.headless_minecraft.launcher.Constants;
-import net.hycrafthd.headless_minecraft.launcher.Main;
 import net.hycrafthd.headless_minecraft.launcher.setup.MinecraftSetup;
+import net.hycrafthd.headless_minecraft.launcher.util.EnumerationUtil;
 import net.hycrafthd.headless_minecraft.launcher.util.ManifestUtil;
 import net.hycrafthd.minecraft_downloader.settings.ProvidedSettings;
 
@@ -31,33 +30,33 @@ public class ProductionLaunchTarget extends BaseLaunchTarget {
 		
 		// Add headless minecraft implementation
 		
-		final Attributes attributes = ManifestUtil.findClassPathManifests().stream().filter(manifest -> {
+		final String implementationJar = ManifestUtil.findClassPathManifests().stream().filter(manifest -> {
 			return manifest.getMainAttributes().containsKey(Constants.PRODUCTION_IMPLEMENTATION_JAR);
-		}).findAny().orElseThrow(() -> new IllegalStateException("Cannot find our manifest file")).getMainAttributes();
-		
-		final String implementationJar = attributes.getValue(Constants.PRODUCTION_IMPLEMENTATION_JAR);
+		}).findAny().orElseThrow(() -> new IllegalStateException("Cannot find manifest property " + Constants.PRODUCTION_IMPLEMENTATION_JAR)).getMainAttributes().getValue(Constants.PRODUCTION_IMPLEMENTATION_JAR);
 		
 		try {
-			final URL url = new URL("classpath:" + implementationJar);
+			final URL url = new URL("jar:classpath:" + implementationJar + "!/");
+			final URLConnection connection = url.openConnection();
 			
-			Main.LOGGER.info("Implementation jar is {}", url);
+			if (!(connection instanceof JarURLConnection)) {
+				throw new IllegalStateException(url + " does not point to a jar file");
+			}
 			
-			final URLClassLoader implementationLoader = new URLClassLoader(new URL[] { url }, null);
-			
-			System.out.println(implementationLoader);
-			System.out.println(implementationLoader.getResource(JarFile.MANIFEST_NAME));
-			
-			System.out.println(new String(ByteStreams.toByteArray(implementationLoader.getResource(JarFile.MANIFEST_NAME).openStream())));
+			final JarFile file = ((JarURLConnection) connection).getJarFile();
 			
 			builder.setResourceEnumeratorLocator(resource -> {
 				try {
-					return implementationLoader.findResources(resource);
+					if (file.getJarEntry(resource) == null) {
+						return Collections.emptyEnumeration();
+					} else {
+						System.out.println(new URL(url, resource));
+						return EnumerationUtil.singleEntry(new URL(url, resource));
+					}
 				} catch (IOException ex) {
-					throw new RuntimeException("A resource find threw an exception", ex);
+					throw new IllegalStateException("A resource find threw an exception", ex);
 				}
 			});
-			
-		} catch (IOException ex) {
+		} catch (Exception ex) {
 			throw new RuntimeException("An error occured to load headless minecraft implementation jar to the classpath", ex);
 		}
 	}
