@@ -7,7 +7,7 @@ import java.util.function.Consumer;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
-public class StreamUtil {
+public class EnumerationUtil {
 	
 	public static <T> Stream<T> toStream(Enumeration<T> enumeration) {
 		return StreamSupport.stream(new AbstractSpliterator<T>(Long.MAX_VALUE, Spliterator.ORDERED) {
@@ -28,6 +28,27 @@ public class StreamUtil {
 				}
 			}
 		}, false);
+	}
+	
+	public static <T> Enumeration<T> singleEntry(T entry) {
+		return new Enumeration<T>() {
+			
+			private boolean moreEntries = true;
+			
+			@Override
+			public boolean hasMoreElements() {
+				if (moreEntries) {
+					moreEntries = false;
+					return true;
+				}
+				return false;
+			}
+			
+			@Override
+			public T nextElement() {
+				return entry;
+			}
+		};
 	}
 	
 }
