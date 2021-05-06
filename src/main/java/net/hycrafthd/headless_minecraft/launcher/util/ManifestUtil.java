@@ -15,7 +15,7 @@ public class ManifestUtil {
 	public static Collection<Manifest> findClassPathManifests() {
 		final List<Manifest> manifests = new ArrayList<>();
 		
-		try (final Stream<URL> stream = StreamUtil.toStream(Thread.currentThread().getContextClassLoader().getResources(JarFile.MANIFEST_NAME))) {
+		try (final Stream<URL> stream = EnumerationUtil.toStream(Thread.currentThread().getContextClassLoader().getResources(JarFile.MANIFEST_NAME))) {
 			stream.forEach(url -> {
 				try (final InputStream inputStream = url.openStream()) {
 					if (inputStream == null) {
