@@ -49,7 +49,6 @@ public class ProductionLaunchTarget extends BaseLaunchTarget {
 					if (file.getJarEntry(resource) == null) {
 						return Collections.emptyEnumeration();
 					} else {
-						System.out.println(new URL(url, resource));
 						return EnumerationUtil.singleEntry(new URL(url, resource));
 					}
 				} catch (IOException ex) {
