@@ -77,7 +77,7 @@ public class Main {
 		
 		final List<String> argList = new ArrayList<>();
 		argList.add("--launchTarget");
-		argList.add(Constants.DEVELOPMENT_MODE ? "development" : "production");
+		argList.add(Constants.DEVELOPMENT_MODE ? "development-client" : "production-client");
 		argList.add("--run");
 		argList.add(run.getPath());
 		argList.add("--auth-name");

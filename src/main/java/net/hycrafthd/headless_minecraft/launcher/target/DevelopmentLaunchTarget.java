@@ -15,7 +15,7 @@ public class DevelopmentLaunchTarget extends BaseLaunchTarget {
 	
 	@Override
 	public String name() {
-		return "development";
+		return "development-client";
 	}
 	
 	@Override

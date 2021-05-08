@@ -5,9 +5,6 @@ import java.io.IOException;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.spongepowered.asm.mixin.MixinEnvironment;
-import org.spongepowered.asm.mixin.MixinEnvironment.Side;
-import org.spongepowered.asm.mixin.Mixins;
 
 import joptsimple.OptionParser;
 import joptsimple.OptionSet;
@@ -18,9 +15,6 @@ public class Main {
 	public static final Logger LOGGER = LogManager.getLogger("Headless Minecraft");
 	
 	public static void main(String[] args) throws IOException {
-		Mixins.addConfiguration("mixin.json");
-		MixinEnvironment.getDefaultEnvironment().setSide(Side.CLIENT);
-		
 		final OptionParser parser = new OptionParser();
 		
 		// Default specs

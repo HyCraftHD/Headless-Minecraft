@@ -18,7 +18,7 @@ public class ProductionLaunchTarget extends BaseLaunchTarget {
 	
 	@Override
 	public String name() {
-		return "production";
+		return "production-client";
 	}
 	
 	@Override
