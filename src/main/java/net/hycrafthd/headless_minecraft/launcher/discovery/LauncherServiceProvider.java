@@ -45,12 +45,12 @@ public class LauncherServiceProvider implements ITransformationService {
 	}
 	
 	@Override
-	public void beginScanning(IEnvironment environment) {
+	public List<Entry<String, Path>> runScan(IEnvironment environment) {
+		return Arrays.asList(new AbstractMap.SimpleImmutableEntry<>("implementation", Paths.get(Constants.DEVELOPMENT_IMPLEMENTATION_BUILD)));
 	}
 	
 	@Override
-	public List<Entry<String, Path>> runScan(IEnvironment environment) {
-		return Arrays.asList(new AbstractMap.SimpleImmutableEntry<>("implementation", Paths.get(Constants.DEVELOPMENT_IMPLEMENTATION_BUILD)));
+	public void beginScanning(IEnvironment environment) {
 	}
 	
 	@SuppressWarnings("rawtypes")
