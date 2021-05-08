@@ -15,7 +15,7 @@ import cpw.mods.modlauncher.api.ITransformer;
 import cpw.mods.modlauncher.api.IncompatibleEnvironmentException;
 import net.hycrafthd.headless_minecraft.launcher.Constants;
 
-public class PluginDiscovery implements ITransformationService {
+public class LauncherServiceProvider implements ITransformationService {
 	
 	@Override
 	public String name() {
