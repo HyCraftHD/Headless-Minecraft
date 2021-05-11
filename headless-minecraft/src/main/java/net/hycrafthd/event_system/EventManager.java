@@ -1,4 +1,4 @@
-package net.hycrafthd.bot_event_system;
+package net.hycrafthd.event_system;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -18,7 +18,7 @@ public class EventManager {
 		listenerMethodLists = new HashMap<>();
 	}
 	
-	public void registerEvent(Object listener) {
+	public void registerListener(Object listener) {
 		if (listener == null) {
 			return;
 		}

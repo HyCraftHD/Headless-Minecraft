@@ -20,6 +20,7 @@ public class TestPlugin implements HeadlessPlugin {
 		LOGGER.info("Enable test plugin");
 		HeadlessMinecraft.getInstance().getConnectionManager().updateServerData("mc-project.hycrafthd.net:25566");
 		HeadlessMinecraft.getInstance().getConnectionManager().connectToServer();
+		HeadlessMinecraft.getInstance().getEventManager().registerListener(new TestListener());
 	}
 	
 }

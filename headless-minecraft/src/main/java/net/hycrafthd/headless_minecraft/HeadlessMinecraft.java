@@ -9,6 +9,7 @@ import com.mojang.authlib.minecraft.OfflineSocialInteractions;
 import com.mojang.authlib.minecraft.SocialInteractionsService;
 import com.mojang.authlib.yggdrasil.YggdrasilAuthenticationService;
 
+import net.hycrafthd.event_system.EventManager;
 import net.hycrafthd.headless_minecraft.impl.HeadlessPlayerSocialManager;
 import net.hycrafthd.headless_minecraft.network.ConnectionManager;
 import net.hycrafthd.headless_minecraft.plugin.PluginManager;
@@ -22,6 +23,8 @@ import net.minecraft.util.thread.ReentrantBlockableEventLoop;
 public class HeadlessMinecraft extends ReentrantBlockableEventLoop<Runnable> {
 	
 	private static HeadlessMinecraft INSTANCE;
+	
+	private EventManager eventManager;
 	
 	static void launch(File run, String authName, String authUuid, String authToken, String authType) {
 		PluginManager.load();
@@ -51,6 +54,8 @@ public class HeadlessMinecraft extends ReentrantBlockableEventLoop<Runnable> {
 	
 	public HeadlessMinecraft(File run, String authName, String authUuid, String authToken, String authType) {
 		super(Constants.NAME);
+		
+		eventManager = new EventManager();
 		
 		thread = Thread.currentThread();
 		running = true;
@@ -133,5 +138,9 @@ public class HeadlessMinecraft extends ReentrantBlockableEventLoop<Runnable> {
 	
 	public ConnectionManager getConnectionManager() {
 		return connectionManager;
+	}
+
+	public EventManager getEventManager() {
+		return eventManager;
 	}
 }

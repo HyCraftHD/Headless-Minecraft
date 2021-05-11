@@ -1,4 +1,4 @@
-package net.hycrafthd.bot_event_system;
+package net.hycrafthd.event_system;
 
 import java.lang.reflect.Method;
 

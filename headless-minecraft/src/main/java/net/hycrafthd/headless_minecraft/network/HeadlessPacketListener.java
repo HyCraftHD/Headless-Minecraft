@@ -3,6 +3,8 @@ package net.hycrafthd.headless_minecraft.network;
 import com.mojang.authlib.GameProfile;
 
 import io.netty.buffer.Unpooled;
+import net.hycrafthd.event_system.events.RawServerChatMessageEvent;
+import net.hycrafthd.event_system.events.ServerChatMessageEvent;
 import net.hycrafthd.headless_minecraft.Constants;
 import net.hycrafthd.headless_minecraft.HeadlessMinecraft;
 import net.hycrafthd.headless_minecraft.impl.HeadlessInput;
@@ -300,7 +302,10 @@ public class HeadlessPacketListener extends ClientPacketListener {
 	// Implemented
 	@Override
 	public void handleChat(ClientboundChatPacket packet) {
+		PacketUtils.ensureRunningOnSameThread(packet, this, headlessMinecraft);
 		Constants.CHAT_LOGGER.info("{}", packet.getMessage().getString());
+		headlessMinecraft.getEventManager().executeEvents(new ServerChatMessageEvent(packet.getMessage().getString(), packet.getSender(), getPlayerInfo(packet.getSender())));
+		headlessMinecraft.getEventManager().executeEvents(new RawServerChatMessageEvent(packet.getMessage().getString(), packet.getSender(), getPlayerInfo(packet.getSender())));
 	}
 	
 	// Implemented
