@@ -88,8 +88,12 @@ dependencies {
 		
 	packedDependencies group: "org.spongepowered", name: "mixin", version: config.mixin.version
 	
-	packedDependencies group: "cpw.mods", name: "modlauncher", version: config.mod_launcher.version
-	packedDependencies group: "cpw.mods", name: "grossjava9hacks", version: config.gross_java9_hacks.version
+	packedDependencies (group: "cpw.mods", name: "modlauncher", version: config.mod_launcher.version) {
+		transitive = false
+	}
+	packedDependencies (group: "cpw.mods", name: "grossjava9hacks", version: config.gross_java9_hacks.version) {
+		transitive = false
+	}
 		
 	packedDependencies group: "com.google.guava", name: "guava", version: config.guava.version
 	packedDependencies group: "com.google.code.gson", name: "gson", version: config.gson.version
