@@ -38,6 +38,8 @@ public class Main {
 		final OptionSpec<File> runSpec = parser.accepts("run", "Run directory for headless minecraft").withRequiredArg().ofType(File.class);
 		
 		// Login specs
+		// TODO make login with microsoft accounts possible (do not use password here)
+		
 		final OptionSpec<String> usernameSpec = parser.accepts("username", "Username / Email for login").withRequiredArg();
 		final OptionSpec<String> passwordSpec = parser.accepts("password", "Password for login").withRequiredArg();
 		
