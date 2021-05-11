@@ -48,7 +48,7 @@ public class LauncherServiceProvider implements ITransformationService {
 	
 	@Override
 	public List<Entry<String, Path>> runScan(IEnvironment environment) {
-		return Arrays.asList(new AbstractMap.SimpleImmutableEntry<>("implementation", Paths.get(Constants.DEVELOPMENT_IMPLEMENTATION_BUILD)));
+		return Arrays.asList(new AbstractMap.SimpleImmutableEntry<>("implementation", Paths.get(Constants.DEVELOPMENT_IMPLEMENTATION_BUILD)), new AbstractMap.SimpleImmutableEntry<>("plugin", Paths.get(Constants.DEVELOPMENT_TEST_PLUGIN_BUILD)));
 	}
 	
 	@Override
