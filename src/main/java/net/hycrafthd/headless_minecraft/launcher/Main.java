@@ -78,8 +78,10 @@ public class Main {
 		final List<String> argList = new ArrayList<>();
 		argList.add("--launchTarget");
 		argList.add(Constants.DEVELOPMENT_MODE ? "development-client" : "production-client");
-		argList.add("--run");
+		argList.add("--gameDir");
 		argList.add(run.getPath());
+		argList.add("--version");
+		argList.add(Constants.MCVERSION);
 		argList.add("--auth-name");
 		argList.add(settings.getVariable(LauncherVariables.AUTH_PLAYER_NAME));
 		argList.add("--auth-uuid");

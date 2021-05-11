@@ -20,7 +20,7 @@ import net.hycrafthd.headless_minecraft.launcher.Constants;
 
 public class LauncherServiceProvider implements ITransformationService {
 	
-	private static final Logger LOGGER = LogManager.getLogger("Launcher Service");
+	private static final Logger LOGGER = LogManager.getLogger("Headless Minecraft Launcher Service");
 	
 	@Override
 	public String name() {
@@ -38,12 +38,10 @@ public class LauncherServiceProvider implements ITransformationService {
 	
 	@Override
 	public void initialize(IEnvironment environment) {
-		// final String version = environment.getProperty(IEnvironment.Keys.VERSION.get()).orElseThrow(() -> new
-		// IllegalStateException("Version key must be present"));
-		// final Path runDirectory = environment.getProperty(IEnvironment.Keys.GAMEDIR.get()).orElseThrow(() -> new
-		// IllegalStateException("Run directory key must be present"));
-		// LOGGER.debug("Launch headless minecraft version {}", version);
-		// LOGGER.debug("The run directory is {}", runDirectory);
+		final String version = environment.getProperty(IEnvironment.Keys.VERSION.get()).orElseThrow(() -> new IllegalStateException("Version key must be present"));
+		final Path runDirectory = environment.getProperty(IEnvironment.Keys.GAMEDIR.get()).orElseThrow(() -> new IllegalStateException("Run directory key must be present"));
+		LOGGER.debug("Launch headless minecraft version {}", version);
+		LOGGER.debug("The run directory is {}", runDirectory);
 	}
 	
 	@Override

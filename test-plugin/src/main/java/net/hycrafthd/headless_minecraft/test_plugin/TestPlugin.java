@@ -18,6 +18,7 @@ public class TestPlugin implements HeadlessPlugin {
 	@Override
 	public void enable() {
 		LOGGER.info("Enable test plugin");
+		HeadlessMinecraft.getInstance().getConnectionManager().updateServerData("mc-project.hycrafthd.net:25566");
 		HeadlessMinecraft.getInstance().getConnectionManager().connectToServer();
 	}
 	

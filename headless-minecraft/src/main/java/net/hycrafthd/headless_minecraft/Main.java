@@ -19,13 +19,15 @@ public class Main {
 		
 		// Default specs
 		final OptionSpec<Void> helpSpec = parser.accepts("help", "Show the help menu").forHelp();
-		final OptionSpec<File> runSpec = parser.accepts("run", "Run directory for headless minecraft").withRequiredArg().ofType(File.class);
+		final OptionSpec<File> runSpec = parser.accepts("gameDir", "Run directory for headless minecraft").withRequiredArg().ofType(File.class);
 		
 		// User data specs
 		final OptionSpec<String> authNameSpec = parser.accepts("auth-name", "Player name").withRequiredArg();
 		final OptionSpec<String> authUuidSpec = parser.accepts("auth-uuid", "Player uuid").withRequiredArg();
 		final OptionSpec<String> authTokenSpec = parser.accepts("auth-token", "Auth / Access token").withRequiredArg();
 		final OptionSpec<String> userTypeSpec = parser.accepts("user-type", "User type").withRequiredArg();
+		
+		parser.allowsUnrecognizedOptions();
 		
 		final OptionSet set = parser.parse(args);
 		
