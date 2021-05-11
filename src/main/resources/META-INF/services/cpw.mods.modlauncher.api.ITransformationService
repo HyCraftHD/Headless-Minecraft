@@ -1,1 +1,1 @@
-net.hycrafthd.headless_minecraft.launcher.discovery.PluginDiscovery
+net.hycrafthd.headless_minecraft.launcher.discovery.LauncherServiceProvider
