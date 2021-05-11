@@ -2,9 +2,6 @@ package net.hycrafthd.headless_minecraft.impl;
 
 import java.util.UUID;
 
-import org.apache.logging.log4j.Marker;
-import org.apache.logging.log4j.MarkerManager;
-
 import net.hycrafthd.headless_minecraft.Constants;
 import net.hycrafthd.headless_minecraft.network.HeadlessPacketListener;
 import net.minecraft.client.ClientRecipeBook;
@@ -36,13 +33,7 @@ public class HeadlessPlayer extends LocalPlayer {
 	
 	@Override
 	public void displayClientMessage(Component component, boolean hotbar) {
-		final Marker marker;
-		if (hotbar) {
-			marker = MarkerManager.getMarker("HOTBAR");
-		} else {
-			marker = null;
-		}
-		Constants.CHAT_LOGGER.info(marker, component.getString());
+		Constants.CHAT_LOGGER.info(component.getString());
 	}
 	
 	@Override

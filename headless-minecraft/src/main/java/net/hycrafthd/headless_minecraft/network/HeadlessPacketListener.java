@@ -300,7 +300,7 @@ public class HeadlessPacketListener extends ClientPacketListener {
 	// Implemented
 	@Override
 	public void handleChat(ClientboundChatPacket packet) {
-		Constants.CHAT_LOGGER.info("{}: {}", packet.getSender(), packet.getMessage().getString());
+		Constants.CHAT_LOGGER.info("{}", packet.getMessage().getString());
 	}
 	
 	// Implemented
