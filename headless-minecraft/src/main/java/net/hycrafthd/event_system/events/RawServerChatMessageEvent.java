@@ -5,6 +5,10 @@ import java.util.UUID;
 import net.hycrafthd.event_system.Event;
 import net.minecraft.client.multiplayer.PlayerInfo;
 
+/**
+ * Called every time something is posted in the chat <br>
+ * Message is the RAW message
+ */
 public class RawServerChatMessageEvent implements Event {
 	
 	protected String message;
