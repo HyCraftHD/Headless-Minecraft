@@ -12,9 +12,6 @@ public class EventHooks {
 	private EventHooks() {
 	}
 	
-	/**
-	 * Funktioniert ist aber bs...
-	 */
 	public static void chatEvent(ClientboundChatPacket packet, HeadlessPacketListener listener) {
 		HeadlessMinecraft minecraft = HeadlessMinecraft.getInstance();
 		String message = packet.getMessage().getString();

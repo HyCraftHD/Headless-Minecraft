@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.UUID;
+import java.util.stream.Stream;
 
 public class CommandRegistry {
 	
@@ -52,7 +53,6 @@ public class CommandRegistry {
 		if (restrictedCommands.containsKey(command)) {
 			for (String s : alias) {
 				if (!restrictedCommands.containsKey(s)) {
-					System.out.println(s);
 					restrictedCommands.put(s, restrictedCommands.get(command));
 				} else {
 					throw new CommandRegisterException("Alias: " + s + " is already registered!");
@@ -77,7 +77,7 @@ public class CommandRegistry {
 		}
 	}
 	
-	private static class CommandRegisterException extends Exception {
+	public static class CommandRegisterException extends Exception {
 		
 		public CommandRegisterException(String message) {
 			super(message);
