@@ -106,9 +106,6 @@ public class CommandRegistry {
 		try {
 			registerCommand("Info", true, (command, args) -> {
 				chat("List of all Commands:");
-				// if (args.length != 1) {
-				// return;
-				// }
 				aliasForCommand.entrySet().forEach(entry -> {
 					chat("----------------------------------------");
 					if (entry.getValue().isEmpty()) {
@@ -123,6 +120,7 @@ public class CommandRegistry {
 	}
 	
 	private static void chat(String out) {
+		System.out.println(Thread.currentThread());
 		HeadlessMinecraft.getInstance().getConnectionManager().getPlayer().chat(out);
 	}
 	

@@ -27,19 +27,13 @@ public class TestPlugin implements HeadlessPlugin {
 		try {
 			CommandRegistry.registerCommand("hi", true, (command, args) -> {
 				HeadlessMinecraft.getInstance().getConnectionManager().getPlayer().chat("Recieved");
-				// HeadlessMinecraft.getInstance().getConnectionManager().getPlayer().chat("Command " + command);
-				// HeadlessMinecraft.getInstance().getConnectionManager().getPlayer().chat("args " + Arrays.toString(args));
 				if (args.length == 2) {
-					new PlayerUtils().setPitchYaw(Integer.parseInt(args[0]), Integer.parseInt(args[1]));
+					PlayerUtils.setPitchYaw(Integer.parseInt(args[0]), Integer.parseInt(args[1])); // TODO float
 				}
 			});
 			
 			CommandRegistry.registerAlias("hi", "h", "i");
 		} catch (CommandRegisterException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		}
-		
 	}
-	
 }

@@ -22,8 +22,9 @@ public class TestListener {
 	
 	@EventHandler
 	public void tickEvent(TickEvent event) {
-		count++;
-		HeadlessMinecraft.getInstance().getConnectionManager().getPlayer().chat("" + count);
+		// count++;
+		// if (HeadlessMinecraft.getInstance().getConnectionManager().getPlayer() != null)
+		// HeadlessMinecraft.getInstance().getConnectionManager().getPlayer().chat("" + count);
 	}
 	
 }

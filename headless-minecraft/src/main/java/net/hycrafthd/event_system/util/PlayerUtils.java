@@ -5,19 +5,17 @@ import net.hycrafthd.headless_minecraft.impl.HeadlessPlayer;
 
 public class PlayerUtils {
 	
-	private HeadlessPlayer player;
-	
-	public PlayerUtils(HeadlessPlayer player) {
-		this.player = player;
-	}
-	
-	public PlayerUtils() {
-		this.player = HeadlessMinecraft.getInstance().getConnectionManager().getPlayer();
-	}
-	
-	public void setPitchYaw(float pitch, float yaw) {
+	public static void setPitchYaw(float pitch, float yaw) {
+		HeadlessPlayer player = getPlayer();
 		player.xRot = pitch;
 		player.yRot = yaw;
 	}
 	
+	public static HeadlessPlayer getPlayer() {
+		HeadlessPlayer player = HeadlessMinecraft.getInstance().getConnectionManager().getPlayer();
+		if (player == null) {
+			throw new IllegalStateException("Player not connected!");
+		}
+		return player;
+	}
 }
