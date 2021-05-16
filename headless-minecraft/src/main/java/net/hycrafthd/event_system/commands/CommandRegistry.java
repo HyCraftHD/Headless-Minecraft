@@ -110,7 +110,6 @@ public class CommandRegistry {
 				// return;
 				// }
 				aliasForCommand.entrySet().forEach(entry -> {
-					System.out.println(entry);
 					chat("----------------------------------------");
 					if (entry.getValue().isEmpty()) {
 						chat("Command: " + entry.getKey() + " without aliasse");

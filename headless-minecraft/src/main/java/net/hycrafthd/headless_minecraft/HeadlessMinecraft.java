@@ -9,6 +9,7 @@ import com.mojang.authlib.minecraft.OfflineSocialInteractions;
 import com.mojang.authlib.minecraft.SocialInteractionsService;
 import com.mojang.authlib.yggdrasil.YggdrasilAuthenticationService;
 
+import net.hycrafthd.event_system.EventHooks;
 import net.hycrafthd.event_system.EventManager;
 import net.hycrafthd.headless_minecraft.impl.HeadlessPlayerSocialManager;
 import net.hycrafthd.headless_minecraft.network.ConnectionManager;
@@ -103,6 +104,7 @@ public class HeadlessMinecraft extends ReentrantBlockableEventLoop<Runnable> {
 	
 	private void tick() {
 		connectionManager.tick();
+		EventHooks.tick();
 	}
 	
 	@Override
@@ -139,7 +141,7 @@ public class HeadlessMinecraft extends ReentrantBlockableEventLoop<Runnable> {
 	public ConnectionManager getConnectionManager() {
 		return connectionManager;
 	}
-
+	
 	public EventManager getEventManager() {
 		return eventManager;
 	}

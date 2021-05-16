@@ -3,6 +3,7 @@ package net.hycrafthd.event_system;
 import net.hycrafthd.event_system.commands.CommandRegistry;
 import net.hycrafthd.event_system.events.RawServerChatMessageEvent;
 import net.hycrafthd.event_system.events.ServerChatMessageEvent;
+import net.hycrafthd.event_system.events.TickEvent;
 import net.hycrafthd.headless_minecraft.HeadlessMinecraft;
 import net.hycrafthd.headless_minecraft.network.HeadlessPacketListener;
 import net.minecraft.network.protocol.game.ClientboundChatPacket;
@@ -25,5 +26,10 @@ public class EventHooks {
 			minecraft.getEventManager().executeEvents(new ServerChatMessageEvent(message, packet.getSender(), listener.getPlayerInfo(packet.getSender())));
 			CommandRegistry.executeCommand(message, packet.getSender());
 		}
+	}
+	
+	public static void tick() {
+		TickEvent event = new TickEvent();
+		HeadlessMinecraft.getInstance().getEventManager().executeEvents(event);
 	}
 }
