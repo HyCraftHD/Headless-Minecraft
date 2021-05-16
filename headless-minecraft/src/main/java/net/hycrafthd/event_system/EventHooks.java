@@ -1,10 +1,12 @@
 package net.hycrafthd.event_system;
 
 import net.hycrafthd.event_system.commands.CommandRegistry;
+import net.hycrafthd.event_system.events.PlayerTickEvent;
 import net.hycrafthd.event_system.events.RawServerChatMessageEvent;
 import net.hycrafthd.event_system.events.ServerChatMessageEvent;
 import net.hycrafthd.event_system.events.TickEvent;
 import net.hycrafthd.headless_minecraft.HeadlessMinecraft;
+import net.hycrafthd.headless_minecraft.impl.HeadlessPlayer;
 import net.hycrafthd.headless_minecraft.network.HeadlessPacketListener;
 import net.minecraft.network.protocol.game.ClientboundChatPacket;
 
@@ -29,7 +31,14 @@ public class EventHooks {
 	}
 	
 	public static void tick() {
-		TickEvent event = new TickEvent();
-		HeadlessMinecraft.getInstance().getEventManager().executeEvents(event);
+		HeadlessMinecraft.getInstance().getEventManager().executeEvents(new TickEvent());
+	}
+	
+	public static void preTick(HeadlessPlayer player) {
+		HeadlessMinecraft.getInstance().getEventManager().executeEvents(new PlayerTickEvent.Pre(player));
+	}
+	
+	public static void postTick(HeadlessPlayer player) {
+		HeadlessMinecraft.getInstance().getEventManager().executeEvents(new PlayerTickEvent.Post(player));
 	}
 }

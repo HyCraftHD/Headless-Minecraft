@@ -1,10 +1,10 @@
 package net.hycrafthd.headless_minecraft.test_plugin;
 
 import net.hycrafthd.event_system.EventHandler;
+import net.hycrafthd.event_system.events.PlayerTickEvent;
 import net.hycrafthd.event_system.events.RawServerChatMessageEvent;
 import net.hycrafthd.event_system.events.ServerChatMessageEvent;
 import net.hycrafthd.event_system.events.TickEvent;
-import net.hycrafthd.headless_minecraft.HeadlessMinecraft;
 
 public class TestListener {
 	
@@ -19,6 +19,16 @@ public class TestListener {
 	public void testMethod(RawServerChatMessageEvent event) {
 		System.out.println("Raw " + event.getMessage());
 	}
+	
+	// @EventHandler
+	// public void playerTickEvent(PlayerTickEvent.Pre event) {
+	// System.out.println("Pre");
+	// }
+	//
+	// @EventHandler
+	// public void playerTickEvent(PlayerTickEvent.Post event) {
+	// System.out.println("Post");
+	// }
 	
 	@EventHandler
 	public void tickEvent(TickEvent event) {

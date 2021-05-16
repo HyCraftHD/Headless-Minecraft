@@ -5,6 +5,11 @@ import net.hycrafthd.headless_minecraft.impl.HeadlessPlayer;
 
 public class PlayerUtils {
 	
+	public static void breakBlock() {
+		HeadlessPlayer player = getPlayer();
+		HeadlessMinecraft.getInstance().getConnectionManager().getGameMode();
+	}
+	
 	public static void setPitchYaw(float pitch, float yaw) {
 		HeadlessPlayer player = getPlayer();
 		player.xRot = pitch;
