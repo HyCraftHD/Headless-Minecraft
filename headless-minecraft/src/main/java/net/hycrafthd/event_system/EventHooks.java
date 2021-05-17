@@ -5,6 +5,8 @@ import net.hycrafthd.event_system.events.PlayerTickEvent;
 import net.hycrafthd.event_system.events.RawServerChatMessageEvent;
 import net.hycrafthd.event_system.events.ServerChatMessageEvent;
 import net.hycrafthd.event_system.events.TickEvent;
+import net.hycrafthd.event_system.util.BlockBreakUtil;
+import net.hycrafthd.event_system.util.PickUtil;
 import net.hycrafthd.headless_minecraft.HeadlessMinecraft;
 import net.hycrafthd.headless_minecraft.impl.HeadlessPlayer;
 import net.hycrafthd.headless_minecraft.network.HeadlessPacketListener;
@@ -32,6 +34,7 @@ public class EventHooks {
 	
 	public static void tick() {
 		HeadlessMinecraft.getInstance().getEventManager().executeEvents(new TickEvent());
+		PickUtil.pick();
 	}
 	
 	public static void preTick(HeadlessPlayer player) {
@@ -40,5 +43,6 @@ public class EventHooks {
 	
 	public static void postTick(HeadlessPlayer player) {
 		HeadlessMinecraft.getInstance().getEventManager().executeEvents(new PlayerTickEvent.Post(player));
+		BlockBreakUtil.tick();
 	}
 }

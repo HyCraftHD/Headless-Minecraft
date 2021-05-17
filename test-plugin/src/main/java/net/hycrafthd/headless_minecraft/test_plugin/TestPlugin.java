@@ -8,6 +8,8 @@ import net.hycrafthd.event_system.EventHandler;
 import net.hycrafthd.event_system.commands.CommandRegistry;
 import net.hycrafthd.event_system.commands.CommandRegistry.CommandRegisterException;
 import net.hycrafthd.event_system.events.PlayerTickEvent;
+import net.hycrafthd.event_system.util.BlockBreakUtil;
+import net.hycrafthd.event_system.util.BlockPlaceUtil;
 import net.hycrafthd.event_system.util.PlayerUtils;
 import net.hycrafthd.headless_minecraft.HeadlessMinecraft;
 import net.hycrafthd.headless_minecraft.plugin.HeadlessPlugin;
@@ -38,16 +40,20 @@ public class TestPlugin implements HeadlessPlugin {
 		HeadlessMinecraft.getInstance().getEventManager().registerListener(new TestListener());
 		HeadlessMinecraft.getInstance().getEventManager().registerListener(this);
 		try {
-			CommandRegistry.registerCommand("hi", true, (command, args) -> {
-				HeadlessMinecraft.getInstance().getConnectionManager().getPlayer().chat("Recieved");
-				HitResult result = HeadlessMinecraft.getInstance().getConnectionManager().getPlayer().pick(HeadlessMinecraft.getInstance().getConnectionManager().getGameMode().getPickRange(), 1.0F, false);
-				if (result instanceof BlockHitResult) {
-					BlockHitResult bhr = (BlockHitResult) result;
-					BlockPos pos = bhr.getBlockPos();
-					BlockState state = HeadlessMinecraft.getInstance().getConnectionManager().getPlayer().level.getBlockState(pos);
-					HeadlessMinecraft.getInstance().getConnectionManager().getGameMode().startDestroyBlock(pos, bhr.getDirection());
-					testbhr = bhr;
-					breakBlock = true;
+			CommandRegistry.registerCommand("place", true, (command, args) -> {
+				if (args.length == 0)
+					System.out.println(BlockPlaceUtil.placeBlock(InteractionHand.MAIN_HAND));
+			});
+			
+			CommandRegistry.registerCommand("slot", true, (command, args) -> {
+				if (args.length == 1) {
+					PlayerUtils.selectHotbarSlot(Integer.parseInt(args[0]));
+				}
+			});
+			
+			CommandRegistry.registerCommand("attack", true, (command, args) -> {
+				if (args.length == 0) {
+					PlayerUtils.attackEntity();
 				}
 			});
 			
@@ -57,14 +63,6 @@ public class TestPlugin implements HeadlessPlugin {
 	
 	@EventHandler
 	public void testContinueBreak(PlayerTickEvent.Post event) {
-		if (breakBlock) {
-			if (!HeadlessMinecraft.getInstance().getConnectionManager().getPlayer().level.getBlockState(testbhr.getBlockPos()).isAir()) {
-				HeadlessMinecraft.getInstance().getConnectionManager().getGameMode().continueDestroyBlock(testbhr.getBlockPos(), testbhr.getDirection());
-				HeadlessMinecraft.getInstance().getConnectionManager().getPlayer().swing(InteractionHand.MAIN_HAND);
-			} else {
-				HeadlessMinecraft.getInstance().getConnectionManager().getGameMode().stopDestroyBlock();
-				breakBlock = false;
-			}
-		}
+		
 	}
 }
