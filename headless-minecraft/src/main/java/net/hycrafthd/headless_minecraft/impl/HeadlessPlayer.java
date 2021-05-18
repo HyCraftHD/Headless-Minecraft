@@ -6,6 +6,7 @@ import net.hycrafthd.event_system.EventHooks;
 import net.hycrafthd.event_system.events.PlayerTickEvent;
 import net.hycrafthd.headless_minecraft.Constants;
 import net.hycrafthd.headless_minecraft.HeadlessMinecraft;
+import net.hycrafthd.headless_minecraft.mixin.accessor.LocalPlayerAccessorMixin;
 import net.hycrafthd.headless_minecraft.network.HeadlessPacketListener;
 import net.minecraft.client.ClientRecipeBook;
 import net.minecraft.client.player.LocalPlayer;
@@ -28,6 +29,7 @@ public class HeadlessPlayer extends LocalPlayer {
 	public HeadlessPlayer(HeadlessPacketListener packetListener, HeadlessLevel level, StatsCounter stats, ClientRecipeBook recipeBook, boolean wasShiftKeyDown, boolean wasSprinting) {
 		super(null, level, packetListener, stats, recipeBook, wasShiftKeyDown, wasSprinting);
 		this.packetListener = packetListener;
+		((LocalPlayerAccessorMixin) this).setAutoJumpEnabled(false);
 	}
 	
 	@Override

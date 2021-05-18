@@ -4,6 +4,7 @@ import java.util.Optional;
 
 import net.hycrafthd.headless_minecraft.HeadlessMinecraft;
 import net.hycrafthd.headless_minecraft.impl.HeadlessPlayer;
+import net.hycrafthd.headless_minecraft.mixin.accessor.LocalPlayerAccessorMixin;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.protocol.Packet;
@@ -13,6 +14,10 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.item.ItemStack;
 
 public class PlayerUtils {
+	
+	public void setAutoJump(boolean value) {
+		((LocalPlayerAccessorMixin) getPlayer()).setAutoJumpEnabled(value);
+	}
 	
 	public static void breakBlockFacing(Runnable callable) {
 		LeftClickManager.breakBlock(callable);

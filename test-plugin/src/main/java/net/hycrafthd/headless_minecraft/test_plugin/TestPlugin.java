@@ -12,6 +12,7 @@ import net.hycrafthd.event_system.util.LeftClickManager;
 import net.hycrafthd.event_system.util.RightClickManager;
 import net.hycrafthd.event_system.util.PlayerUtils;
 import net.hycrafthd.headless_minecraft.HeadlessMinecraft;
+import net.hycrafthd.headless_minecraft.impl.HeadlessInput;
 import net.hycrafthd.headless_minecraft.plugin.HeadlessPlugin;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionHand;
@@ -24,6 +25,10 @@ public class TestPlugin implements HeadlessPlugin {
 	private static Logger LOGGER = LogManager.getLogger();
 	
 	private boolean holdRight = false;
+	
+	private boolean move = false;
+	
+	private float impuls = 0.01F;
 	
 	@Override
 	public void load() {
@@ -85,6 +90,12 @@ public class TestPlugin implements HeadlessPlugin {
 				}
 			});
 			
+			CommandRegistry.registerCommand("move", true, (command, args) -> {
+				if (args.length == 0) {
+					HeadlessMinecraft.getInstance().getConnectionManager().getPlayer().input.forwardImpulse = 1.0F;
+				}
+			});
+			
 		} catch (CommandRegisterException e) {
 		}
 	}
@@ -94,6 +105,19 @@ public class TestPlugin implements HeadlessPlugin {
 		if (holdRight) {
 			PlayerUtils.rightClick(InteractionHand.MAIN_HAND);
 			System.out.println();
+		}
+		
+		if (move) {
+			HeadlessMinecraft.getInstance().getConnectionManager().getPlayer().input.forwardImpulse += impuls;
+			
+			if (HeadlessMinecraft.getInstance().getConnectionManager().getPlayer().input.forwardImpulse >= 1.0F) {
+				impuls = -impuls;
+			}
+			
+			if (HeadlessMinecraft.getInstance().getConnectionManager().getPlayer().input.forwardImpulse <= -1.0F) {
+				impuls = -impuls;
+			}
+			
 		}
 	}
 }
