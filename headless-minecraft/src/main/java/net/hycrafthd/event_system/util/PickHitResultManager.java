@@ -14,7 +14,7 @@ import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 
-public class PickUtil {
+public class PickHitResultManager {
 	
 	private static Entity crosshairPickEntity;
 	

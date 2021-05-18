@@ -8,8 +8,8 @@ import net.hycrafthd.event_system.EventHandler;
 import net.hycrafthd.event_system.commands.CommandRegistry;
 import net.hycrafthd.event_system.commands.CommandRegistry.CommandRegisterException;
 import net.hycrafthd.event_system.events.PlayerTickEvent;
-import net.hycrafthd.event_system.util.BlockBreakUtil;
-import net.hycrafthd.event_system.util.BlockPlaceUtil;
+import net.hycrafthd.event_system.util.LeftClickManager;
+import net.hycrafthd.event_system.util.RightClickManager;
 import net.hycrafthd.event_system.util.PlayerUtils;
 import net.hycrafthd.headless_minecraft.HeadlessMinecraft;
 import net.hycrafthd.headless_minecraft.plugin.HeadlessPlugin;
@@ -23,9 +23,7 @@ public class TestPlugin implements HeadlessPlugin {
 	
 	private static Logger LOGGER = LogManager.getLogger();
 	
-	private boolean breakBlock = false;
-	
-	private BlockHitResult testbhr;
+	private boolean holdRight = false;
 	
 	@Override
 	public void load() {
@@ -42,7 +40,13 @@ public class TestPlugin implements HeadlessPlugin {
 		try {
 			CommandRegistry.registerCommand("place", true, (command, args) -> {
 				if (args.length == 0)
-					System.out.println(BlockPlaceUtil.placeBlock(InteractionHand.MAIN_HAND));
+					System.out.println(PlayerUtils.rightClick(InteractionHand.MAIN_HAND));
+			});
+			
+			CommandRegistry.registerCommand("break", true, (command, args) -> {
+				if (args.length == 0)
+					PlayerUtils.breakBlockFacing(() -> {
+					});
 			});
 			
 			CommandRegistry.registerCommand("slot", true, (command, args) -> {
@@ -57,12 +61,39 @@ public class TestPlugin implements HeadlessPlugin {
 				}
 			});
 			
+			CommandRegistry.registerCommand("facing", true, (command, args) -> {
+				if (args.length == 2)
+					PlayerUtils.setPitchYaw(Float.parseFloat(args[0]), Float.parseFloat(args[1]));
+			});
+			
+			CommandRegistry.registerCommand("continue", true, (command, args) -> {
+				if (args.length == 0) {
+					holdRight = !holdRight;
+					PlayerUtils.chat("" + holdRight);
+				}
+			});
+			
+			CommandRegistry.registerCommand("drop", true, (command, args) -> {
+				if (args.length == 1) {
+					PlayerUtils.dropSelected(Boolean.parseBoolean(args[0]));
+				}
+			});
+			
+			CommandRegistry.registerCommand("swap", true, (command, args) -> {
+				if (args.length == 0) {
+					PlayerUtils.swapHand();
+				}
+			});
+			
 		} catch (CommandRegisterException e) {
 		}
 	}
 	
 	@EventHandler
-	public void testContinueBreak(PlayerTickEvent.Post event) {
-		
+	public void tick(PlayerTickEvent.Post event) {
+		if (holdRight) {
+			PlayerUtils.rightClick(InteractionHand.MAIN_HAND);
+			System.out.println();
+		}
 	}
 }

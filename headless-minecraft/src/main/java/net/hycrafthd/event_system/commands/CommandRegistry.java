@@ -107,7 +107,6 @@ public class CommandRegistry {
 			registerCommand("Info", true, (command, args) -> {
 				chat("List of all Commands:");
 				aliasForCommand.entrySet().forEach(entry -> {
-					chat("----------------------------------------");
 					if (entry.getValue().isEmpty()) {
 						chat("Command: " + entry.getKey() + " without aliasse");
 					} else {
