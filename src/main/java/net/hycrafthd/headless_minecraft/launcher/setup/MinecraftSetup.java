@@ -3,8 +3,8 @@ package net.hycrafthd.headless_minecraft.launcher.setup;
 import java.io.File;
 
 import net.hycrafthd.headless_minecraft.launcher.Constants;
+import net.hycrafthd.headless_minecraft.launcher.Main;
 import net.hycrafthd.minecraft_downloader.MinecraftAuthenticator;
-import net.hycrafthd.minecraft_downloader.MinecraftClasspathBuilder;
 import net.hycrafthd.minecraft_downloader.MinecraftDownloader;
 import net.hycrafthd.minecraft_downloader.MinecraftParser;
 import net.hycrafthd.minecraft_downloader.settings.ProvidedSettings;
@@ -13,8 +13,8 @@ public class MinecraftSetup {
 	
 	private static MinecraftSetup INSTANCE;
 	
-	public static MinecraftSetup launch(File run, String username, String password) {
-		return INSTANCE = new MinecraftSetup(run, username, password);
+	public static MinecraftSetup launch(File run, File authFile, boolean authenticate, String authenticateType) {
+		return INSTANCE = new MinecraftSetup(run, authFile, authenticate, authenticateType);
 	}
 	
 	public static void destroy() {
@@ -27,7 +27,9 @@ public class MinecraftSetup {
 	
 	private final ProvidedSettings settings;
 	
-	public MinecraftSetup(File run, String username, String password) {
+	public MinecraftSetup(File run, File authFile, boolean authenticate, String authenticateType) {
+		Main.LOGGER.info("Verify minecraft installation and authenticate");
+		
 		final File outputDirectory;
 		if (Constants.DEVELOPMENT_MODE) {
 			outputDirectory = new File(Constants.DEVELOPMENT_DOWNLOAD_DIRECTORY);
@@ -43,8 +45,9 @@ public class MinecraftSetup {
 		MinecraftDownloader.launch(settings, true);
 		
 		// Authenticate
-		MinecraftClasspathBuilder.launch(settings);
-		MinecraftAuthenticator.launch(settings, username, password);
+		MinecraftAuthenticator.launch(settings, authFile, authenticate, authenticateType);
+		
+		Main.LOGGER.info("Finished minecraft installation and authenticated");
 	}
 	
 	public ProvidedSettings getSettings() {
