@@ -43,7 +43,7 @@ public class Main {
 		
 		final OptionSet set = parser.parse(args);
 		
-		if (set.has(helpSpec) || set.specs().size() < 3) {
+		if (set.has(helpSpec) || set.specs().size() < 2) {
 			parser.printHelpOn(IoBuilder.forLogger(LOGGER).setAutoFlush(true).setLevel(Level.ERROR).buildPrintStream());
 			return;
 		}
