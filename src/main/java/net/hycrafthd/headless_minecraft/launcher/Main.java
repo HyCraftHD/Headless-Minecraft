@@ -38,10 +38,8 @@ public class Main {
 		final OptionSpec<File> runSpec = parser.accepts("run", "Run directory for headless minecraft").withRequiredArg().ofType(File.class);
 		
 		// Login specs
-		// TODO make login with microsoft accounts possible (do not use password here)
-		
-		final OptionSpec<String> usernameSpec = parser.accepts("username", "Username / Email for login").withRequiredArg();
-		final OptionSpec<String> passwordSpec = parser.accepts("password", "Password for login").withRequiredArg();
+		final OptionSpec<File> authFileSpec = parser.accepts("auth-file", "Authentication file for reading and updating authentication data").withRequiredArg().required().ofType(File.class);
+		final OptionSpec<String> authenticateSpec = parser.accepts("authenticate", "Shows an interactive console login for mojang and microsoft accounts (soon a gui solution may be implemented)").availableIf(authFileSpec).withOptionalArg();
 		
 		final OptionSet set = parser.parse(args);
 		
@@ -55,12 +53,13 @@ public class Main {
 		// Get arguments
 		final File run = set.valueOf(runSpec);
 		
-		final String username = set.valueOf(usernameSpec);
-		final String password = set.valueOf(passwordSpec);
+		final File authFile = set.valueOf(authFileSpec);
+		final boolean authenticate = set.has(authenticateSpec);
+		final String authenticateType = set.valueOf(authenticateSpec);
 		
-		// Validate that run, username and password are not null
-		if (run == null || username == null || password == null) {
-			throw new IllegalStateException("Run, username and password cannot be null values.");
+		// Validate that run, and auth file != null
+		if (run == null || authFile == null) {
+			throw new IllegalStateException("Run and auth file cannot be null values.");
 		}
 		
 		// Create output folder
@@ -69,7 +68,7 @@ public class Main {
 		}
 		
 		// Minecraft setup
-		final MinecraftSetup setup = MinecraftSetup.launch(run, username, password);
+		final MinecraftSetup setup = MinecraftSetup.launch(run, authFile, authenticate, authenticateType);
 		
 		// Setup url classpath url stream handler
 		URLUtil.addUrlHandler(Handler.class);
