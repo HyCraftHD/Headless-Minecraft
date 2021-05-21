@@ -164,7 +164,7 @@ task runHeadlessMinecraft(type: JavaExec) {
 	}
 
 	main "net.hycrafthd.headless_minecraft.launcher.Main"
-	args "--run", "\"$run\"", "--username", "xyz", "--password", "xyz"
+	args "--run", "\"$run\"", "--auth-file", "auth.json"
 	systemProperties = [
 		"headless-minecraft.development": "true",
 		"headless-minecraft.development.download": "\"$minecraft_files\"",
