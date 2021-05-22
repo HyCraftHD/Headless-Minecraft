@@ -22,10 +22,10 @@ buildscript {
 }
 
 plugins {
-    id "java-library"
-    id "eclipse"
-    id "com.palantir.launch-config" version "1.2.0"
-    id "application"
+	id "java-library"
+	id "eclipse"
+	id "com.palantir.launch-config" version "1.2.0"
+	id "application"
 	id "com.github.johnrengelman.shadow" version "6.1.0"
 }
 
