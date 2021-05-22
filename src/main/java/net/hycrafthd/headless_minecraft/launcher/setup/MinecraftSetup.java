@@ -17,18 +17,18 @@ public class MinecraftSetup {
 		return INSTANCE = new MinecraftSetup(run, authFile, authenticate, authenticateType);
 	}
 	
-	public static void destroy() {
-		INSTANCE = null;
-	}
-	
 	public static MinecraftSetup getInstance() {
 		return INSTANCE;
 	}
 	
 	private final ProvidedSettings settings;
 	
+	private final File authFile;
+	private final boolean authenticate;
+	private final String authenticateType;
+	
 	public MinecraftSetup(File run, File authFile, boolean authenticate, String authenticateType) {
-		LauncherServiceProvider.LOGGER.info("Verify minecraft installation and authenticate");
+		LauncherServiceProvider.LOGGER.info("Verify minecraft installation");
 		
 		final File outputDirectory;
 		if (Constants.DEVELOPMENT_MODE) {
@@ -44,10 +44,13 @@ public class MinecraftSetup {
 		MinecraftParser.launch(settings);
 		MinecraftDownloader.launch(settings, true);
 		
-		// Authenticate
+		this.authFile = authFile;
+		this.authenticate = authenticate;
+		this.authenticateType = authenticateType;
+	}
+	
+	public void authenticate() {
 		MinecraftAuthenticator.launch(settings, authFile, authenticate, authenticateType);
-		
-		LauncherServiceProvider.LOGGER.info("Finished minecraft installation and authenticated");
 	}
 	
 	public ProvidedSettings getSettings() {
