@@ -55,6 +55,7 @@ public class LauncherServiceProvider implements ITransformationService {
 		LOGGER.debug("The run directory is {}", runDirectory);
 		
 		// Minecraft setup
+		LOGGER.debug("Setup minecraft environment");
 		MinecraftSetup.launch(runDirectory.toFile(), authFile, authenticateType != null, authenticateType);
 	}
 	

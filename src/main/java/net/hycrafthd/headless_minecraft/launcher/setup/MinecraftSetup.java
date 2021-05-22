@@ -3,7 +3,7 @@ package net.hycrafthd.headless_minecraft.launcher.setup;
 import java.io.File;
 
 import net.hycrafthd.headless_minecraft.launcher.Constants;
-import net.hycrafthd.headless_minecraft.launcher.service.LauncherServiceProvider;
+import net.hycrafthd.headless_minecraft.launcher.Main;
 import net.hycrafthd.minecraft_downloader.MinecraftAuthenticator;
 import net.hycrafthd.minecraft_downloader.MinecraftDownloader;
 import net.hycrafthd.minecraft_downloader.MinecraftParser;
@@ -28,7 +28,7 @@ public class MinecraftSetup {
 	private final String authenticateType;
 	
 	public MinecraftSetup(File run, File authFile, boolean authenticate, String authenticateType) {
-		LauncherServiceProvider.LOGGER.info("Verify minecraft installation");
+		Main.LOGGER.info("Verify minecraft installation");
 		
 		final File outputDirectory;
 		if (Constants.DEVELOPMENT_MODE) {
