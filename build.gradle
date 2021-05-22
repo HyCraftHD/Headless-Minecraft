@@ -78,6 +78,7 @@ dependencies {
 	headlessMinecraftImplementation project(":Headless-Minecraft-Implementation")
 
 	packedDependencies group: "net.hycrafthd", name: "minecraft_downloader", version: config.minecraft_downloader.version
+	packedDependencies group: "net.hycrafthd", name: "minecraft_authenticator", version: config.minecraft_authenticator.version
 	packedDependencies group: "net.hycrafthd", name: "logging_util", version: config.logging_util.version
 	
 	packedDependencies group: "org.apache.logging.log4j", name: "log4j-api", version: config.log4j.version
