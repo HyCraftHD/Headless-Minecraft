@@ -59,6 +59,11 @@ public class LauncherServiceProvider implements ITransformationService {
 		final String version = environment.getProperty(HeadlessEnvironment.VERSION.get()).orElseThrow(() -> new IllegalStateException("Version key must be present"));
 		final Path gameDirectory = environment.getProperty(HeadlessEnvironment.GAME_DIR.get()).orElseThrow(() -> new IllegalStateException("Game directory key must be present"));
 		
+		// Setup cache dir
+		final File cacheDir = gameDirectory.resolve("cache").toFile();
+		FileUtil.createFolders(cacheDir);
+		final Path cacheDirectory = environment.computePropertyIfAbsent(HeadlessEnvironment.CACHE_DIR.get(), key -> cacheDir.toPath());
+		
 		// Setup minecraft install directory
 		if (minecraftInstallationDir == null) {
 			if (Constants.DEVELOPMENT_MODE) {
@@ -82,7 +87,8 @@ public class LauncherServiceProvider implements ITransformationService {
 		
 		// Log information
 		LOGGER.info("Minecraft version is {}", version);
-		LOGGER.info("The run directory is {}", gameDirectory.toAbsolutePath());
+		LOGGER.info("The game directory is {}", gameDirectory.toAbsolutePath());
+		LOGGER.info("The cache directory is {}", cacheDirectory.toAbsolutePath());
 		LOGGER.info("The minecraft installation directory is {}", minecraftInstallationDirectory.toAbsolutePath());
 		LOGGER.info("The auth file is {}", authenticationFile.toAbsolutePath());
 		if (authenticateType != null) {
@@ -109,11 +115,7 @@ public class LauncherServiceProvider implements ITransformationService {
 		
 		beginScanning(environment);
 		
-		return Collections.emptyList();
-		
-		// return Arrays.asList(new AbstractMap.SimpleImmutableEntry<>("implementation",
-		// Paths.get(Constants.DEVELOPMENT_IMPLEMENTATION_BUILD)), new AbstractMap.SimpleImmutableEntry<>("plugin",
-		// Paths.get(Constants.DEVELOPMENT_TEST_PLUGIN_BUILD)));
+		return entries;
 	}
 	
 	@Override

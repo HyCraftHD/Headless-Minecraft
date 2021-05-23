@@ -28,7 +28,7 @@ public class DevelopmentLaunchTarget extends BaseLaunchTarget {
 		builder.addTransformationPath(implementationBuild);
 		
 		// Add test plugin build
-		final Path testPluginBuild = Paths.get(Constants.DEVELOPMENT_TEST_PLUGIN_BUILD);
+		final Path testPluginBuild = Paths.get(Constants.DEVELOPMENT_MAIN_PLUGIN_BUILD);
 		builder.addTransformationPath(testPluginBuild);
 		
 		// Supply manifest for implementation and test plugin

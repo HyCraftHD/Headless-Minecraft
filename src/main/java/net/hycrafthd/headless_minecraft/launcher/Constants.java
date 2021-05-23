@@ -12,8 +12,9 @@ public class Constants {
 	public static final String DEVELOPMENT_DOWNLOAD_DIRECTORY = System.getProperty("headless-minecraft.development.download");
 	public static final String DEVELOPMENT_MAPPED_MINECRAFT = System.getProperty("headless-minecraft.development.mapped-minecraft");
 	public static final String DEVELOPMENT_IMPLEMENTATION_BUILD = System.getProperty("headless-minecraft.development.implementation-build");
-	public static final String DEVELOPMENT_TEST_PLUGIN_BUILD = System.getProperty("headless-minecraft.development.test-plugin-build");
+	public static final String DEVELOPMENT_MAIN_PLUGIN_BUILD = System.getProperty("headless-minecraft.development.main-plugin-build");
 	
 	// Production manifest value
 	public static final Attributes.Name PRODUCTION_IMPLEMENTATION_JAR = new Attributes.Name("Headless-Minecraft-Implementation-Jar");
+	public static final Attributes.Name PRODUCTION_MAIN_PLUGIN_JAR = new Attributes.Name("Headless-Minecraft-Main-Plugin-Jar");
 }
