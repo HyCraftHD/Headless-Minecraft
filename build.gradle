@@ -63,11 +63,15 @@ repositories {
 }
 
 configurations {
+	headlessMinecraftCommon {
+		transitive = false
+	}
+	
 	headlessMinecraftImplementation {
 		transitive = false
 	}
 	
-	headlessMinecraftCommon {
+	mainPlugin {
 		transitive = false
 	}
 	
@@ -81,6 +85,7 @@ configurations {
 dependencies {
 	headlessMinecraftCommon project(":Headless-Minecraft-Common")
 	headlessMinecraftImplementation project(":Headless-Minecraft-Implementation")
+	mainPlugin project(":Main-Plugin")
 
 	packedDependencies group: "net.hycrafthd", name: "minecraft_downloader", version: config.minecraft_downloader.version
 	packedDependencies group: "net.hycrafthd", name: "minecraft_authenticator", version: config.minecraft_authenticator.version
@@ -139,6 +144,7 @@ tasks.named("jar") {
 	
 	dependsOn ":Headless-Minecraft-Common:build"
 	dependsOn ":Headless-Minecraft-Implementation:build"
+	dependsOn ":Main-Plugin:build"
 		
 	from "LICENSE"
 	
@@ -149,12 +155,16 @@ tasks.named("jar") {
    	def implementation = configurations.headlessMinecraftImplementation.singleFile
 	from implementation
 	
+	def plugin = configurations.mainPlugin.singleFile
+	from plugin
+	
 	manifest {
 		attributes(
 			"Implementation-Version": project.version,
 			"Implementation-Vendor": "HyCraftHD, Luc_ZZ",
 			"Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ"),
-			"Headless-Minecraft-Implementation-Jar": implementation.name
+			"Headless-Minecraft-Implementation-Jar": implementation.name,
+			"Headless-Minecraft-Main-Plugin-Jar": plugin.name
 		)
 	}
 }
