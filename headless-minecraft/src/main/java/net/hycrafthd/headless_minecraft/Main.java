@@ -18,7 +18,6 @@ public class Main {
 		final OptionParser parser = new OptionParser();
 		
 		// Default specs
-		final OptionSpec<Void> helpSpec = parser.accepts("help", "Show the help menu").forHelp();
 		final OptionSpec<File> runSpec = parser.accepts("gameDir", "Run directory for headless minecraft").withRequiredArg().ofType(File.class);
 		
 		// User data specs
@@ -30,11 +29,6 @@ public class Main {
 		parser.allowsUnrecognizedOptions();
 		
 		final OptionSet set = parser.parse(args);
-		
-		if (set.has(helpSpec) || set.specs().size() < 5) {
-			parser.printHelpOn(System.out);
-			return;
-		}
 		
 		LOGGER.info("Start headless minecraft");
 		
