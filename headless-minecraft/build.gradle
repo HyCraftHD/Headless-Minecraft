@@ -17,7 +17,7 @@ repositories {
 
 dependencies {
 	compileOnly project(":Mapped-Minecraft")
-	compileOnly project(":Headless-Minecraft-Common")
+	implementation project(":Headless-Minecraft-Common")
 				
 	implementation group: "org.spongepowered", name: "mixin", version: config.mixin.version
 	implementation group: "org.ow2.asm", name: "asm", version: config.asm.version
