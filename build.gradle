@@ -137,12 +137,16 @@ sourceSets {
 tasks.named("jar") {
 	archiveClassifier = ""
 	
-	//dependsOn ":Headless-Minecraft-Implementation:build"
-	
-	def implementation = configurations.headlessMinecraftImplementation.singleFile
-	
+	dependsOn ":Headless-Minecraft-Common:build"
+	dependsOn ":Headless-Minecraft-Implementation:build"
+		
 	from "LICENSE"
-	from configurations.headlessMinecraftCommon.singleFile
+	
+	configurations.headlessMinecraftCommon.asFileTree.each {
+        from(zipTree(it))
+    }	
+    
+   	def implementation = configurations.headlessMinecraftImplementation.singleFile
 	from implementation
 	
 	manifest {
