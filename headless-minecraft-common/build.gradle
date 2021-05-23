@@ -8,6 +8,19 @@ java {
 	}
 }
 
+repositories {
+	mavenCentral()
+	maven {
+		url "https://files.minecraftforge.net/maven"
+	}
+}
+
+dependencies {
+	implementation (group: "cpw.mods", name: "modlauncher", version: config.mod_launcher.version) {
+		transitive = false
+	}
+}
+
 jar {
 	classifier = "common"
 }

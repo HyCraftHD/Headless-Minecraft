@@ -76,6 +76,7 @@ configurations {
 
 dependencies {
 	headlessMinecraftImplementation project(":Headless-Minecraft-Implementation")
+	compileOnly project(":Headless-Minecraft-Common")
 
 	packedDependencies group: "net.hycrafthd", name: "minecraft_downloader", version: config.minecraft_downloader.version
 	packedDependencies group: "net.hycrafthd", name: "minecraft_authenticator", version: config.minecraft_authenticator.version
