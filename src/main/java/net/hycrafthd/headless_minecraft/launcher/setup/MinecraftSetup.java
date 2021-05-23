@@ -27,7 +27,7 @@ public class MinecraftSetup {
 	private final String authenticateType;
 	
 	public MinecraftSetup(File outputDir, File authFile, boolean authenticate, String authenticateType) {
-		this.authFile = outputDir;
+		this.authFile = authFile;
 		this.authenticate = authenticate;
 		this.authenticateType = authenticateType;
 		settings = new ProvidedSettings(Constants.MCVERSION, outputDir, null);
