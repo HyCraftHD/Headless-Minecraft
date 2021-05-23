@@ -27,14 +27,19 @@ import cpw.mods.modlauncher.api.ITransformer;
 import cpw.mods.modlauncher.api.IncompatibleEnvironmentException;
 import joptsimple.OptionSpec;
 import joptsimple.OptionSpecBuilder;
+import net.hycrafthd.headless_minecraft.common.HeadlessEnvironment;
+import net.hycrafthd.headless_minecraft.launcher.Constants;
+import net.hycrafthd.headless_minecraft.launcher.setup.MinecraftSetup;
 
 public class LauncherServiceProvider implements ITransformationService {
 	
 	public static final Logger LOGGER = LogManager.getLogger("Headless Minecraft Launcher Service");
 	
+	private OptionSpec<File> minecraftInstallationDirSpec;
 	private OptionSpec<File> authFileSpec;
 	private OptionSpec<String> authenticateTypeSpec;
 	
+	private File minecraftInstallationDir;
 	private File authFile;
 	private String authenticateType;
 	
@@ -54,21 +59,39 @@ public class LauncherServiceProvider implements ITransformationService {
 	
 	@Override
 	public void initialize(IEnvironment environment) {
-		// Validate supplied parameters
-		final String version = environment.getProperty(IEnvironment.Keys.VERSION.get()).orElseThrow(() -> new IllegalStateException("Version key must be present"));
-		final Path runDirectory = environment.getProperty(IEnvironment.Keys.GAMEDIR.get()).orElseThrow(() -> new IllegalStateException("Run directory key must be present"));
-		if (authFile == null) {
-			throw new IllegalStateException("Auth file cannot be null");
+		LOGGER.info("Initialize headless minecraft launcher service provider");
+		
+		// Validate and compute supplied parameters
+		final String version = environment.getProperty(HeadlessEnvironment.VERSION.get()).orElseThrow(() -> new IllegalStateException("Version key must be present"));
+		final Path gameDirectory = environment.getProperty(HeadlessEnvironment.GAME_DIR.get()).orElseThrow(() -> new IllegalStateException("Game directory key must be present"));
+		
+		if (minecraftInstallationDir == null) {
+			if (Constants.DEVELOPMENT_MODE) {
+				minecraftInstallationDir = new File(Constants.DEVELOPMENT_DOWNLOAD_DIRECTORY);
+			} else {
+				minecraftInstallationDir = new File(gameDirectory.toFile(), "minecraft_files");
+			}
 		}
+		
+		final Path minecraftInstallationDirectory = environment.computePropertyIfAbsent(HeadlessEnvironment.MINECRAFT_INSTALLATION_DIR.get(), key -> minecraftInstallationDir.toPath());
+		final Path authenticationFile = environment.computePropertyIfAbsent(HeadlessEnvironment.MINECRAFT_INSTALLATION_DIR.get(), key -> authFile.toPath());
 		
 		// Log information
 		LOGGER.debug("Launch headless minecraft version {}", version);
-		LOGGER.debug("The run directory is {}", runDirectory.toAbsolutePath());
-		LOGGER.debug("The auth file is {}", authFile.toPath().toAbsolutePath());
+		LOGGER.debug("The run directory is {}", gameDirectory.toAbsolutePath());
+		LOGGER.debug("The minecraft installation directory is {}", minecraftInstallationDirectory.toAbsolutePath());
+		LOGGER.debug("The auth file is {}", authenticationFile.toAbsolutePath());
+		if (authenticateType != null) {
+			LOGGER.debug("The authentication type is {}", authenticateType);
+		}
+		
+		// Initialize the minecraft setup
+		LOGGER.info("Initialize minecraft setup");
+		final MinecraftSetup setup = MinecraftSetup.initialize(minecraftInstallationDirectory.toFile(), authenticationFile.toFile(), authenticateType != null, authenticateType);
 		
 		// Minecraft setup
 		LOGGER.debug("Setup minecraft environment");
-		//MinecraftSetup.setup(runDirectory.toFile(), authFile, authenticateType != null, authenticateType);
+		setup.download();
 	}
 	
 	@Override
@@ -113,12 +136,14 @@ public class LauncherServiceProvider implements ITransformationService {
 	
 	@Override
 	public void arguments(BiFunction<String, String, OptionSpecBuilder> argumentBuilder) {
+		minecraftInstallationDirSpec = argumentBuilder.apply("minecraft-installation", "Directory where minecraft will be installed. Can be shared between instances").withRequiredArg().ofType(File.class);
 		authFileSpec = argumentBuilder.apply("auth-file", "Authentication file for reading and updating authentication data").withRequiredArg().required().ofType(File.class);
 		authenticateTypeSpec = argumentBuilder.apply("authenticate", "Shows an interactive console login for mojang and microsoft accounts (Only console is allowed currently)").withRequiredArg();
 	}
 	
 	@Override
 	public void argumentValues(OptionResult option) {
+		minecraftInstallationDir = option.value(minecraftInstallationDirSpec);
 		authFile = option.value(authFileSpec);
 		authenticateType = option.value(authenticateTypeSpec);
 	}

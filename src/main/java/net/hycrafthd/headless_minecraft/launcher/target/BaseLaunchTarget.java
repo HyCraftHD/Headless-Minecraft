@@ -57,6 +57,8 @@ public abstract class BaseLaunchTarget implements ILaunchHandlerService {
 		
 		final String[] args = Stream.concat(argsList.stream(), Stream.of(arguments)).toArray(String[]::new);
 		
+		Main.LOGGER.info("Launch headless minecraft");
+		
 		return () -> {
 			
 			final Class<?> entryClass = Class.forName("net.hycrafthd.headless_minecraft.Main", true, launchClassLoader.getInstance());

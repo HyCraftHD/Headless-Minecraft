@@ -3,7 +3,6 @@ package net.hycrafthd.headless_minecraft.launcher.setup;
 import java.io.File;
 
 import net.hycrafthd.headless_minecraft.launcher.Constants;
-import net.hycrafthd.headless_minecraft.launcher.Main;
 import net.hycrafthd.minecraft_downloader.MinecraftAuthenticator;
 import net.hycrafthd.minecraft_downloader.MinecraftDownloader;
 import net.hycrafthd.minecraft_downloader.MinecraftParser;
@@ -13,8 +12,8 @@ public class MinecraftSetup {
 	
 	private static MinecraftSetup INSTANCE;
 	
-	public static MinecraftSetup launch(File run, File authFile, boolean authenticate, String authenticateType) {
-		return INSTANCE = new MinecraftSetup(run, authFile, authenticate, authenticateType);
+	public static MinecraftSetup initialize(File outputDir, File authFile, boolean authenticate, String authenticateType) {
+		return INSTANCE = new MinecraftSetup(outputDir, authFile, authenticate, authenticateType);
 	}
 	
 	public static MinecraftSetup getInstance() {
@@ -27,26 +26,16 @@ public class MinecraftSetup {
 	private final boolean authenticate;
 	private final String authenticateType;
 	
-	public MinecraftSetup(File run, File authFile, boolean authenticate, String authenticateType) {
-		Main.LOGGER.info("Verify minecraft installation");
-		
-		final File outputDirectory;
-		if (Constants.DEVELOPMENT_MODE) {
-			outputDirectory = new File(Constants.DEVELOPMENT_DOWNLOAD_DIRECTORY);
-		} else {
-			outputDirectory = new File(run, "minecraft_files");
-		}
-		
-		// Create provided settings
-		settings = new ProvidedSettings(Constants.MCVERSION, outputDirectory, null);
-		
-		// Download minecraft
-		MinecraftParser.launch(settings);
-		MinecraftDownloader.launch(settings, true);
-		
-		this.authFile = authFile;
+	public MinecraftSetup(File outputDir, File authFile, boolean authenticate, String authenticateType) {
+		this.authFile = outputDir;
 		this.authenticate = authenticate;
 		this.authenticateType = authenticateType;
+		settings = new ProvidedSettings(Constants.MCVERSION, outputDir, null);
+	}
+	
+	public void download() {
+		MinecraftParser.launch(settings);
+		MinecraftDownloader.launch(settings, true);
 	}
 	
 	public void authenticate() {
