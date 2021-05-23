@@ -19,6 +19,7 @@ import joptsimple.OptionSpec;
 import joptsimple.OptionSpecBuilder;
 import net.hycrafthd.headless_minecraft.common.HeadlessEnvironment;
 import net.hycrafthd.headless_minecraft.launcher.Constants;
+import net.hycrafthd.headless_minecraft.launcher.setup.HeadlessMinecraftSetup;
 import net.hycrafthd.headless_minecraft.launcher.setup.MinecraftSetup;
 import net.hycrafthd.minecraft_downloader.util.FileUtil;
 
@@ -104,6 +105,8 @@ public class LauncherServiceProvider implements ITransformationService {
 	
 	@Override
 	public List<Entry<String, Path>> runScan(IEnvironment environment) {
+		final List<Entry<String, Path>> entries = HeadlessMinecraftSetup.run(environment);
+		
 		beginScanning(environment);
 		
 		return Collections.emptyList();
