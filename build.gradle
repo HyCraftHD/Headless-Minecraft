@@ -67,16 +67,20 @@ configurations {
 		transitive = false
 	}
 	
+	headlessMinecraftCommon {
+		transitive = false
+	}
+	
 	packedDependencies {
 		transitive = false
 	}
 	
-	implementation.extendsFrom packedDependencies
+	implementation.extendsFrom packedDependencies, headlessMinecraftCommon
 }
 
 dependencies {
+	headlessMinecraftCommon project(":Headless-Minecraft-Common")
 	headlessMinecraftImplementation project(":Headless-Minecraft-Implementation")
-	compileOnly project(":Headless-Minecraft-Common")
 
 	packedDependencies group: "net.hycrafthd", name: "minecraft_downloader", version: config.minecraft_downloader.version
 	packedDependencies group: "net.hycrafthd", name: "minecraft_authenticator", version: config.minecraft_authenticator.version
@@ -133,11 +137,12 @@ sourceSets {
 tasks.named("jar") {
 	archiveClassifier = ""
 	
-	dependsOn ":Headless-Minecraft-Implementation:build"
+	//dependsOn ":Headless-Minecraft-Implementation:build"
 	
 	def implementation = configurations.headlessMinecraftImplementation.singleFile
 	
 	from "LICENSE"
+	from configurations.headlessMinecraftCommon.singleFile
 	from implementation
 	
 	manifest {

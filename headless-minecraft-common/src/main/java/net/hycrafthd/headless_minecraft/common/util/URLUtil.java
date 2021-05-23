@@ -1,4 +1,4 @@
-package net.hycrafthd.headless_minecraft.launcher.util;
+package net.hycrafthd.headless_minecraft.common.util;
 
 import java.net.URLStreamHandler;
 

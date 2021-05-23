@@ -8,10 +8,10 @@ import java.util.Collections;
 import java.util.jar.JarFile;
 
 import cpw.mods.modlauncher.api.ITransformingClassLoaderBuilder;
+import net.hycrafthd.headless_minecraft.common.util.EnumerationUtil;
+import net.hycrafthd.headless_minecraft.common.util.ManifestUtil;
 import net.hycrafthd.headless_minecraft.launcher.Constants;
 import net.hycrafthd.headless_minecraft.launcher.setup.MinecraftSetup;
-import net.hycrafthd.headless_minecraft.launcher.util.EnumerationUtil;
-import net.hycrafthd.headless_minecraft.launcher.util.ManifestUtil;
 import net.hycrafthd.minecraft_downloader.settings.ProvidedSettings;
 
 public class ProductionLaunchTarget extends BaseLaunchTarget {

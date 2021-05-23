@@ -14,8 +14,8 @@ import cpw.mods.modlauncher.Launcher;
 import joptsimple.OptionParser;
 import joptsimple.OptionSet;
 import joptsimple.OptionSpec;
+import net.hycrafthd.headless_minecraft.common.util.URLUtil;
 import net.hycrafthd.headless_minecraft.launcher.url.classpath.Handler;
-import net.hycrafthd.headless_minecraft.launcher.util.URLUtil;
 import net.hycrafthd.logging_util.LoggingUtil;
 import net.hycrafthd.minecraft_downloader.util.FileUtil;
 

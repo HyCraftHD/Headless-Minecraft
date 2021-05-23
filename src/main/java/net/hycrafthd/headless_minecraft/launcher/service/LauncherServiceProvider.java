@@ -27,7 +27,6 @@ import cpw.mods.modlauncher.api.ITransformer;
 import cpw.mods.modlauncher.api.IncompatibleEnvironmentException;
 import joptsimple.OptionSpec;
 import joptsimple.OptionSpecBuilder;
-import net.hycrafthd.headless_minecraft.launcher.setup.MinecraftSetup;
 
 public class LauncherServiceProvider implements ITransformationService {
 	
@@ -69,7 +68,7 @@ public class LauncherServiceProvider implements ITransformationService {
 		
 		// Minecraft setup
 		LOGGER.debug("Setup minecraft environment");
-		MinecraftSetup.setup(runDirectory.toFile(), authFile, authenticateType != null, authenticateType);
+		//MinecraftSetup.setup(runDirectory.toFile(), authFile, authenticateType != null, authenticateType);
 	}
 	
 	@Override
