@@ -16,4 +16,6 @@ public class HeadlessEnvironment {
 	
 	public static final Supplier<TypesafeMap.Key<Path>> AUTH_FILE = IEnvironment.buildKey("authfile", Path.class);
 	
+	public static final Supplier<TypesafeMap.Key<Path>> PLUGIN_DIR = IEnvironment.buildKey("plugindir", Path.class);
+	
 }
