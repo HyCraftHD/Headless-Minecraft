@@ -147,25 +147,25 @@ tasks.named("jar") {
 	dependsOn ":Main-Plugin:build"
 		
 	from "LICENSE"
-	
-	configurations.headlessMinecraftCommon.asFileTree.each {
-        from(zipTree(it))
-    }	
-    
-   	def implementation = configurations.headlessMinecraftImplementation.singleFile
-	from implementation
-	
-	def plugin = configurations.mainPlugin.singleFile
-	from plugin
-	
-	manifest {
-		attributes(
-			"Implementation-Version": project.version,
-			"Implementation-Vendor": "HyCraftHD, Luc_ZZ",
-			"Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ"),
-			"Headless-Minecraft-Implementation-Jar": implementation.name,
-			"Headless-Minecraft-Main-Plugin-Jar": plugin.name
-		)
+		
+	doFirst {
+		from(zipTree(configurations.headlessMinecraftCommon.singleFile))
+	        
+		def implementation = configurations.headlessMinecraftImplementation.singleFile
+		from implementation
+			
+		def plugin = configurations.mainPlugin.singleFile
+		from plugin
+			
+		manifest {
+			attributes(
+				"Implementation-Version": project.version,
+				"Implementation-Vendor": "HyCraftHD, Luc_ZZ",
+				"Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ"),
+				"Headless-Minecraft-Implementation-Jar": implementation.name,
+				"Headless-Minecraft-Main-Plugin-Jar": plugin.name
+			)
+		}
 	}
 }
 
