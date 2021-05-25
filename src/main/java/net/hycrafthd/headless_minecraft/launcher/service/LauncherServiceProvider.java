@@ -69,7 +69,7 @@ public class LauncherServiceProvider implements ITransformationService {
 			if (Constants.DEVELOPMENT_MODE) {
 				minecraftInstallationDir = new File(Constants.DEVELOPMENT_DOWNLOAD_DIRECTORY);
 			} else {
-				minecraftInstallationDir = new File(gameDirectory.toFile(), "minecraft_files");
+				minecraftInstallationDir = new File(cacheDir, "minecraft");
 			}
 		}
 		FileUtil.createFolders(minecraftInstallationDir);
