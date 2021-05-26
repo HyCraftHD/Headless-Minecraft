@@ -1,4 +1,4 @@
-package net.hycrafthd.headless_minecraft.test_plugin;
+package net.hycrafthd.headless_minecraft.main_plugin;
 
 import net.hycrafthd.event_system.EventHandler;
 import net.hycrafthd.event_system.events.PlayerTickEvent;

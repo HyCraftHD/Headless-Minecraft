@@ -1,26 +1,18 @@
-package net.hycrafthd.headless_minecraft.test_plugin;
+package net.hycrafthd.headless_minecraft.main_plugin;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.apache.logging.log4j.core.config.plugins.util.ResolverUtil.Test;
 
 import net.hycrafthd.event_system.EventHandler;
 import net.hycrafthd.event_system.commands.CommandRegistry;
 import net.hycrafthd.event_system.commands.CommandRegistry.CommandRegisterException;
 import net.hycrafthd.event_system.events.PlayerTickEvent;
-import net.hycrafthd.event_system.util.LeftClickManager;
-import net.hycrafthd.event_system.util.RightClickManager;
 import net.hycrafthd.event_system.util.PlayerUtils;
 import net.hycrafthd.headless_minecraft.HeadlessMinecraft;
-import net.hycrafthd.headless_minecraft.impl.HeadlessInput;
 import net.hycrafthd.headless_minecraft.plugin.HeadlessPlugin;
-import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.phys.BlockHitResult;
-import net.minecraft.world.phys.HitResult;
 
-public class TestPlugin implements HeadlessPlugin {
+public class MainPlugin implements HeadlessPlugin {
 	
 	private static Logger LOGGER = LogManager.getLogger();
 	
