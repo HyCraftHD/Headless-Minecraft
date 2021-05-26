@@ -2,6 +2,9 @@ package net.hycrafthd.headless_minecraft.launcher.setup;
 
 import java.io.File;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import net.hycrafthd.headless_minecraft.launcher.Constants;
 import net.hycrafthd.minecraft_downloader.MinecraftAuthenticator;
 import net.hycrafthd.minecraft_downloader.MinecraftDownloader;
@@ -10,15 +13,7 @@ import net.hycrafthd.minecraft_downloader.settings.ProvidedSettings;
 
 public class MinecraftSetup {
 	
-	private static MinecraftSetup INSTANCE;
-	
-	public static MinecraftSetup initialize(File outputDir, File authFile, boolean authenticate, String authenticateType) {
-		return INSTANCE = new MinecraftSetup(outputDir, authFile, authenticate, authenticateType);
-	}
-	
-	public static MinecraftSetup getInstance() {
-		return INSTANCE;
-	}
+	private static final Logger LOGGER = LogManager.getLogger();
 	
 	private final ProvidedSettings settings;
 	
@@ -34,6 +29,7 @@ public class MinecraftSetup {
 	}
 	
 	public void download() {
+		LOGGER.info("Verify or download required minecraft files");
 		MinecraftParser.launch(settings);
 		MinecraftDownloader.launch(settings, true);
 	}

@@ -13,31 +13,43 @@ import java.util.List;
 import java.util.Map.Entry;
 import java.util.jar.Manifest;
 
-import cpw.mods.modlauncher.api.IEnvironment;
-import net.hycrafthd.headless_minecraft.common.HeadlessEnvironment;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import net.hycrafthd.headless_minecraft.common.util.ManifestUtil;
 import net.hycrafthd.headless_minecraft.launcher.Constants;
 
 public class HeadlessMinecraftSetup {
 	
-	public static List<Entry<String, Path>> run(IEnvironment environment) {
-		final List<Entry<String, Path>> entries = new ArrayList<>();
-		
+	private static final Logger LOGGER = LogManager.getLogger();
+	
+	private final Path cache;
+	private final List<Entry<String, Path>> files;
+	
+	public HeadlessMinecraftSetup(Path cache) {
+		this.cache = cache;
+		files = new ArrayList<>();
+	}
+	
+	public void findJars() {
+		LOGGER.info("Discover required headless minecraft files");
 		if (Constants.DEVELOPMENT_MODE) {
-			populateDev(entries);
+			findDev();
 		} else {
-			populateProduction(environment, entries);
+			findAndSetupProduction();
 		}
-		
-		return entries;
 	}
 	
-	private static void populateDev(List<Entry<String, Path>> entries) {
-		entries.add(new SimpleImmutableEntry<>("implementation", Paths.get(Constants.DEVELOPMENT_IMPLEMENTATION_BUILD)));
-		entries.add(new SimpleImmutableEntry<>("main-plugin", Paths.get(Constants.DEVELOPMENT_MAIN_PLUGIN_BUILD)));
+	public List<Entry<String, Path>> getFiles() {
+		return files;
 	}
 	
-	private static void populateProduction(IEnvironment environment, List<Entry<String, Path>> entries) {
+	private void findDev() {
+		files.add(new SimpleImmutableEntry<>("implementation", Paths.get(Constants.DEVELOPMENT_IMPLEMENTATION_BUILD)));
+		files.add(new SimpleImmutableEntry<>("main-plugin", Paths.get(Constants.DEVELOPMENT_MAIN_PLUGIN_BUILD)));
+	}
+	
+	private void findAndSetupProduction() {
 		final Collection<Manifest> manifests = ManifestUtil.findClassPathManifests();
 		
 		final String implementationJar = manifests.stream().filter(manifest -> {
@@ -48,17 +60,15 @@ public class HeadlessMinecraftSetup {
 			return manifest.getMainAttributes().containsKey(Constants.PRODUCTION_MAIN_PLUGIN_JAR);
 		}).findAny().orElseThrow(() -> new IllegalStateException("Cannot find manifest property " + Constants.PRODUCTION_MAIN_PLUGIN_JAR)).getMainAttributes().getValue(Constants.PRODUCTION_MAIN_PLUGIN_JAR);
 		
-		final Path cache = environment.getProperty(HeadlessEnvironment.CACHE_DIR.get()).orElseThrow(() -> new IllegalStateException("Cache directory must be set"));
-		
 		try {
-			entries.add(new SimpleImmutableEntry<>("implementation", extract(implementationJar, cache)));
-			entries.add(new SimpleImmutableEntry<>("main-plugin", extract(mainPluginJar, cache)));
+			files.add(new SimpleImmutableEntry<>("implementation", extract(implementationJar, cache)));
+			files.add(new SimpleImmutableEntry<>("main-plugin", extract(mainPluginJar, cache)));
 		} catch (IOException ex) {
 			throw new IllegalStateException("Cannot extract implementation or main plugin file. Things do not work.", ex);
 		}
 	}
 	
-	private static Path extract(String resourceName, Path cache) throws IOException {
+	private Path extract(String resourceName, Path cache) throws IOException {
 		final URL url = new URL("classpath:" + resourceName);
 		final Path path = cache.resolve(resourceName);
 		Files.copy(url.openStream(), path, StandardCopyOption.REPLACE_EXISTING);
