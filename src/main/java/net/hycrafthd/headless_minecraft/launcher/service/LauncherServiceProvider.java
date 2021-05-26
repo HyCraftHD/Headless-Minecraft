@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map.Entry;
 import java.util.Set;
 import java.util.function.BiFunction;
+import java.util.stream.Collectors;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -21,6 +22,7 @@ import net.hycrafthd.headless_minecraft.common.HeadlessEnvironment;
 import net.hycrafthd.headless_minecraft.launcher.Constants;
 import net.hycrafthd.headless_minecraft.launcher.setup.HeadlessMinecraftSetup;
 import net.hycrafthd.headless_minecraft.launcher.setup.MinecraftSetup;
+import net.hycrafthd.headless_minecraft.launcher.setup.PluginSetup;
 import net.hycrafthd.minecraft_downloader.util.FileUtil;
 
 public class LauncherServiceProvider implements ITransformationService {
@@ -106,16 +108,17 @@ public class LauncherServiceProvider implements ITransformationService {
 	}
 	
 	@Override
-	public void beginScanning(IEnvironment environment) {
+	public List<Entry<String, Path>> runScan(IEnvironment environment) {
+		final List<Entry<String, Path>> entries = HeadlessMinecraftSetup.run(environment);
+		PluginSetup.initialize(entries.stream().map(entry -> entry.getValue()).collect(Collectors.toSet()), environment.getProperty(HeadlessEnvironment.PLUGIN_DIR.get()).get());
+		beginScanning(environment);
+		entries.addAll(PluginSetup.getInstance().getPluginScanEntries());
+		return entries;
 	}
 	
 	@Override
-	public List<Entry<String, Path>> runScan(IEnvironment environment) {
-		final List<Entry<String, Path>> entries = HeadlessMinecraftSetup.run(environment);
-		
-		beginScanning(environment);
-		
-		return entries;
+	public void beginScanning(IEnvironment environment) {
+		PluginSetup.getInstance().discover();
 	}
 	
 	@Override
