@@ -35,7 +35,7 @@ public class PluginLoader {
 		LOGGER.info("Discover plugins");
 		
 		// Scan plugin directory
-		try (final Stream<Path> stream = Files.walk(pluginDirectory, 0)) {
+		try (final Stream<Path> stream = Files.walk(pluginDirectory, 1)) {
 			discovery.discoverJars(stream);
 		} catch (IOException ex) {
 			throw new IllegalStateException("Cannot access plugin directory", ex);

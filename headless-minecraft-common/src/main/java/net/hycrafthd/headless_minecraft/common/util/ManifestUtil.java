@@ -38,7 +38,7 @@ public class ManifestUtil {
 	
 	public static Optional<Manifest> manifestOfJarFile(JarFile file) {
 		try {
-			return Optional.of(file.getManifest());
+			return Optional.ofNullable(file.getManifest());
 		} catch (IOException ex) {
 			return Optional.empty();
 		}
