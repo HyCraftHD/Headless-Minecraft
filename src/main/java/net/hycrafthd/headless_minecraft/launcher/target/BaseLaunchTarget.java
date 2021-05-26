@@ -20,7 +20,7 @@ public abstract class BaseLaunchTarget implements ILaunchHandlerService {
 		final ProvidedSettings settings = HeadlessMinecraftLoader.getMinecraftSetup().getSettings();
 		final GeneratedSettings generatedSettings = settings.getGeneratedSettings();
 		
-		// Add all libraries to the transforming path
+		// Add all minecraft libraries to the transforming path
 		generatedSettings.getDownloadableFiles() //
 				.stream() //
 				.filter(downloadableFile -> !downloadableFile.isNative()) //
