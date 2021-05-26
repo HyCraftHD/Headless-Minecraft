@@ -23,7 +23,7 @@ public class PluginDiscovery {
 	
 	void discoverJars(Stream<Path> stream) {
 		stream.filter(Files::isRegularFile) //
-				.filter(path -> path.endsWith(".jar")) //
+				.filter(path -> path.getFileName().toString().endsWith(".jar")) //
 				.map(path -> {
 					LOGGER.debug("Consider {} as jar plugin source", path);
 					try {
