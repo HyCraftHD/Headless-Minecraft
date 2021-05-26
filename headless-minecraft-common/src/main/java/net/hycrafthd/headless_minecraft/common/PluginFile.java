@@ -1,19 +1,23 @@
-package net.hycrafthd.headless_minecraft.launcher.loading;
+package net.hycrafthd.headless_minecraft.common;
 
 import java.nio.file.Path;
 import java.util.Optional;
+import java.util.jar.Attributes.Name;
 import java.util.jar.Manifest;
 
 public class PluginFile {
 	
 	private final Path path;
 	private final Optional<Manifest> manifest;
+	private final Optional<String> pluginMainClass;
 	
 	private final String fileName;
 	
-	PluginFile(Path path, Optional<Manifest> manifest) {
+	protected PluginFile(Path path, Optional<Manifest> manifest, Name manifestMainClassName) {
 		this.path = path;
 		this.manifest = manifest;
+		
+		pluginMainClass = manifest.map(pluginManifest -> pluginManifest.getMainAttributes().getValue(manifestMainClassName));
 		
 		fileName = path.getFileName().toString();
 	}
@@ -24,6 +28,10 @@ public class PluginFile {
 	
 	public Optional<Manifest> getManifest() {
 		return manifest;
+	}
+	
+	public Optional<String> getPluginMainClass() {
+		return pluginMainClass;
 	}
 	
 	public String getFileName() {

@@ -11,6 +11,8 @@ import java.util.stream.Stream;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import net.hycrafthd.headless_minecraft.common.PluginFile;
+
 public class PluginDiscovery {
 	
 	public static final Logger LOGGER = LogManager.getLogger();

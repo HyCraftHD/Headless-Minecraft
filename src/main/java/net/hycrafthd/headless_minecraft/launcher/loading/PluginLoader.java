@@ -8,10 +8,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map.Entry;
 import java.util.Set;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
+import cpw.mods.modlauncher.api.IEnvironment;
+import net.hycrafthd.headless_minecraft.common.HeadlessEnvironment;
+import net.hycrafthd.headless_minecraft.common.PluginFile;
 
 public class PluginLoader {
 	
@@ -52,6 +57,12 @@ public class PluginLoader {
 		// Scan headless minecraft entries
 		discovery.discoverJars(headlessMinecraftEntries.stream().map(Entry::getValue));
 		discovery.discoverDirectories(headlessMinecraftEntries.stream().map(Entry::getValue));
+	}
+	
+	void initPluginFiles(IEnvironment environment) {
+		environment.computePropertyIfAbsent(HeadlessEnvironment.PLUGINS.get(), key -> discovery.getFiles().stream() //
+				.filter(file -> file.getPluginMainClass().isPresent()) //
+				.collect(Collectors.toSet()));
 	}
 	
 	public List<Entry<String, Path>> getPluginScanEntries() {

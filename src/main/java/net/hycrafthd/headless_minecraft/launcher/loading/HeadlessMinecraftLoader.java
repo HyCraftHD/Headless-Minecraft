@@ -96,6 +96,7 @@ public class HeadlessMinecraftLoader {
 	static void beginScanning(IEnvironment environment) {
 		headlessMinecraftSetup.findJars();
 		pluginLoader.discover(headlessMinecraftSetup.getFiles());
+		pluginLoader.initPluginFiles(environment);
 	}
 	
 	static List<Entry<String, Path>> runScanning(IEnvironment environment) {

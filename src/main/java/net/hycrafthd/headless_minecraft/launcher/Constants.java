@@ -17,4 +17,7 @@ public class Constants {
 	// Production manifest value
 	public static final Attributes.Name PRODUCTION_IMPLEMENTATION_JAR = new Attributes.Name("Headless-Minecraft-Implementation-Jar");
 	public static final Attributes.Name PRODUCTION_MAIN_PLUGIN_JAR = new Attributes.Name("Headless-Minecraft-Main-Plugin-Jar");
+	
+	// Plugin manifest main class entry
+	public static final Attributes.Name PLUGIN_MAIN_CLASS = new Attributes.Name("Headless-Minecraft-Plugin-Main-Class");
 }
