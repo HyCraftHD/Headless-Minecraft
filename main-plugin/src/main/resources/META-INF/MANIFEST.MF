@@ -1,0 +1,3 @@
+Manifest-Version: 1.0
+Headless-Minecraft-Plugin-Main-Class: net.hycrafthd.headless_minecraft.test_plugin.TestPlugin
+
