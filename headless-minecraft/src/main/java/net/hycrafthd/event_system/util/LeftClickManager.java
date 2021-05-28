@@ -28,8 +28,6 @@ public class LeftClickManager {
 		
 		ConnectionManager manager = HeadlessMinecraft.getInstance().getConnectionManager();
 		
-		System.out.println(PickHitResultManager.getHitResult());
-		
 		if (missTime <= 0) {
 			if (PickHitResultManager.getHitResult() == null) {
 				if (manager.getGameMode().hasMissTime()) {

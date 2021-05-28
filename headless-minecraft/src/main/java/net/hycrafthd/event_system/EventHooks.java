@@ -8,6 +8,7 @@ import net.hycrafthd.event_system.events.TickEvent;
 import net.hycrafthd.event_system.util.LeftClickManager;
 import net.hycrafthd.event_system.util.PickHitResultManager;
 import net.hycrafthd.event_system.util.RightClickManager;
+import net.hycrafthd.event_system.util.SlowChatManager;
 import net.hycrafthd.headless_minecraft.HeadlessMinecraft;
 import net.hycrafthd.headless_minecraft.impl.HeadlessPlayer;
 import net.hycrafthd.headless_minecraft.network.HeadlessPacketListener;
@@ -33,19 +34,28 @@ public class EventHooks {
 		}
 	}
 	
+	/**
+	 * global tick TODO
+	 */
 	public static void tick() {
 		HeadlessMinecraft.getInstance().getEventManager().executeEvents(new TickEvent());
 		PickHitResultManager.pick();
 		RightClickManager.tick();
 		LeftClickManager.tick();
+		SlowChatManager.tick();
 	}
 	
+	/**
+	 * playertick
+	 */
 	public static void preTick(HeadlessPlayer player) {
 		HeadlessMinecraft.getInstance().getEventManager().executeEvents(new PlayerTickEvent.Pre(player));
 	}
 	
+	/**
+	 * playertick
+	 */
 	public static void postTick(HeadlessPlayer player) {
 		HeadlessMinecraft.getInstance().getEventManager().executeEvents(new PlayerTickEvent.Post(player));
-		LeftClickManager.tick();
 	}
 }

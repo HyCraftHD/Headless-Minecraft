@@ -1,6 +1,8 @@
 package net.hycrafthd.event_system.util;
 
+import java.util.LinkedList;
 import java.util.Optional;
+import java.util.Queue;
 
 import net.hycrafthd.headless_minecraft.HeadlessMinecraft;
 import net.hycrafthd.headless_minecraft.impl.HeadlessPlayer;
@@ -8,12 +10,20 @@ import net.hycrafthd.headless_minecraft.mixin.accessor.LocalPlayerAccessorMixin;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.protocol.game.ServerboundMovePlayerPacket;
 import net.minecraft.network.protocol.game.ServerboundPlayerActionPacket;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.HitResult.Type;
 
 public class PlayerUtils {
+	
+	public static final int MAX_TELEPORT_RANGE = 20;
+	
+	private static final Queue<String> messages = new LinkedList<String>();
 	
 	public void setAutoJump(boolean value) {
 		((LocalPlayerAccessorMixin) getPlayer()).setAutoJumpEnabled(value);
@@ -56,6 +66,37 @@ public class PlayerUtils {
 		return getPlayer().getItemInHand(hand);
 	}
 	
+	public static boolean teleportTo(double x, double z) {
+		if (Math.sqrt(x * x + z * z) < MAX_TELEPORT_RANGE) {
+			teleport(getPlayer().getX() + x, getPlayer().getZ() + z, getPlayer().isOnGround());
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	public static boolean alignOnBlock(double x, double z) {
+		if (x >= 0 && z >= 0 && x <= 1 && z <= 1) {
+			teleport(Math.floor(getPlayer().getX()) + x, Math.floor(getPlayer().getZ()) + z, getPlayer().isOnGround());
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	public static Optional<BlockState> getBlockLookingAt() {
+		if (PickHitResultManager.getHitResult().getType() == Type.BLOCK) {
+			BlockHitResult bhr = (BlockHitResult) PickHitResultManager.getHitResult();
+			return Optional.of(getPlayer().level.getBlockState(bhr.getBlockPos()));
+		} else {
+			return Optional.empty();
+		}
+	}
+	
+	public static void slowChat(String message) {
+		messages.add(message);
+	}
+	
 	// public static void getInventoryContents() {
 	// return getPlayer().inventory.get
 	// }
@@ -70,5 +111,14 @@ public class PlayerUtils {
 			throw new IllegalStateException("Player not connected!");
 		}
 		return player;
+	}
+	
+	public static Queue<String> getMessagesToSend() {
+		return messages;
+	}
+	
+	private static void teleport(double x, double z, boolean onGround) {
+		HeadlessMinecraft.getInstance().getConnectionManager().getConnection().send(new ServerboundMovePlayerPacket.Pos(x, getPlayer().getY(), z, onGround));
+		getPlayer().setPos(x, getPlayer().getY(), z);
 	}
 }

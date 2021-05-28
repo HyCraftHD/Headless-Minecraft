@@ -1,5 +1,7 @@
 package net.hycrafthd.headless_minecraft.main_plugin;
 
+import java.util.Random;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import net.hycrafthd.event_system.EventHandler;
@@ -82,11 +84,29 @@ public class MainPlugin implements HeadlessPlugin {
 				}
 			});
 			
-			CommandRegistry.registerCommand("move", true, (command, args, player) -> {
-				if (args.length == 1) {
-					double distance = Double.parseDouble(args[0]);
-					HeadlessMinecraft.getInstance().getConnectionManager().getConnection().send(new ServerboundMovePlayerPacket.Pos(player.getX() + distance, player.getY(), player.getZ(), player.isOnGround()));
-					player.setPos(player.getX() + distance, player.getY(), player.getZ());
+			CommandRegistry.registerCommand("teleport", true, (command, args, player) -> {
+				if (args.length == 2) {
+					PlayerUtils.teleportTo(Double.parseDouble(args[0]), Double.parseDouble(args[1]));
+				}
+			});
+			
+			CommandRegistry.registerCommand("align", true, (command, args, player) -> {
+				if (args.length == 2) {
+					PlayerUtils.alignOnBlock(Double.parseDouble(args[0]), Double.parseDouble(args[1]));
+				}
+			});
+			
+			CommandRegistry.registerCommand("looking", true, (command, args, player) -> {
+				if (args.length == 0) {
+					PlayerUtils.getBlockLookingAt().ifPresent(e -> PlayerUtils.chat(e.toString()));
+				}
+			});
+			
+			CommandRegistry.registerCommand("testChat", true, (command, args, player) -> {
+				if (args.length == 0) {
+					for (int i = 0; i < 100; i++) {
+						PlayerUtils.chat(randomString());
+					}
 				}
 			});
 			
@@ -104,5 +124,16 @@ public class MainPlugin implements HeadlessPlugin {
 		if (move) {
 			
 		}
+	}
+	
+	private String randomString() {
+		int leftLimit = 97; // letter 'a'
+		int rightLimit = 122; // letter 'z'
+		int targetStringLength = 10;
+		Random random = new Random();
+		
+		String generatedString = random.ints(leftLimit, rightLimit + 1).limit(targetStringLength).collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append).toString();
+		
+		return generatedString;
 	}
 }
