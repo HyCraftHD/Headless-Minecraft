@@ -15,6 +15,7 @@ import net.hycrafthd.headless_minecraft.HeadlessMinecraft;
 import net.hycrafthd.headless_minecraft.impl.HeadlessInput;
 import net.hycrafthd.headless_minecraft.plugin.HeadlessPlugin;
 import net.minecraft.core.BlockPos;
+import net.minecraft.network.protocol.game.ServerboundMovePlayerPacket;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
@@ -43,56 +44,58 @@ public class TestPlugin implements HeadlessPlugin {
 		HeadlessMinecraft.getInstance().getEventManager().registerListener(new TestListener());
 		HeadlessMinecraft.getInstance().getEventManager().registerListener(this);
 		try {
-			CommandRegistry.registerCommand("place", true, (command, args) -> {
+			CommandRegistry.registerCommand("place", true, (command, args, player) -> {
 				if (args.length == 0)
 					System.out.println(PlayerUtils.rightClick(InteractionHand.MAIN_HAND));
 			});
 			
-			CommandRegistry.registerCommand("break", true, (command, args) -> {
+			CommandRegistry.registerCommand("break", true, (command, args, player) -> {
 				if (args.length == 0)
 					PlayerUtils.breakBlockFacing(() -> {
 					});
 			});
 			
-			CommandRegistry.registerCommand("slot", true, (command, args) -> {
+			CommandRegistry.registerCommand("slot", true, (command, args, player) -> {
 				if (args.length == 1) {
 					PlayerUtils.selectHotbarSlot(Integer.parseInt(args[0]));
 				}
 			});
 			
-			CommandRegistry.registerCommand("attack", true, (command, args) -> {
+			CommandRegistry.registerCommand("attack", true, (command, args, player) -> {
 				if (args.length == 0) {
 					PlayerUtils.attackEntity();
 				}
 			});
 			
-			CommandRegistry.registerCommand("facing", true, (command, args) -> {
+			CommandRegistry.registerCommand("facing", true, (command, args, player) -> {
 				if (args.length == 2)
 					PlayerUtils.setPitchYaw(Float.parseFloat(args[0]), Float.parseFloat(args[1]));
 			});
 			
-			CommandRegistry.registerCommand("continue", true, (command, args) -> {
+			CommandRegistry.registerCommand("continue", true, (command, args, player) -> {
 				if (args.length == 0) {
 					holdRight = !holdRight;
 					PlayerUtils.chat("" + holdRight);
 				}
 			});
 			
-			CommandRegistry.registerCommand("drop", true, (command, args) -> {
+			CommandRegistry.registerCommand("drop", true, (command, args, player) -> {
 				if (args.length == 1) {
 					PlayerUtils.dropSelected(Boolean.parseBoolean(args[0]));
 				}
 			});
 			
-			CommandRegistry.registerCommand("swap", true, (command, args) -> {
+			CommandRegistry.registerCommand("swap", true, (command, args, player) -> {
 				if (args.length == 0) {
 					PlayerUtils.swapHand();
 				}
 			});
 			
-			CommandRegistry.registerCommand("move", true, (command, args) -> {
-				if (args.length == 0) {
-					HeadlessMinecraft.getInstance().getConnectionManager().getPlayer().input.forwardImpulse = 1.0F;
+			CommandRegistry.registerCommand("move", true, (command, args, player) -> {
+				if (args.length == 1) {
+					double distance = Double.parseDouble(args[0]);
+					HeadlessMinecraft.getInstance().getConnectionManager().getConnection().send(new ServerboundMovePlayerPacket.Pos(player.getX() + distance, player.getY(), player.getZ(), player.isOnGround()));
+					player.setPos(player.getX() + distance, player.getY(), player.getZ());
 				}
 			});
 			
@@ -108,15 +111,6 @@ public class TestPlugin implements HeadlessPlugin {
 		}
 		
 		if (move) {
-			HeadlessMinecraft.getInstance().getConnectionManager().getPlayer().input.forwardImpulse += impuls;
-			
-			if (HeadlessMinecraft.getInstance().getConnectionManager().getPlayer().input.forwardImpulse >= 1.0F) {
-				impuls = -impuls;
-			}
-			
-			if (HeadlessMinecraft.getInstance().getConnectionManager().getPlayer().input.forwardImpulse <= -1.0F) {
-				impuls = -impuls;
-			}
 			
 		}
 	}
