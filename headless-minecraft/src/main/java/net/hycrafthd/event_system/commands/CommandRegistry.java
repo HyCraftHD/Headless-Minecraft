@@ -8,6 +8,7 @@ import java.util.UUID;
 import java.util.stream.Stream;
 
 import net.hycrafthd.headless_minecraft.HeadlessMinecraft;
+import net.hycrafthd.headless_minecraft.impl.HeadlessPlayer;
 
 public class CommandRegistry {
 	
@@ -93,18 +94,18 @@ public class CommandRegistry {
 		
 		if (allowedPlayers.contains(sender)) {
 			if (restrictedCommands.containsKey(command)) {
-				restrictedCommands.get(command).action(command, args);
+				restrictedCommands.get(command).action(command, args, getPlayer());
 			}
 		} else {
 			if (commands.containsKey(command)) {
-				commands.get(command).action(command, args);
+				commands.get(command).action(command, args, getPlayer());
 			}
 		}
 	}
 	
 	private static void registerInfo() {
 		try {
-			registerCommand("Info", true, (command, args) -> {
+			registerCommand("Info", true, (command, args, player) -> {
 				chat("List of all Commands:");
 				aliasForCommand.entrySet().forEach(entry -> {
 					if (entry.getValue().isEmpty()) {
@@ -121,6 +122,16 @@ public class CommandRegistry {
 	private static void chat(String out) {
 		System.out.println(Thread.currentThread());
 		HeadlessMinecraft.getInstance().getConnectionManager().getPlayer().chat(out);
+	}
+	
+	private static HeadlessPlayer getPlayer() {
+		HeadlessPlayer player = HeadlessMinecraft.getInstance().getConnectionManager().getPlayer();
+		if (player != null) {
+			return player;
+		} else {
+			throw new NullPointerException("Player null, probably n0t connected!");
+		}
+		
 	}
 	
 	public static class CommandRegisterException extends Exception {
