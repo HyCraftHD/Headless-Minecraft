@@ -1,7 +1,5 @@
 package net.hycrafthd.headless_minecraft.launcher.target;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.stream.Stream;
 
@@ -9,20 +7,20 @@ import cpw.mods.modlauncher.api.ILaunchHandlerService;
 import cpw.mods.modlauncher.api.ITransformingClassLoader;
 import cpw.mods.modlauncher.api.ITransformingClassLoaderBuilder;
 import net.hycrafthd.headless_minecraft.launcher.Main;
+import net.hycrafthd.headless_minecraft.launcher.loading.HeadlessMinecraftLoader;
 import net.hycrafthd.headless_minecraft.launcher.setup.MinecraftSetup;
 import net.hycrafthd.minecraft_downloader.library.DownloadableFile;
 import net.hycrafthd.minecraft_downloader.settings.GeneratedSettings;
-import net.hycrafthd.minecraft_downloader.settings.LauncherVariables;
 import net.hycrafthd.minecraft_downloader.settings.ProvidedSettings;
 
 public abstract class BaseLaunchTarget implements ILaunchHandlerService {
 	
 	@Override
 	public void configureTransformationClassLoader(ITransformingClassLoaderBuilder builder) {
-		final ProvidedSettings settings = MinecraftSetup.getInstance().getSettings();
+		final ProvidedSettings settings = HeadlessMinecraftLoader.getMinecraftSetup().getSettings();
 		final GeneratedSettings generatedSettings = settings.getGeneratedSettings();
 		
-		// Add all libraries to the transforming path
+		// Add all minecraft libraries to the transforming path
 		generatedSettings.getDownloadableFiles() //
 				.stream() //
 				.filter(downloadableFile -> !downloadableFile.isNative()) //
@@ -31,35 +29,27 @@ public abstract class BaseLaunchTarget implements ILaunchHandlerService {
 				.distinct() //
 				.forEach(file -> builder.addTransformationPath(file.toPath()));
 		
-		configureTargetSpecificTransformationClassLoader(builder);
+		// Add implementation and plugins to the transforming path
+		HeadlessMinecraftLoader.getPluginLoader().getPluginFiles().forEach(file -> builder.addTransformationPath(file.getPath()));
+		
+		configureTargetSpecificTransformationClassLoader(builder, settings);
 	}
 	
-	protected abstract void configureTargetSpecificTransformationClassLoader(ITransformingClassLoaderBuilder builder);
+	protected abstract void configureTargetSpecificTransformationClassLoader(ITransformingClassLoaderBuilder builder, ProvidedSettings settings);
 	
 	@Override
 	public Callable<Void> launchService(String[] arguments, ITransformingClassLoader launchClassLoader) {
 		Main.LOGGER.info("Authenticate minecraft account");
 		
 		// Authenticate
-		final MinecraftSetup setup = MinecraftSetup.getInstance();
+		final MinecraftSetup setup = HeadlessMinecraftLoader.getMinecraftSetup();
 		setup.authenticate();
-		final ProvidedSettings settings = setup.getSettings();
 		
-		final List<String> argsList = new ArrayList<>();
-		argsList.add("--auth-name");
-		argsList.add(settings.getVariable(LauncherVariables.AUTH_PLAYER_NAME));
-		argsList.add("--auth-uuid");
-		argsList.add(settings.getVariable(LauncherVariables.AUTH_UUID));
-		argsList.add("--auth-token");
-		argsList.add(settings.getVariable(LauncherVariables.AUTH_ACCESS_TOKEN));
-		argsList.add("--user-type");
-		argsList.add(settings.getVariable(LauncherVariables.USER_TYPE));
-		
-		final String[] args = Stream.concat(argsList.stream(), Stream.of(arguments)).toArray(String[]::new);
-		
-		Main.LOGGER.info("Launch headless minecraft");
+		// Build arguments for implementation with auth args
+		final String[] args = Stream.concat(setup.buildAuthenticationArgs().stream(), Stream.of(arguments)).toArray(String[]::new);
 		
 		return () -> {
+			Main.LOGGER.info("Launch headless minecraft");
 			
 			final Class<?> entryClass = Class.forName("net.hycrafthd.headless_minecraft.Main", true, launchClassLoader.getInstance());
 			entryClass.getMethod("main", String[].class).invoke(null, (Object) args);
