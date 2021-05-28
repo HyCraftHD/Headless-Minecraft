@@ -4,12 +4,12 @@ import org.objectweb.asm.Opcodes;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.At.Shift;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.Constant;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyConstant;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.Redirect;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import com.mojang.authlib.GameProfile;
 
@@ -22,7 +22,6 @@ import net.minecraft.client.gui.screens.social.PlayerSocialManager;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.multiplayer.ClientPacketListener;
 import net.minecraft.client.multiplayer.MultiPlayerGameMode;
-import net.minecraft.client.particle.ItemPickupParticle;
 import net.minecraft.client.particle.Particle;
 import net.minecraft.client.particle.ParticleEngine;
 import net.minecraft.client.player.LocalPlayer;
@@ -77,11 +76,6 @@ abstract class ClientPacketListenerMixin {
 	
 	@Redirect(method = "handleTakeItemEntity", at = @At(value = "INVOKE", opcode = Opcodes.INVOKEVIRTUAL, target = "Lnet/minecraft/client/Minecraft;renderBuffers()Lnet/minecraft/client/renderer/RenderBuffers;"))
 	private RenderBuffers replaceRenderBuffers(Minecraft minecraft) {
-		return null;
-	}
-	
-	@Redirect(method = "handleTakeItemEntity", at = @At(value = "NEW", target = "Lnet/minecraft/client/particle/ItemPickupParticle;"))
-	private ItemPickupParticle replaceConstructItemPickupParticle(EntityRenderDispatcher dispatcher, RenderBuffers buffers, ClientLevel level, Entity entity, Entity entity2) {
 		return null;
 	}
 	
