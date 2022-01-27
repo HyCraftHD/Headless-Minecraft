@@ -1,1 +1,9 @@
 rootProject.name = "Headless-Minecraft"
+
+include ":mcp"
+include ":clean"
+include ":minecraft"
+
+project(":mcp").projectDir = file("mcp")
+project(":clean").projectDir = file("clean")
+project(":minecraft").projectDir = file("minecraft")

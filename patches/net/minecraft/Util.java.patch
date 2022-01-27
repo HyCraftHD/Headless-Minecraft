@@ -1,0 +1,39 @@
+--- a/net/minecraft/Util.java
++++ b/net/minecraft/Util.java
+@@ -649,30 +_,30 @@
+ 
+    public static <T, R> Function<T, R> m_143827_(final Function<T, R> p_143828_) {
+       return new Function<T, R>() {
+-         private final Map<T, R> f_143845_ = Maps.newHashMap();
++         private final Map<T, R> cache = Maps.newHashMap();
+ 
+          public R apply(T p_143849_) {
+-            return this.f_143845_.computeIfAbsent(p_143849_, p_143828_);
++            return this.cache.computeIfAbsent(p_143849_, p_143828_);
+          }
+ 
+          public String toString() {
+-            return "memoize/1[function=" + p_143828_ + ", size=" + this.f_143845_.size() + "]";
++            return "memoize/1[function=" + p_143828_ + ", size=" + this.cache.size() + "]";
+          }
+       };
+    }
+ 
+    public static <T, U, R> BiFunction<T, U, R> m_143821_(final BiFunction<T, U, R> p_143822_) {
+       return new BiFunction<T, U, R>() {
+-         private final Map<Pair<T, U>, R> f_143852_ = Maps.newHashMap();
++         private final Map<Pair<T, U>, R> f_143845_ = Maps.newHashMap();
+ 
+          public R apply(T p_143859_, U p_143860_) {
+-            return this.f_143852_.computeIfAbsent(Pair.of(p_143859_, p_143860_), (p_143857_) -> {
++            return this.f_143845_.computeIfAbsent(Pair.of(p_143859_, p_143860_), (p_143857_) -> {
+                return p_143822_.apply(p_143857_.getFirst(), p_143857_.getSecond());
+             });
+          }
+ 
+          public String toString() {
+-            return "memoize/2[function=" + p_143822_ + ", size=" + this.f_143852_.size() + "]";
++            return "memoize/2[function=" + p_143822_ + ", size=" + this.f_143845_.size() + "]";
+          }
+       };
+    }
