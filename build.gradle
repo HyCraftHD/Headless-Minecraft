@@ -133,22 +133,6 @@ project(":minecraft") {
 		}
 	}
 
-	task([type: net.minecraftforge.gradle.common.tasks.DownloadMavenArtifact], "createJoinedSRG") {
-		artifact = "net.minecraft:joined:${MC_VERSION}-${MCP_VERSION}:srg"
-	}
-
-	def gen = tasks.getByName("genJoinedBinPatches")
-	def createSRG = tasks.getByName("createJoinedSRG")
-	gen.dependsOn(createSRG)
-	gen.tool = BINPATCH_TOOL
-	gen.cleanJar = createSRG.output
-
-	task([type: net.minecraftforge.gradle.common.tasks.ApplyBinPatches, dependsOn: gen], "applyJoinedBinPatches") {
-		clean = gen.cleanJar
-		patch = gen.output
-		tool = BINPATCH_TOOL
-	}
-
 	genPatches {
 		autoHeader true
 		lineEnding = "\n"
