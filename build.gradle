@@ -39,8 +39,9 @@ ext {
 	MC_VERSION = "1.18.1"
 	MCP_VERSION = "20211210.034407"
 	SPI_VERSION = "4.0.10"
-	
+
 	FART = "net.minecraftforge:ForgeAutoRenamingTool:0.1.17:all"
+	BINPATCH_TOOL = 'net.minecraftforge:binarypatcher:1.0.12:fatjar'
 }
 
 println(" Java: " + System.getProperty("java.version") +
@@ -58,95 +59,118 @@ project(":mcp") {
 
 project(":clean") {
 	evaluationDependsOn(":mcp")
-	
+
 	apply plugin: "net.minecraftforge.gradle.patcher"
-	
+
 	dependencies {
 		implementation "net.minecraftforge:forgespi:" + SPI_VERSION
 	}
-	
+
 	patcher {
 		parent = project(":mcp")
 		mcVersion = MC_VERSION
 		patchedSrc = file("src/main/java")
-		
+
 		mappings channel: MAPPING_CHANNEL, version: MAPPING_VERSION
 	}
 }
 
 project(":minecraft") {
 	evaluationDependsOn(":clean")
-	
+
 	apply plugin: "net.minecraftforge.gradle.patcher"
-	
+
 	sourceSets {
-        main {
-            java {
-                srcDirs = [
-                    "$rootDir/src/main/java",
-                ]
-            }
-            resources {
-                srcDirs = [
-                    "$rootDir/src/main/resources",
-                    "$rootDir/src/generated/resources",
-                ]
-            }
-        }
-    }
-	
+		main {
+			java {
+				srcDirs = [
+					"$rootDir/src/main/java",
+				]
+			}
+			resources {
+				srcDirs = [
+					"$rootDir/src/main/resources",
+					"$rootDir/src/generated/resources",
+				]
+			}
+		}
+	}
+
 	dependencies {
 		implementation "net.minecraftforge:forgespi:" + SPI_VERSION
 	}
-	
+
 	patcher {
 		parent = project(":clean")
 		patches = file("$rootDir/patches")
 		patchedSrc = file("src/main/java")
 		srgPatches = true
-		
+
 		runs {
 			minecraft_client {
 				client true
 				taskName "minecraft_client"
 				ideaModule "${rootProject.name}.${project.name}.main"
-				
+
 				main "net.minecraft.client.main.Main"
 				workingDirectory project.file("run")
-				
+
 				args "--gameDir", "."
 				args "--version", MC_VERSION
 				args "--assetsDir", downloadAssets.output
 				args "--assetIndex", "{asset_index}"
 				args "--accessToken", "0"
 			}
-			
+
 			minecraft_server {
 				client false
 				taskName "minecraft_server"
 				ideaModule "${rootProject.name}.${project.name}.main"
-				
+
 				main "net.minecraft.server.Main"
 				workingDirectory project.file("run")
 			}
 		}
 	}
-	
+
+	task([type: net.minecraftforge.gradle.common.tasks.DownloadMavenArtifact], "createJoinedSRG") {
+		artifact = "net.minecraft:joined:${MC_VERSION}-${MCP_VERSION}:srg"
+	}
+
+	def gen = tasks.getByName("genJoinedBinPatches")
+	def createSRG = tasks.getByName("createJoinedSRG")
+	gen.dependsOn(createSRG)
+	gen.tool = BINPATCH_TOOL
+	gen.cleanJar = createSRG.output
+
+	task([type: net.minecraftforge.gradle.common.tasks.ApplyBinPatches, dependsOn: gen], "applyJoinedBinPatches") {
+		clean = gen.cleanJar
+		patch = gen.output
+		tool = BINPATCH_TOOL
+	}
+
 	genPatches {
 		autoHeader true
 		lineEnding = "\n"
 	}
-	
+
 	reobfJar {
-        tool = FART
-        args = ['--input', '{input}', '--output', '{output}', '--map', '{srg}']
-    }
+		tool = FART
+		args = [
+			'--input',
+			'{input}',
+			'--output',
+			'{output}',
+			'--map',
+			'{srg}'
+		]
+	}
 }
 
 task setup {
 	group = "setup"
 	description = "Setups the dev workspace"
-	
+
 	dependsOn ":clean:extractMapped"
 	dependsOn ":minecraft:extractMapped"
 }
