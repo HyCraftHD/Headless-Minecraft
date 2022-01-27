@@ -18,6 +18,6 @@ run
 libs
 logs
 
-mcp
-clean
-minecraft
+/mcp/
+/clean/
+/minecraft/
