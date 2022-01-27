@@ -103,6 +103,7 @@ project(":minecraft") {
 		parent = project(":clean")
 		patches = file("$rootDir/patches")
 		patchedSrc = file("src/main/java")
+		accessTransformers.from file("$rootDir/src/main/resources/accesstransformer.at")
 		srgPatches = true
 
 		runs.clear()
@@ -113,7 +114,7 @@ project(":minecraft") {
 				taskName "runHeadless-Minecraft"
 				ideaModule "${rootProject.name}.${project.name}.main"
 
-				main "net.minecraft.client.main.Main"
+				main "net.hycrafthd.headless_minecraft.Main"
 				workingDirectory rootProject.file("run")
 
 				args "--gameDir", "."
