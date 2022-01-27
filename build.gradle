@@ -32,16 +32,13 @@ subprojects {
 }
 
 ext {
-	//MAPPING_CHANNEL = "parchment"
-	//MAPPING_VERSION = "2022.01.23-1.18.1"
-	MAPPING_CHANNEL = "official"
-	MAPPING_VERSION = "1.18.1"
+	MAPPING_CHANNEL = "parchment"
+	MAPPING_VERSION = "2022.01.23-1.18.1"
 	MC_VERSION = "1.18.1"
 	MCP_VERSION = "20211210.034407"
 	SPI_VERSION = "4.0.10"
 
 	FART = "net.minecraftforge:ForgeAutoRenamingTool:0.1.17:all"
-	BINPATCH_TOOL = 'net.minecraftforge:binarypatcher:1.0.12:fatjar'
 }
 
 println(" Java: " + System.getProperty("java.version") +
@@ -51,6 +48,7 @@ println(" Java: " + System.getProperty("java.version") +
 
 project(":mcp") {
 	apply plugin: "net.minecraftforge.gradle.mcp"
+
 	mcp {
 		config MC_VERSION + "-" + MCP_VERSION
 		pipeline = "joined"
@@ -61,6 +59,7 @@ project(":clean") {
 	evaluationDependsOn(":mcp")
 
 	apply plugin: "net.minecraftforge.gradle.patcher"
+	apply plugin: "org.parchmentmc.librarian.forgegradle"
 
 	dependencies {
 		implementation "net.minecraftforge:forgespi:" + SPI_VERSION
@@ -79,6 +78,7 @@ project(":minecraft") {
 	evaluationDependsOn(":clean")
 
 	apply plugin: "net.minecraftforge.gradle.patcher"
+	apply plugin: "org.parchmentmc.librarian.forgegradle"
 
 	sourceSets {
 		main {
@@ -90,7 +90,6 @@ project(":minecraft") {
 			resources {
 				srcDirs = [
 					"$rootDir/src/main/resources",
-					"$rootDir/src/generated/resources",
 				]
 			}
 		}
