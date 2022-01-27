@@ -14,12 +14,6 @@ buildscript {
 	}
 }
 
-apply plugin: "eclipse"
-
-group = "net.hycrafthd"
-//archivesBaseName = "headless-minecraft"
-version = "1.18.1-0.0.1"
-
 subprojects {
 	apply plugin: "eclipse"
 	apply plugin: "java"
@@ -71,6 +65,8 @@ project(":clean") {
 		patchedSrc = file("src/main/java")
 
 		mappings channel: MAPPING_CHANNEL, version: MAPPING_VERSION
+
+		runs.clear()
 	}
 }
 
@@ -79,6 +75,10 @@ project(":minecraft") {
 
 	apply plugin: "net.minecraftforge.gradle.patcher"
 	apply plugin: "org.parchmentmc.librarian.forgegradle"
+
+	group = "net.hycrafthd"
+	archivesBaseName = "headless-minecraft"
+	version = MC_VERSION + "-0.0.1"
 
 	sourceSets {
 		main {
@@ -105,29 +105,22 @@ project(":minecraft") {
 		patchedSrc = file("src/main/java")
 		srgPatches = true
 
+		runs.clear()
+
 		runs {
-			minecraft_client {
+			headless_minecraft {
 				client true
-				taskName "minecraft_client"
+				taskName "runHeadless-Minecraft"
 				ideaModule "${rootProject.name}.${project.name}.main"
 
 				main "net.minecraft.client.main.Main"
-				workingDirectory project.file("run")
+				workingDirectory rootProject.file("run")
 
 				args "--gameDir", "."
 				args "--version", MC_VERSION
 				args "--assetsDir", downloadAssets.output
 				args "--assetIndex", "{asset_index}"
 				args "--accessToken", "0"
-			}
-
-			minecraft_server {
-				client false
-				taskName "minecraft_server"
-				ideaModule "${rootProject.name}.${project.name}.main"
-
-				main "net.minecraft.server.Main"
-				workingDirectory project.file("run")
 			}
 		}
 	}
