@@ -1,6 +1,6 @@
 --- a/net/minecraft/client/Minecraft.java
 +++ b/net/minecraft/client/Minecraft.java
-@@ -433,6 +_,40 @@
+@@ -433,6 +_,39 @@
        }
  
        Util.f_137440_ = RenderSystem.m_69576_();
@@ -11,7 +11,6 @@
 +      f_91043_ = null;
 +      f_91050_ = null;
 +      f_90993_ = null;
-+      f_91006_ = null;
 +      f_91061_ = null;
 +      f_91053_ = null;
 +      f_91044_ = null;
@@ -55,14 +54,25 @@
        this.f_90987_ = new TextureManager(this.f_91036_);
        this.f_91036_.m_7217_(this.f_90987_);
        this.f_91050_ = new SkinManager(this.f_90987_, new File(file1, "skins"), this.f_91048_);
-@@ -551,6 +_,7 @@
-       } else {
-          this.m_91152_(new TitleScreen(true));
-       }
+@@ -496,7 +_,10 @@
+       this.f_90993_ = new RenderBuffers();
+       this.f_91063_ = new GameRenderer(this, this.f_91036_, this.f_90993_);
+       this.f_91036_.m_7217_(this.f_91063_);
 +      }
- 
-    }
- 
+       this.f_91006_ = new PlayerSocialManager(this, this.f_193584_);
++      if(false) {
++      BlockEntityWithoutLevelRenderer blockentitywithoutlevelrenderer = null;
+       this.f_91052_ = new BlockRenderDispatcher(this.f_91051_.m_119430_(), blockentitywithoutlevelrenderer, this.f_91040_);
+       this.f_91036_.m_7217_(this.f_91052_);
+       this.f_91060_ = new LevelRenderer(this, this.f_90993_);
+@@ -546,6 +_,7 @@
+             this.f_167847_.m_168556_();
+          });
+       }, false));
++      }
+       if (s != null) {
+          ConnectScreen.m_169267_(new TitleScreen(), this, new ServerAddress(s, i), (ServerData)null);
+       } else {
 @@ -892,6 +_,7 @@
        }
  
@@ -236,6 +246,40 @@
     }
  
     private boolean m_91278_() {
+@@ -2052,7 +_,7 @@
+       this.f_91006_.m_194060_();
+       IntegratedServer integratedserver = this.f_91007_;
+       this.f_91007_ = null;
+-      this.f_91063_.m_109150_();
++      //this.gameRenderer.resetData();
+       this.f_91072_ = null;
+       NarratorChatListener.f_93311_.m_93328_();
+       this.m_91362_(p_91321_);
+@@ -2068,21 +_,21 @@
+          }
+ 
+          this.f_91037_.m_118586_();
+-         this.f_91065_.m_93089_();
++         //this.gui.onDisconnected();
+          this.f_91008_ = null;
+          this.f_91010_ = false;
+          this.f_91004_.m_90740_();
+       }
+ 
+       this.f_91073_ = null;
+-      this.m_91324_((ClientLevel)null);
++      //this.updateLevelInEngines((ClientLevel)null);
+       this.f_91074_ = null;
+       SkullBlockEntity.m_196704_();
+    }
+ 
+    private void m_91362_(Screen p_91363_) {
+       this.f_91026_.m_6180_("forcedTick");
+-      this.f_91043_.m_120405_();
++      //this.soundManager.stop();
+       this.f_91075_ = null;
+       this.f_91009_ = null;
+       this.m_91152_(p_91363_);
 @@ -2261,6 +_,7 @@
        p_167851_.m_143522_("Launched Version", () -> {
           return p_167854_;
