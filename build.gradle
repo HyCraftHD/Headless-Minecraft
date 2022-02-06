@@ -1,206 +1,153 @@
 buildscript {
-
-	ext.buildProps = file "build.properties"
-
-	buildProps.withReader {
-		def prop = new Properties()
-		prop.load(it)
-		ext.config = new ConfigSlurper().parse prop
-	}
-
-    repositories {
-	    mavenCentral()
-	    maven {
-			url = "https://plugins.gradle.org/m2/"
+	repositories {
+		maven {
+			url = "https://maven.minecraftforge.net"
 		}
+		maven {
+			url = "https://maven.parchmentmc.org"
+		}
+		mavenCentral()
 	}
-
-    dependencies {
-		classpath group: "net.md-5", name: "SpecialSource", version: config.special_source.version
-		classpath group: "com.github.jengelman.gradle.plugins", name: "shadow", version: "6.1.0"
-    }
+	dependencies {
+		classpath group: "net.minecraftforge.gradle", name: "ForgeGradle", version: "5.1.+", changing: true
+		classpath group: "org.parchmentmc", name: "librarian", version: "1.+", changing: true
+	}
 }
 
-plugins {
-	id "java-library"
-	id "eclipse"
-	id "com.palantir.launch-config" version "1.2.0"
-	id "application"
-	id "com.github.johnrengelman.shadow" version "6.1.0"
+subprojects {
+	apply plugin: "eclipse"
+	apply plugin: "java"
+	
+	java {
+		toolchain {
+			languageVersion = JavaLanguageVersion.of(17)
+		}
+	}
 }
 
 ext {
-	minecraft_version = config.minecraft.version
-
-	// Directories
-	minecraft_files = file "${buildDir}/minecraft/files"
-	minecraft_files_working_directory = file "${buildDir}/minecraft"
-	mappings = file "${buildDir}/minecraft/mappings"
+	MAPPING_CHANNEL = "parchment"
+	MAPPING_VERSION = "2022.01.23-1.18.1"
+	MC_VERSION = "1.18.1"
+	MCP_VERSION = "20211210.034407"
+	SPI_VERSION = "4.0.10"
 	
-	minecraft_files.mkdirs()
-	minecraft_files_working_directory.mkdirs()
-	mappings.mkdirs()
-	
-	// Files
-	minecraft_mappings = file "${minecraft_files}/${minecraft_version}-client.txt"
-	minecraft_jar = file "${minecraft_files}/${minecraft_version}-client.jar"
-	library_list = file "${minecraft_files}/${minecraft_version}-libraries.txt"
-	
-	mapping_obf_to_name = file "${mappings}/obf_to_name.tsrg"
-	mapping_name_to_obf = file "${mappings}/name_to_obf.tsrg"
-	
-	mapped_minecraft_jar = file "${minecraft_files}/${minecraft_version}-client-mapped.jar"
+	FART = "net.minecraftforge:ForgeAutoRenamingTool:0.1.17:all"
 }
 
-repositories {
-	mavenCentral()
-	maven {
-		url "https://files.minecraftforge.net/maven"
-	}
-	maven {
-		url "https://repo.u-team.info"
+println(" Java: " + System.getProperty("java.version") +
+		" JVM: " + System.getProperty("java.vm.version") + "(" + System.getProperty("java.vendor") + ")" +
+		" Arch: " + System.getProperty("os.arch"))
+
+
+project(":mcp") {
+	apply plugin: "net.minecraftforge.gradle.mcp"
+	
+	mcp {
+		config MC_VERSION + "-" + MCP_VERSION
+		pipeline = "joined"
 	}
 }
 
-configurations {
-	headlessMinecraftCommon {
-		transitive = false
+project(":clean") {
+	evaluationDependsOn(":mcp")
+	
+	apply plugin: "net.minecraftforge.gradle.patcher"
+	apply plugin: "org.parchmentmc.librarian.forgegradle"
+	
+	dependencies {
+		implementation "net.minecraftforge:forgespi:" + SPI_VERSION
 	}
 	
-	headlessMinecraftImplementation {
-		transitive = false
-	}
-	
-	mainPlugin {
-		transitive = false
-	}
-	
-	packedDependencies {
-		transitive = false
-	}
-	
-	implementation.extendsFrom packedDependencies, headlessMinecraftCommon
-}
-
-dependencies {
-	headlessMinecraftCommon project(":Headless-Minecraft-Common")
-	headlessMinecraftImplementation project(":Headless-Minecraft-Implementation")
-	mainPlugin project(":Main-Plugin")
-
-	packedDependencies group: "net.hycrafthd", name: "minecraft_downloader", version: config.minecraft_downloader.version
-	packedDependencies group: "net.hycrafthd", name: "minecraft_authenticator", version: config.minecraft_authenticator.version
-	packedDependencies group: "net.hycrafthd", name: "logging_util", version: config.logging_util.version
-	
-	packedDependencies group: "org.apache.logging.log4j", name: "log4j-api", version: config.log4j.version
-	packedDependencies group: "org.apache.logging.log4j", name: "log4j-core", version: config.log4j.version
-	packedDependencies group: "org.apache.logging.log4j", name: "log4j-iostreams", version: config.log4j.version
+	patcher {
+		parent = project(":mcp")
+		mcVersion = MC_VERSION
+		patchedSrc = file("src/main/java")
 		
-	packedDependencies group: "net.sf.jopt-simple", name: "jopt-simple", version: config.jopt_simple.version
+		mappings channel: MAPPING_CHANNEL, version: MAPPING_VERSION
 		
-	packedDependencies group: "org.spongepowered", name: "mixin", version: config.mixin.version
-	
-	packedDependencies (group: "cpw.mods", name: "modlauncher", version: config.mod_launcher.version) {
-		transitive = false
+		runs.clear()
 	}
-	packedDependencies (group: "cpw.mods", name: "grossjava9hacks", version: config.gross_java9_hacks.version) {
-		transitive = false
-	}
-		
-	packedDependencies group: "com.google.guava", name: "guava", version: config.guava.version
-	packedDependencies group: "com.google.code.gson", name: "gson", version: config.gson.version
+}
+
+project(":minecraft") {
+	evaluationDependsOn(":clean")
 	
-	packedDependencies group: "org.ow2.asm", name: "asm", version: config.asm.version
-	packedDependencies group: "org.ow2.asm", name: "asm-commons", version: config.asm.version
-	packedDependencies group: "org.ow2.asm", name: "asm-tree", version: config.asm.version
-	packedDependencies group: "org.ow2.asm", name: "asm-analysis", version: config.asm.version
-	packedDependencies group: "org.ow2.asm", name: "asm-util", version: config.asm.version
-}
-
-group = "net.hycrafthd"
-archivesBaseName = "headless_minecraft-" + minecraft_version
-version = "1.0.0-SNAPSHOT"
-
-tasks.withType(JavaCompile) {
-    options.encoding = "UTF-8"
-}
-
-java {
-	toolchain {
-		languageVersion = JavaLanguageVersion.of(8)
-	}
-	withSourcesJar()
-	withJavadocJar()
-}
-
-sourceSets {
-    main {
-        java
-        resources
-    }
-}
-
-tasks.named("jar") {
-	archiveClassifier = ""
+	apply plugin: "net.minecraftforge.gradle.patcher"
+	apply plugin: "org.parchmentmc.librarian.forgegradle"
 	
-	dependsOn ":Headless-Minecraft-Common:build"
-	dependsOn ":Headless-Minecraft-Implementation:build"
-	dependsOn ":Main-Plugin:build"
-		
-	from "LICENSE"
-		
-	doFirst {
-		from(zipTree(configurations.headlessMinecraftCommon.singleFile))
-	        
-		def implementation = configurations.headlessMinecraftImplementation.singleFile
-		from implementation
-			
-		def plugin = configurations.mainPlugin.singleFile
-		from plugin
-			
-		manifest {
-			attributes(
-				"Implementation-Version": project.version,
-				"Implementation-Vendor": "HyCraftHD, Luc_ZZ",
-				"Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ"),
-				"Headless-Minecraft-Implementation-Jar": implementation.name,
-				"Headless-Minecraft-Main-Plugin-Jar": plugin.name
-			)
+	group = "net.hycrafthd"
+	archivesBaseName = "headless-minecraft"
+	version = MC_VERSION + "-0.0.1"
+	
+	sourceSets {
+		main {
+			java {
+				srcDirs = [
+					"$rootDir/src/main/java",
+				]
+			}
+			resources {
+				srcDirs = [
+					"$rootDir/src/main/resources",
+				]
+			}
 		}
 	}
-}
-
-tasks.named("shadowJar") {
-   archiveClassifier.set("application")
-   configurations = [project.configurations.packedDependencies]
-   
-   mergeServiceFiles()
-   
-   transform(com.github.jengelman.gradle.plugins.shadow.transformers.Log4j2PluginsCacheFileTransformer)
-}
-
-task runHeadlessMinecraft(type: JavaExec) {
-	def run = new File("${rootDir}/run")
-	if(!run.exists()) {
-		run.mkdirs()
+	
+	dependencies {
+		implementation "net.minecraftforge:forgespi:" + SPI_VERSION
 	}
-
-	main "net.hycrafthd.headless_minecraft.launcher.Main"
-	args "--run", "\"$run\"", "--auth-file", "auth.json"
-	systemProperties = [
-		"headless-minecraft.development": "true",
-		"headless-minecraft.development.download": "\"$minecraft_files\"",
-		"headless-minecraft.development.mapped-minecraft": "\"$mapped_minecraft_jar\"",
-		"headless-minecraft.development.implementation-build": "\"" + file(project(":Headless-Minecraft-Implementation").projectDir.toString() + "/bin/main") +"\"",
-		"headless-minecraft.development.main-plugin-build": "\"" + file(project(":Main-Plugin").projectDir.toString() + "/bin/main") +"\"",
-	]
-	workingDir run
+	
+	patcher {
+		parent = project(":clean")
+		patches = file("$rootDir/patches")
+		patchedSrc = file("src/main/java")
+		accessTransformers.from file("$rootDir/src/main/resources/accesstransformer.at")
+		srgPatches = true
+		
+		runs.clear()
+		
+		runs {
+			headless_minecraft {
+				client true
+				taskName "runHeadless-Minecraft"
+				ideaModule "${rootProject.name}.${project.name}.main"
+				
+				main "net.hycrafthd.headless_minecraft.Main"
+				workingDirectory rootProject.file("run")
+				
+				args "--gameDir", "."
+				args "--version", MC_VERSION
+				args "--assetsDir", downloadAssets.output
+				args "--assetIndex", "{asset_index}"
+				args "--accessToken", "0"
+			}
+		}
+	}
+	
+	genPatches {
+		autoHeader true
+		lineEnding = "\n"
+	}
+	
+	reobfJar {
+		tool = FART
+		args = [
+			"--input",
+			"{input}",
+			"--output",
+			"{output}",
+			"--map",
+			"{srg}"
+		]
+	}
 }
 
-application {
-	mainClassName = "net.hycrafthd.headless_minecraft.launcher.Main"
-	applicationName = "Headless Minecraft"
-}
-
-launchConfig {
-	includedTasks "runHeadlessMinecraft"
+task setup {
+	group = "setup"
+	description = "Setup dev workspace"
+	
+	dependsOn ":clean:extractMapped"
+	dependsOn ":minecraft:extractMapped"
 }

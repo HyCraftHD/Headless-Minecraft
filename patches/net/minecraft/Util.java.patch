@@ -1,0 +1,12 @@
+--- a/net/minecraft/Util.java
++++ b/net/minecraft/Util.java
+@@ -157,6 +_,9 @@
+ 
+       return 255;
+    }
++   
++   // We add this inner class to compensate for Mojang's missing inner class and allow us to obf subsequent anon inner classes correctly.
++   @SuppressWarnings("unused") private static LongSupplier INNER_CLASS_SHIFT = new LongSupplier() { public long getAsLong() { return 0; } };
+ 
+    public static ExecutorService m_183988_() {
+       return f_137443_;

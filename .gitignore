@@ -17,3 +17,7 @@ eclipse
 run
 libs
 logs
+
+/mcp/
+/clean/
+/minecraft/

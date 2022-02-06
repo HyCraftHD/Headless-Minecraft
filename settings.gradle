@@ -1,10 +1,9 @@
-include "minecraft"
-include "headless-minecraft-common"
-include "headless-minecraft"
-include "main-plugin"
-
 rootProject.name = "Headless-Minecraft"
-project(":minecraft").name = "Mapped-Minecraft"
-project(":headless-minecraft-common").name = "Headless-Minecraft-Common"
-project(":headless-minecraft").name = "Headless-Minecraft-Implementation"
-project(":main-plugin").name = "Main-Plugin"
+
+include ":mcp"
+include ":clean"
+include ":minecraft"
+
+project(":mcp").projectDir = file("mcp")
+project(":clean").projectDir = file("clean")
+project(":minecraft").projectDir = file("minecraft")
