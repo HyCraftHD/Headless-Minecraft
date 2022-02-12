@@ -1,1 +1,35 @@
 public net.minecraft.client.main.Main f_129630_ # LOGGER
+
+# Make some fields not final so we do not need to init them explicitly with null
+
+private-f net.minecraft.client.Minecraft f_90990_
+private-f net.minecraft.client.Minecraft f_90989_
+private-f net.minecraft.client.Minecraft f_90987_
+private-f net.minecraft.client.Minecraft f_91046_
+private-f net.minecraft.client.Minecraft f_91043_
+private-f net.minecraft.client.Minecraft f_91050_
+private-f net.minecraft.client.Minecraft f_90993_
+private-f net.minecraft.client.Minecraft f_91061_
+private-f net.minecraft.client.Minecraft f_91053_
+private-f net.minecraft.client.Minecraft f_91044_
+private-f net.minecraft.client.Minecraft f_91067_
+private-f net.minecraft.client.Minecraft f_91051_
+private-f net.minecraft.client.Minecraft f_91054_
+private-f net.minecraft.client.Minecraft f_91042_
+private-f net.minecraft.client.Minecraft f_91031_
+private-f net.minecraft.client.Minecraft f_91060_
+private-f net.minecraft.client.Minecraft f_91068_
+private-f net.minecraft.client.Minecraft f_90995_
+private-f net.minecraft.client.Minecraft f_90996_
+private-f net.minecraft.client.Minecraft f_91041_
+private-f net.minecraft.client.Minecraft f_91065_
+private-f net.minecraft.client.Minecraft f_91047_
+private-f net.minecraft.client.Minecraft f_91063_
+private-f net.minecraft.client.Minecraft f_91045_
+private-f net.minecraft.client.Minecraft f_91062_
+private-f net.minecraft.client.Minecraft f_90994_
+private-f net.minecraft.client.Minecraft f_167844_
+private-f net.minecraft.client.Minecraft f_91064_
+private-f net.minecraft.client.Minecraft f_91052_
+private-f net.minecraft.client.Minecraft f_167845_
+private-f net.minecraft.client.Minecraft f_91040_
