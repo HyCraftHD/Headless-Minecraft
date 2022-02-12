@@ -1,0 +1,11 @@
+--- a/net/minecraft/client/gui/chat/NarratorChatListener.java
++++ b/net/minecraft/client/gui/chat/NarratorChatListener.java
+@@ -21,7 +_,7 @@
+    public static final Component f_93310_ = TextComponent.f_131282_;
+    private static final Logger f_93312_ = LogManager.getLogger();
+    public static final NarratorChatListener f_93311_ = new NarratorChatListener();
+-   private final Narrator f_93313_ = Narrator.getNarrator();
++   private final Narrator f_93313_ = new com.mojang.text2speech.NarratorDummy();
+ 
+    public void m_7437_(ChatType p_93322_, Component p_93323_, UUID p_93324_) {
+       NarratorStatus narratorstatus = m_93330_();
