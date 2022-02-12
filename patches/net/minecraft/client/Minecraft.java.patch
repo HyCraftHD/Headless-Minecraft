@@ -1,40 +1,9 @@
 --- a/net/minecraft/client/Minecraft.java
 +++ b/net/minecraft/client/Minecraft.java
-@@ -433,6 +_,39 @@
+@@ -433,6 +_,8 @@
        }
  
        Util.f_137440_ = RenderSystem.m_69576_();
-+      f_90990_ = null;
-+      f_90989_ = null;
-+      f_90987_ = null;
-+      f_91046_ = null;
-+      f_91043_ = null;
-+      f_91050_ = null;
-+      f_90993_ = null;
-+      f_91061_ = null;
-+      f_91053_ = null;
-+      f_91044_ = null;
-+      f_91067_ = null;
-+      f_91051_ = null;
-+      f_91054_ = null;
-+      f_91042_ = null;
-+      f_91031_ = null;
-+      f_91060_ = null;
-+      f_91068_ = null;
-+      f_90995_ = null;
-+      f_90996_ = null;
-+      f_91041_ = null;
-+      f_91065_ = null;
-+      f_91047_ = null;
-+      f_91063_ = null;
-+      f_91045_ = null;
-+      f_91062_ = null;
-+      f_90994_ = null;
-+      f_167844_ = null;
-+      f_91064_ = null;
-+      f_91052_ = null;
-+      f_167845_ = null;
-+      f_91040_ = null;
 +      f_91079_ = true;
 +      if(false) {
        this.f_90989_ = new VirtualScreen(this);
