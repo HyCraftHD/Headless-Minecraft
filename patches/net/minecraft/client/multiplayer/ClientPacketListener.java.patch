@@ -17,6 +17,14 @@
        this.f_104888_.f_91064_.m_113434_();
        this.f_104888_.f_91074_.m_172530_();
        int i = p_105030_.f_132360_();
+@@ -698,6 +_,7 @@
+             this.f_104889_.m_7785_(entity.m_20185_(), entity.m_20186_(), entity.m_20189_(), SoundEvents.f_12019_, SoundSource.PLAYERS, 0.2F, (this.f_104898_.nextFloat() - this.f_104898_.nextFloat()) * 1.4F + 2.0F, false);
+          }
+ 
++         if(false)
+          this.f_104888_.f_91061_.m_107344_(new ItemPickupParticle(this.f_104888_.m_91290_(), this.f_104888_.m_91269_(), this.f_104889_, entity, livingentity));
+          if (entity instanceof ItemEntity) {
+             ItemEntity itementity = (ItemEntity)entity;
 @@ -715,6 +_,7 @@
  
     public void m_5784_(ClientboundChatPacket p_104986_) {
@@ -24,6 +32,17 @@
 +      if(false) // TODO handle chat
        this.f_104888_.f_91065_.m_93051_(p_104986_.m_131840_(), p_104986_.m_131836_(), p_104986_.m_131841_());
     }
+ 
+@@ -734,8 +_,10 @@
+             Player player = (Player)entity;
+             player.m_6145_(false, false);
+          } else if (p_104968_.m_131627_() == 4) {
++        	if(false)
+             this.f_104888_.f_91061_.m_107329_(entity, ParticleTypes.f_123797_);
+          } else if (p_104968_.m_131627_() == 5) {
++        	if(false)
+             this.f_104888_.f_91061_.m_107329_(entity, ParticleTypes.f_123808_);
+          }
  
 @@ -790,6 +_,7 @@
              if (entity1 != null) {
@@ -33,15 +52,21 @@
                    this.f_104888_.f_91065_.m_93063_(new TranslatableComponent("mount.onboard", this.f_104888_.f_91066_.f_92090_.m_90863_()), false);
                 }
              }
-@@ -828,7 +_,7 @@
+@@ -825,12 +_,14 @@
+          if (p_105010_.m_132102_() == 21) {
+             this.f_104888_.m_91106_().m_120367_(new GuardianAttackSoundInstance((Guardian)entity));
+          } else if (p_105010_.m_132102_() == 35) {
++            if(false) {
              int i = 40;
              this.f_104888_.f_91061_.m_107332_(entity, ParticleTypes.f_123767_, 30);
              this.f_104889_.m_7785_(entity.m_20185_(), entity.m_20186_(), entity.m_20189_(), SoundEvents.f_12513_, entity.m_5720_(), 1.0F, 1.0F, false);
--            if (entity == this.f_104888_.f_91074_) {
-+            if (false && entity == this.f_104888_.f_91074_) {
+             if (entity == this.f_104888_.f_91074_) {
                 this.f_104888_.f_91063_.m_109113_(m_104927_(this.f_104888_.f_91074_));
              }
++            }
           } else {
+             entity.m_7822_(p_105010_.m_132102_());
+          }
 @@ -864,7 +_,7 @@
           boolean flag1 = p_105066_.m_132960_();
           ClientLevel.ClientLevelData clientlevel$clientleveldata = new ClientLevel.ClientLevelData(this.f_104890_.m_5472_(), this.f_104890_.m_5466_(), flag1);
@@ -88,6 +113,15 @@
     }
  
     public void m_7704_(ClientboundLevelEventPacket p_105024_) {
+@@ -1273,7 +_,7 @@
+       PacketUtils.m_131363_(p_171775_, this, this.f_104888_);
+       Entity entity = this.f_104889_.m_6815_(p_171775_.m_179078_());
+       if (entity == this.f_104888_.f_91074_) {
+-         if (this.f_104888_.f_91074_.m_108632_()) {
++         if (false && this.f_104888_.f_91074_.m_108632_()) {
+             this.f_104888_.m_91152_(new DeathScreen(p_171775_.m_179079_(), this.f_104889_.m_6106_().m_5466_()));
+          } else {
+             this.f_104888_.f_91074_.m_7583_();
 @@ -1340,37 +_,45 @@
  
     public void m_142766_(ClientboundClearTitlesPacket p_171765_) {
