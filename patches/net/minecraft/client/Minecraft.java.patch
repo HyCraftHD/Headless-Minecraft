@@ -1,40 +1,19 @@
 --- a/net/minecraft/client/Minecraft.java
 +++ b/net/minecraft/client/Minecraft.java
-@@ -433,6 +_,39 @@
+@@ -424,6 +_,7 @@
+       this.f_91066_ = new Options(this, this.f_91069_);
+       this.f_91005_ = new Tutorial(this, this.f_91066_);
+       this.f_91000_ = new HotbarManager(this.f_91069_, this.f_90988_);
++      if(false)
+       f_90982_.info("Backend library: {}", (Object)RenderSystem.m_69517_());
+       DisplayData displaydata;
+       if (this.f_91066_.f_92129_ > 0 && this.f_91066_.f_92128_ > 0) {
+@@ -432,7 +_,10 @@
+          displaydata = p_91084_.f_101906_;
        }
  
++      if(false)
        Util.f_137440_ = RenderSystem.m_69576_();
-+      f_90990_ = null;
-+      f_90989_ = null;
-+      f_90987_ = null;
-+      f_91046_ = null;
-+      f_91043_ = null;
-+      f_91050_ = null;
-+      f_90993_ = null;
-+      f_91061_ = null;
-+      f_91053_ = null;
-+      f_91044_ = null;
-+      f_91067_ = null;
-+      f_91051_ = null;
-+      f_91054_ = null;
-+      f_91042_ = null;
-+      f_91031_ = null;
-+      f_91060_ = null;
-+      f_91068_ = null;
-+      f_90995_ = null;
-+      f_90996_ = null;
-+      f_91041_ = null;
-+      f_91065_ = null;
-+      f_91047_ = null;
-+      f_91063_ = null;
-+      f_91045_ = null;
-+      f_91062_ = null;
-+      f_90994_ = null;
-+      f_167844_ = null;
-+      f_91064_ = null;
-+      f_91052_ = null;
-+      f_167845_ = null;
-+      f_91040_ = null;
 +      f_91079_ = true;
 +      if(false) {
        this.f_90989_ = new VirtualScreen(this);
@@ -54,17 +33,28 @@
        this.f_90987_ = new TextureManager(this.f_91036_);
        this.f_91036_.m_7217_(this.f_90987_);
        this.f_91050_ = new SkinManager(this.f_90987_, new File(file1, "skins"), this.f_91048_);
-@@ -496,7 +_,10 @@
+@@ -494,15 +_,21 @@
+       this.f_90996_ = new ItemInHandRenderer(this);
+       this.f_91036_.m_7217_(this.f_90995_);
        this.f_90993_ = new RenderBuffers();
-       this.f_91063_ = new GameRenderer(this, this.f_91036_, this.f_90993_);
-       this.f_91036_.m_7217_(this.f_91063_);
 +      }
+       this.f_91063_ = new GameRenderer(this, this.f_91036_, this.f_90993_);
++      if(false)
+       this.f_91036_.m_7217_(this.f_91063_);
        this.f_91006_ = new PlayerSocialManager(this, this.f_193584_);
 +      if(false) {
 +      BlockEntityWithoutLevelRenderer blockentitywithoutlevelrenderer = null;
        this.f_91052_ = new BlockRenderDispatcher(this.f_91051_.m_119430_(), blockentitywithoutlevelrenderer, this.f_91040_);
        this.f_91036_.m_7217_(this.f_91052_);
        this.f_91060_ = new LevelRenderer(this, this.f_90993_);
+       this.f_91036_.m_7217_(this.f_91060_);
++      }
+       this.m_91271_();
+       this.f_91036_.m_7217_(this.f_90997_);
++      if(false) {
+       this.f_91061_ = new ParticleEngine(this.f_91073_, this.f_90987_);
+       this.f_91036_.m_7217_(this.f_91061_);
+       this.f_91053_ = new PaintingTextureManager(this.f_90987_);
 @@ -546,6 +_,7 @@
              this.f_167847_.m_168556_();
           });
@@ -89,40 +79,37 @@
     }
  
     public void m_91150_(@Nullable Overlay p_91151_) {
-@@ -968,8 +_,9 @@
+@@ -968,8 +_,10 @@
     }
  
     private void m_91383_(boolean p_91384_) {
--      this.f_90990_.m_85403_("Pre render");
-+      //this.window.setErrorSection("Pre render");
++	  if(false)
+       this.f_90990_.m_85403_("Pre render");
        long i = Util.m_137569_();
 +      if(false) {
        if (this.f_90990_.m_85411_()) {
           this.m_91395_();
        }
-@@ -981,7 +_,7 @@
-             completablefuture.complete((Void)null);
+@@ -982,6 +_,7 @@
           });
        }
--
+ 
 +      }
        Runnable runnable;
        while((runnable = this.f_91023_.poll()) != null) {
           runnable.run();
-@@ -1001,7 +_,7 @@
- 
+@@ -1002,6 +_,7 @@
           this.f_91026_.m_7238_();
        }
--
+ 
 +      if(false) {
        this.f_91067_.m_91523_();
        this.f_90990_.m_85403_("Render");
        this.f_91026_.m_6180_("sound");
-@@ -1046,10 +_,11 @@
-       if ((double)i1 < Option.f_91670_.m_92235_()) {
+@@ -1047,9 +_,11 @@
           RenderSystem.m_69830_(i1);
        }
--
+ 
 +      }
        this.f_91026_.m_6182_("yield");
        Thread.yield();
@@ -131,75 +118,68 @@
        this.f_90990_.m_85403_("Post render");
        ++this.f_91016_;
        boolean flag = this.m_91091_() && (this.f_91080_ != null && this.f_91080_.m_7043_() || this.f_91081_ != null && this.f_91081_.m_7859_()) && !this.f_91007_.m_6992_();
-@@ -1074,8 +_,9 @@
-          this.f_91015_ += 1000L;
-          this.f_91016_ = 0;
+@@ -1076,6 +_,8 @@
        }
--
-+      
+ 
        this.f_91026_.m_7238_();
++
 +      }
     }
  
     private boolean m_91274_() {
-@@ -1554,22 +_,23 @@
-       if (this.f_91011_ > 0) {
+@@ -1555,9 +_,11 @@
           --this.f_91011_;
        }
--
+ 
 +      if(false) {
        this.f_91026_.m_6180_("gui");
        this.f_91065_.m_193832_(this.f_91012_);
        this.f_91026_.m_7238_();
--      this.f_91063_.m_109087_(1.0F);
-+      this.f_91063_.m_109087_(1.0F); //evtl gebraucht
 +      }
+       this.f_91063_.m_109087_(1.0F);
        this.f_91005_.m_120578_(this.f_91073_, this.f_91077_);
        this.f_91026_.m_6180_("gameMode");
-       if (!this.f_91012_ && this.f_91073_ != null) {
+@@ -1565,10 +_,12 @@
           this.f_91072_.m_105287_();
        }
--
+ 
 +      if(false) {
        this.f_91026_.m_6182_("textures");
        if (this.f_91073_ != null) {
           this.f_90987_.m_7673_();
        }
--
 +      }
+ 
        if (this.f_91080_ == null && this.f_91074_ != null) {
           if (this.f_91074_.m_21224_() && !(this.f_91080_ instanceof DeathScreen)) {
-             this.m_91152_((Screen)null);
-@@ -1589,7 +_,7 @@
-       if (this.f_91080_ != null) {
+@@ -1590,6 +_,7 @@
           this.f_91078_ = 10000;
        }
--
+ 
 +      if(false) {
        if (this.f_91080_ != null) {
           Screen.m_96579_(() -> {
              this.f_91080_.m_96624_();
-@@ -1607,8 +_,9 @@
+@@ -1607,8 +_,10 @@
              --this.f_91078_;
           }
        }
--
 +      }
+ 
        if (this.f_91073_ != null) {
 +    	 if(false) {
           this.f_91026_.m_6182_("gameRenderer");
           if (!this.f_91012_) {
              this.f_91063_.m_109148_();
-@@ -1618,7 +_,7 @@
+@@ -1618,6 +_,7 @@
           if (!this.f_91012_) {
              this.f_91060_.m_109823_();
           }
--
 +    	 }
+ 
           this.f_91026_.m_6182_("level");
           if (!this.f_91012_) {
-             if (this.f_91073_.m_104819_() > 0) {
-@@ -1627,15 +_,16 @@
+@@ -1627,15 +_,17 @@
  
              this.f_91073_.m_104804_();
           }
@@ -207,28 +187,26 @@
 +      } else if (false && this.f_91063_.m_109149_() != null) {
           this.f_91063_.m_109086_();
        }
--
+ 
 +      if(false) {
        if (!this.f_91012_) {
           this.f_91044_.m_120183_();
        }
--
-+      
+ 
        this.f_91043_.m_120389_(this.f_91012_);
 +      }
        if (this.f_91073_ != null) {
           if (!this.f_91012_) {
              if (!this.f_91066_.f_92031_ && this.m_91278_()) {
-@@ -1665,7 +_,7 @@
-                throw new ReportedException(crashreport);
+@@ -1666,6 +_,7 @@
              }
           }
--
+ 
 +         if(false) {
           this.f_91026_.m_6182_("animateTick");
           if (!this.f_91012_ && this.f_91073_ != null) {
              this.f_91073_.m_104784_(this.f_91074_.m_146903_(), this.f_91074_.m_146904_(), this.f_91074_.m_146907_());
-@@ -1675,14 +_,16 @@
+@@ -1675,14 +_,17 @@
           if (!this.f_91012_) {
              this.f_91061_.m_107388_();
           }
@@ -237,7 +215,7 @@
           this.f_91026_.m_6182_("pendingConnection");
           this.f_91009_.m_129483_();
        }
--
+ 
 +      if(false) {
        this.f_91026_.m_6182_("keyboard");
        this.f_91068_.m_90931_();
@@ -246,40 +224,46 @@
     }
  
     private boolean m_91278_() {
-@@ -2052,7 +_,7 @@
+@@ -2025,6 +_,7 @@
+       progressscreen.m_6309_(new TranslatableComponent("connect.joining"));
+       this.m_91362_(progressscreen);
+       this.f_91073_ = p_91157_;
++      if(false)
+       this.m_91324_(p_91157_);
+       if (!this.f_91010_) {
+          AuthenticationService authenticationservice = new YggdrasilAuthenticationService(this.f_91030_);
+@@ -2052,6 +_,7 @@
        this.f_91006_.m_194060_();
        IntegratedServer integratedserver = this.f_91007_;
        this.f_91007_ = null;
--      this.f_91063_.m_109150_();
-+      //this.gameRenderer.resetData();
++      if(false)
+       this.f_91063_.m_109150_();
        this.f_91072_ = null;
        NarratorChatListener.f_93311_.m_93328_();
-       this.m_91362_(p_91321_);
-@@ -2068,21 +_,21 @@
+@@ -2068,6 +_,7 @@
           }
  
           this.f_91037_.m_118586_();
--         this.f_91065_.m_93089_();
-+         //this.gui.onDisconnected();
++         if(false)
+          this.f_91065_.m_93089_();
           this.f_91008_ = null;
           this.f_91010_ = false;
-          this.f_91004_.m_90740_();
+@@ -2075,6 +_,7 @@
        }
  
        this.f_91073_ = null;
--      this.m_91324_((ClientLevel)null);
-+      //this.updateLevelInEngines((ClientLevel)null);
++      if(false)
+       this.m_91324_((ClientLevel)null);
        this.f_91074_ = null;
        SkullBlockEntity.m_196704_();
-    }
+@@ -2082,6 +_,7 @@
  
     private void m_91362_(Screen p_91363_) {
        this.f_91026_.m_6180_("forcedTick");
--      this.f_91043_.m_120405_();
-+      //this.soundManager.stop();
++      if(false)
+       this.f_91043_.m_120405_();
        this.f_91075_ = null;
        this.f_91009_ = null;
-       this.m_91152_(p_91363_);
 @@ -2261,6 +_,7 @@
        p_167851_.m_143522_("Launched Version", () -> {
           return p_167854_;

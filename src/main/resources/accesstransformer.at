@@ -1,1 +1,37 @@
 public net.minecraft.client.main.Main f_129630_ # LOGGER
+
+# Make some fields not final so we do not need to init them explicitly with null
+
+protected-f net.minecraft.client.Minecraft f_90990_
+protected-f net.minecraft.client.Minecraft f_90989_
+protected-f net.minecraft.client.Minecraft f_90987_
+protected-f net.minecraft.client.Minecraft f_91046_
+protected-f net.minecraft.client.Minecraft f_91043_
+protected-f net.minecraft.client.Minecraft f_91050_
+protected-f net.minecraft.client.Minecraft f_90993_
+protected-f net.minecraft.client.Minecraft f_91061_
+protected-f net.minecraft.client.Minecraft f_91053_
+protected-f net.minecraft.client.Minecraft f_91044_
+protected-f net.minecraft.client.Minecraft f_91067_
+protected-f net.minecraft.client.Minecraft f_91051_
+protected-f net.minecraft.client.Minecraft f_91054_
+protected-f net.minecraft.client.Minecraft f_91042_
+protected-f net.minecraft.client.Minecraft f_91031_
+protected-f net.minecraft.client.Minecraft f_91060_
+protected-f net.minecraft.client.Minecraft f_91068_
+protected-f net.minecraft.client.Minecraft f_90995_
+protected-f net.minecraft.client.Minecraft f_90996_
+protected-f net.minecraft.client.Minecraft f_91041_
+protected-f net.minecraft.client.Minecraft f_91065_
+protected-f net.minecraft.client.Minecraft f_91047_
+protected-f net.minecraft.client.Minecraft f_91045_
+protected-f net.minecraft.client.Minecraft f_91062_
+protected-f net.minecraft.client.Minecraft f_90994_
+protected-f net.minecraft.client.Minecraft f_167844_
+protected-f net.minecraft.client.Minecraft f_91064_
+protected-f net.minecraft.client.Minecraft f_91052_
+protected-f net.minecraft.client.Minecraft f_167845_
+protected-f net.minecraft.client.Minecraft f_91040_
+
+protected-f net.minecraft.client.renderer.GameRenderer f_109063_
+protected-f net.minecraft.client.renderer.GameRenderer f_109074_
