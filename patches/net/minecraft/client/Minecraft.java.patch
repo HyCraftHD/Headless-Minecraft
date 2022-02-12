@@ -66,40 +66,37 @@
     }
  
     public void m_91150_(@Nullable Overlay p_91151_) {
-@@ -968,8 +_,9 @@
+@@ -968,8 +_,10 @@
     }
  
     private void m_91383_(boolean p_91384_) {
--      this.f_90990_.m_85403_("Pre render");
-+      //this.window.setErrorSection("Pre render");
++	  if(false)
+       this.f_90990_.m_85403_("Pre render");
        long i = Util.m_137569_();
 +      if(false) {
        if (this.f_90990_.m_85411_()) {
           this.m_91395_();
        }
-@@ -981,7 +_,7 @@
-             completablefuture.complete((Void)null);
+@@ -982,6 +_,7 @@
           });
        }
--
+ 
 +      }
        Runnable runnable;
        while((runnable = this.f_91023_.poll()) != null) {
           runnable.run();
-@@ -1001,7 +_,7 @@
- 
+@@ -1002,6 +_,7 @@
           this.f_91026_.m_7238_();
        }
--
+ 
 +      if(false) {
        this.f_91067_.m_91523_();
        this.f_90990_.m_85403_("Render");
        this.f_91026_.m_6180_("sound");
-@@ -1046,10 +_,11 @@
-       if ((double)i1 < Option.f_91670_.m_92235_()) {
+@@ -1047,9 +_,11 @@
           RenderSystem.m_69830_(i1);
        }
--
+ 
 +      }
        this.f_91026_.m_6182_("yield");
        Thread.yield();
@@ -108,22 +105,19 @@
        this.f_90990_.m_85403_("Post render");
        ++this.f_91016_;
        boolean flag = this.m_91091_() && (this.f_91080_ != null && this.f_91080_.m_7043_() || this.f_91081_ != null && this.f_91081_.m_7859_()) && !this.f_91007_.m_6992_();
-@@ -1074,8 +_,9 @@
-          this.f_91015_ += 1000L;
-          this.f_91016_ = 0;
+@@ -1076,6 +_,8 @@
        }
--
-+      
+ 
        this.f_91026_.m_7238_();
++
 +      }
     }
  
     private boolean m_91274_() {
-@@ -1554,22 +_,23 @@
-       if (this.f_91011_ > 0) {
+@@ -1555,20 +_,24 @@
           --this.f_91011_;
        }
--
+ 
 +      if(false) {
        this.f_91026_.m_6180_("gui");
        this.f_91065_.m_193832_(this.f_91012_);
@@ -136,47 +130,44 @@
        if (!this.f_91012_ && this.f_91073_ != null) {
           this.f_91072_.m_105287_();
        }
--
+ 
 +      if(false) {
        this.f_91026_.m_6182_("textures");
        if (this.f_91073_ != null) {
           this.f_90987_.m_7673_();
        }
--
 +      }
+ 
        if (this.f_91080_ == null && this.f_91074_ != null) {
           if (this.f_91074_.m_21224_() && !(this.f_91080_ instanceof DeathScreen)) {
-             this.m_91152_((Screen)null);
-@@ -1589,7 +_,7 @@
-       if (this.f_91080_ != null) {
+@@ -1590,6 +_,7 @@
           this.f_91078_ = 10000;
        }
--
+ 
 +      if(false) {
        if (this.f_91080_ != null) {
           Screen.m_96579_(() -> {
              this.f_91080_.m_96624_();
-@@ -1607,8 +_,9 @@
+@@ -1607,8 +_,10 @@
              --this.f_91078_;
           }
        }
--
 +      }
+ 
        if (this.f_91073_ != null) {
 +    	 if(false) {
           this.f_91026_.m_6182_("gameRenderer");
           if (!this.f_91012_) {
              this.f_91063_.m_109148_();
-@@ -1618,7 +_,7 @@
+@@ -1618,6 +_,7 @@
           if (!this.f_91012_) {
              this.f_91060_.m_109823_();
           }
--
 +    	 }
+ 
           this.f_91026_.m_6182_("level");
           if (!this.f_91012_) {
-             if (this.f_91073_.m_104819_() > 0) {
-@@ -1627,15 +_,16 @@
+@@ -1627,15 +_,18 @@
  
              this.f_91073_.m_104804_();
           }
@@ -184,7 +175,7 @@
 +      } else if (false && this.f_91063_.m_109149_() != null) {
           this.f_91063_.m_109086_();
        }
--
+ 
 +      if(false) {
        if (!this.f_91012_) {
           this.f_91044_.m_120183_();
@@ -193,19 +184,19 @@
 +      
        this.f_91043_.m_120389_(this.f_91012_);
 +      }
++
        if (this.f_91073_ != null) {
           if (!this.f_91012_) {
              if (!this.f_91066_.f_92031_ && this.m_91278_()) {
-@@ -1665,7 +_,7 @@
-                throw new ReportedException(crashreport);
+@@ -1666,6 +_,7 @@
              }
           }
--
+ 
 +         if(false) {
           this.f_91026_.m_6182_("animateTick");
           if (!this.f_91012_ && this.f_91073_ != null) {
              this.f_91073_.m_104784_(this.f_91074_.m_146903_(), this.f_91074_.m_146904_(), this.f_91074_.m_146907_());
-@@ -1675,14 +_,16 @@
+@@ -1675,14 +_,17 @@
           if (!this.f_91012_) {
              this.f_91061_.m_107388_();
           }
@@ -214,7 +205,7 @@
           this.f_91026_.m_6182_("pendingConnection");
           this.f_91009_.m_129483_();
        }
--
+ 
 +      if(false) {
        this.f_91026_.m_6182_("keyboard");
        this.f_91068_.m_90931_();
