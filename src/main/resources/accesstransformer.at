@@ -33,5 +33,5 @@ protected-f net.minecraft.client.Minecraft f_91052_
 protected-f net.minecraft.client.Minecraft f_167845_
 protected-f net.minecraft.client.Minecraft f_91040_
 
-protected-f net.minecraft.client.renderer.GameRenderer f_109063_ # mapRenderer
-protected-f net.minecraft.client.renderer.GameRenderer f_109074_ # lightTexture
+protected-f net.minecraft.client.renderer.GameRenderer f_109063_
+protected-f net.minecraft.client.renderer.GameRenderer f_109074_
