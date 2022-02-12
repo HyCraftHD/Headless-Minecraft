@@ -24,7 +24,6 @@ protected-f net.minecraft.client.Minecraft f_90996_
 protected-f net.minecraft.client.Minecraft f_91041_
 protected-f net.minecraft.client.Minecraft f_91065_
 protected-f net.minecraft.client.Minecraft f_91047_
-protected-f net.minecraft.client.Minecraft f_91063_
 protected-f net.minecraft.client.Minecraft f_91045_
 protected-f net.minecraft.client.Minecraft f_91062_
 protected-f net.minecraft.client.Minecraft f_90994_
@@ -33,3 +32,6 @@ protected-f net.minecraft.client.Minecraft f_91064_
 protected-f net.minecraft.client.Minecraft f_91052_
 protected-f net.minecraft.client.Minecraft f_167845_
 protected-f net.minecraft.client.Minecraft f_91040_
+
+protected-f net.minecraft.client.renderer.GameRenderer f_109063_ # mapRenderer
+protected-f net.minecraft.client.renderer.GameRenderer f_109074_ # lightTexture

@@ -13,6 +13,14 @@
           RenderSystem.m_69494_();
        } catch (SilentInitException silentinitexception) {
           f_129630_.warn("Failed to create window: ", (Throwable)silentinitexception);
+@@ -174,6 +_,7 @@
+       } catch (Throwable throwable1) {
+          CrashReport crashreport = CrashReport.m_127521_(throwable1, "Initializing game");
+          CrashReportCategory crashreportcategory = crashreport.m_127514_("Initialization");
++         if(false)
+          NativeModuleLister.m_184679_(crashreportcategory);
+          Minecraft.m_167872_((Minecraft)null, (LanguageManager)null, gameconfig.f_101908_.f_101927_, (Options)null, crashreport);
+          Minecraft.m_91332_(crashreport);
 @@ -185,6 +_,7 @@
           thread1 = new Thread("Game thread") {
              public void run() {

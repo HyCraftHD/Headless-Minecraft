@@ -1,0 +1,36 @@
+--- a/net/minecraft/client/renderer/GameRenderer.java
++++ b/net/minecraft/client/renderer/GameRenderer.java
+@@ -81,7 +_,7 @@
+    private final Random f_109061_ = new Random();
+    private float f_109062_;
+    public final ItemInHandRenderer f_109055_;
+-   protected MapRenderer f_109063_;
++   private final MapRenderer f_109063_;
+    private final RenderBuffers f_109064_;
+    private int f_109065_;
+    private float f_109066_;
+@@ -93,8 +_,8 @@
+    private long f_109072_;
+    private boolean f_182638_;
+    private long f_109073_ = Util.m_137550_();
+-   protected LightTexture f_109074_;
+-   private final OverlayTexture f_109075_ = new OverlayTexture();
++   private final LightTexture f_109074_;
++   private final OverlayTexture f_109075_ = null;
+    private boolean f_109076_;
+    private float f_109077_ = 1.0F;
+    private float f_109078_;
+@@ -227,8 +_,13 @@
+       this.f_109059_ = p_109083_;
+       this.f_109060_ = p_109084_;
+       this.f_109055_ = p_109083_.m_91292_();
++      if(false) {
+       this.f_109063_ = new MapRenderer(p_109083_.m_91097_());
+       this.f_109074_ = new LightTexture(this, p_109083_);
++      } else {
++    	  f_109063_ = null;
++    	  f_109074_ = null;
++      }
+       this.f_109064_ = p_109085_;
+       this.f_109050_ = null;
+    }
