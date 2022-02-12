@@ -1,14 +1,5 @@
 --- a/net/minecraft/client/Minecraft.java
 +++ b/net/minecraft/client/Minecraft.java
-@@ -281,7 +_,7 @@
-    private final SearchRegistry f_90997_ = new SearchRegistry();
-    private final User f_90998_;
-    public Font f_91062_;
--   public final GameRenderer f_91063_;
-+   public GameRenderer f_91063_;
-    public DebugRenderer f_91064_;
-    private final AtomicReference<StoringChunkProgressListener> f_90999_ = new AtomicReference<>();
-    public Gui f_91065_;
 @@ -424,6 +_,7 @@
        this.f_91066_ = new Options(this, this.f_91069_);
        this.f_91005_ = new Tutorial(this, this.f_91066_);
