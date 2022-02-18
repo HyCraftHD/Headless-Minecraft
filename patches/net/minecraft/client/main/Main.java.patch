@@ -1,0 +1,47 @@
+--- a/net/minecraft/client/main/Main.java
++++ b/net/minecraft/client/main/Main.java
+@@ -164,9 +_,12 @@
+       final Minecraft minecraft;
+       try {
+          Thread.currentThread().setName("Render thread");
++         if(false) {
+          RenderSystem.m_69579_();
+          RenderSystem.m_69395_();
++         }
+          minecraft = new Minecraft(gameconfig);
++         if(false)
+          RenderSystem.m_69494_();
+       } catch (SilentInitException silentinitexception) {
+          f_129630_.warn("Failed to create window: ", (Throwable)silentinitexception);
+@@ -174,6 +_,7 @@
+       } catch (Throwable throwable1) {
+          CrashReport crashreport = CrashReport.m_127521_(throwable1, "Initializing game");
+          CrashReportCategory crashreportcategory = crashreport.m_127514_("Initialization");
++         if(false)
+          NativeModuleLister.m_184679_(crashreportcategory);
+          Minecraft.m_167872_((Minecraft)null, (LanguageManager)null, gameconfig.f_101908_.f_101927_, (Options)null, crashreport);
+          Minecraft.m_91332_(crashreport);
+@@ -185,6 +_,7 @@
+          thread1 = new Thread("Game thread") {
+             public void run() {
+                try {
++            	  if(false)
+                   RenderSystem.m_69577_(true);
+                   minecraft.m_91374_();
+                } catch (Throwable throwable2) {
+@@ -201,6 +_,7 @@
+          thread1 = null;
+ 
+          try {
++        	if(false)
+             RenderSystem.m_69577_(false);
+             minecraft.m_91374_();
+          } catch (Throwable throwable) {
+@@ -208,6 +_,7 @@
+          }
+       }
+ 
++      if(false)
+       BufferUploader.m_166835_();
+ 
+       try {
