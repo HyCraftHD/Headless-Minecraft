@@ -8,9 +8,14 @@ import net.minecraft.client.multiplayer.PlayerInfo;
  * Called when the message begins with <strong>@BOT_NAME </strong> <br>
  * Message is the RAW message
  */
-public class ServerChatMessageEvent extends RawServerChatMessageEvent {
+public class ChatTellEvent extends RawServerChatMessageEvent {
 	
-	public ServerChatMessageEvent(String message, UUID uuid, PlayerInfo playerInfo) {
+	public ChatTellEvent(String message, UUID uuid, PlayerInfo playerInfo) {
 		super(message, uuid, playerInfo);
+	}
+	
+	@Override
+	public String toString() {
+		return "ChatTellEvent [message=" + message + ", uuid=" + uuid + ", playerInfo=" + playerInfo + "]";
 	}
 }

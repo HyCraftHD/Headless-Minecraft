@@ -12,13 +12,9 @@ public class EventManager {
 	/**
 	 * Key: EventType Value: Method with object
 	 */
-	private Map<Class<?>, List<MethodsAndObject>> listenerMethodLists;
+	private static Map<Class<?>, List<MethodsAndObject>> listenerMethodLists = new HashMap<>();
 	
-	public EventManager() {
-		listenerMethodLists = new HashMap<>();
-	}
-	
-	public void registerListener(Object listener) {
+	public static void registerListener(Object listener) {
 		if (listener == null) {
 			return;
 		}
@@ -49,7 +45,7 @@ public class EventManager {
 		}
 	}
 	
-	public void executeEvents(Event event) {
+	public static void executeEvents(Event event) {
 		if (!listenerMethodLists.containsKey(event.getClass())) {
 			return;
 		}

@@ -47,7 +47,6 @@ public class CommandRegistry {
 		String[] t = message.split(" ");
 		String command = t[0];
 		String[] args = Arrays.copyOfRange(t, 1, t.length);
-
 		if (commands.containsKey(command)) {
 			commands.get(command).action(command, args, null); //TODO
 		}

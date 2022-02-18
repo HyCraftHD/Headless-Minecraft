@@ -25,11 +25,12 @@
           this.f_104888_.f_91061_.m_107344_(new ItemPickupParticle(this.f_104888_.m_91290_(), this.f_104888_.m_91269_(), this.f_104889_, entity, livingentity));
           if (entity instanceof ItemEntity) {
              ItemEntity itementity = (ItemEntity)entity;
-@@ -715,6 +_,7 @@
+@@ -715,6 +_,8 @@
  
     public void m_5784_(ClientboundChatPacket p_104986_) {
        PacketUtils.m_131363_(p_104986_, this, this.f_104888_);
-+      if(false) // TODO handle chat
++      net.hycrafthd.headless_minecraft.event_system.EventHooks.chatEvent(p_104986_, this);
++      if(false)
        this.f_104888_.f_91065_.m_93051_(p_104986_.m_131840_(), p_104986_.m_131836_(), p_104986_.m_131841_());
     }
  
