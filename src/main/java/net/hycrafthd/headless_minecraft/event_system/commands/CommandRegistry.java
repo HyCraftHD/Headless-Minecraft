@@ -45,6 +45,9 @@ public class CommandRegistry {
 	}
 
 	public static void executeCommand(String message, UUID sender) {
+		if(!allowedPlayers.contains(sender)) {
+			return;
+		}
 		String[] t = message.split(" ");
 		String command = t[0];
 		String[] args = Arrays.copyOfRange(t, 1, t.length);
