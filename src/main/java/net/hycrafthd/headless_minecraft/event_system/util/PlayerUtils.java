@@ -3,7 +3,9 @@ package net.hycrafthd.headless_minecraft.event_system.util;
 import java.util.LinkedList;
 import java.util.Optional;
 import java.util.Queue;
+import java.util.UUID;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.protocol.Packet;
@@ -11,6 +13,7 @@ import net.minecraft.network.protocol.game.ServerboundMovePlayerPacket;
 import net.minecraft.network.protocol.game.ServerboundPlayerActionPacket;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
@@ -21,6 +24,11 @@ public class PlayerUtils {
 	public static final int MAX_TELEPORT_RANGE = 20;
 	
 	private static final Queue<String> messages = new LinkedList<String>();
+	
+	public static Player getPlayer(UUID uuid) {
+		return Minecraft.getInstance().level.getPlayerByUUID(uuid);
+	}
+	
 	
 //	public void setAutoJump(boolean value) {
 //		((LocalPlayerAccessorMixin) getPlayer()).setAutoJumpEnabled(value);

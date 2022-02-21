@@ -20,7 +20,7 @@ public class Main {
 	public Main() {
 		EventManager.registerListener(this);
 		EventManager.registerListener(new CommandExecution());
-		CommandRegistry.registerCommand("test", (command, args, player) -> { System.out.println("Command!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");});
+		CommandRegistry.registerCommand("test", (command, args, player) -> { System.out.println("Command!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");}, "t");
 	}
 	
 	@EventHandler

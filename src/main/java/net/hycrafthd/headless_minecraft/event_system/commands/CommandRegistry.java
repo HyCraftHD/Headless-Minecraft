@@ -15,7 +15,7 @@ public class CommandRegistry {
 
 	private static final ArrayList<UUID> allowedPlayers = new ArrayList<>();
 
-	private static HashMap<String, ArrayList<String>> aliasForCommand = new HashMap<String, ArrayList<String>>();
+	private static HashMap<String, String> aliasForCommand = new HashMap<String, String>();
 
 	static {
 		allowedPlayers.add(UUID.fromString("1e26ade8-8288-4963-87a5-b478f08c0633"));
@@ -29,7 +29,6 @@ public class CommandRegistry {
 			throw new CommandRegisterException("Command: " + command + " already registered!");
 		}
 		commands.put(command, action);
-		aliasForCommand.put(command, new ArrayList<String>());
 	}
 
 	public static void registerCommand(String command, CommandAction action, String... alias) {
@@ -40,7 +39,9 @@ public class CommandRegistry {
 			throw new CommandRegisterException("Alias not found!");
 		}
 		commands.put(command, action);
-		aliasForCommand.put(command, new ArrayList<String>(List.of(alias)));
+		for(String a : alias) {
+			aliasForCommand.put(a, command);
+		}
 	}
 
 	public static void executeCommand(String message, UUID sender) {
@@ -48,7 +49,10 @@ public class CommandRegistry {
 		String command = t[0];
 		String[] args = Arrays.copyOfRange(t, 1, t.length);
 		if (commands.containsKey(command)) {
-			commands.get(command).action(command, args, null); //TODO
+			commands.get(command).action(command, args, sender); //TODO
+		}
+		if(aliasForCommand.containsKey(command)) {
+			commands.get(aliasForCommand.get(command)).action(command, args, sender);
 		}
 	}
 }
