@@ -2,6 +2,8 @@ package net.hycrafthd.headless_minecraft.launch;
 
 import java.io.IOException;
 import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import org.apache.logging.log4j.Level;
@@ -42,11 +44,51 @@ public class Main {
 		final Path authFile = set.valueOf(authFileSpec);
 		final boolean authHeadless = set.has(authHeadlessSpec);
 		
-		Main.LOGGER.atInfo().log("Start Headless Minecraft");
+		Main.LOGGER.atInfo().log("Start headless minecraft");
 		
-		final Optional<User> user = MinecraftAuthenticator.authenticate(authMethod, authFile, authHeadless);
+		final Optional<User> userOptional = MinecraftAuthenticator.authenticate(authMethod, authFile, authHeadless);
 		
-		System.out.println(user);
+		// Args TODO cleanup constants
+		final List<String> argList = new ArrayList<>();
+		
+		if (userOptional.isPresent()) {
+			final User user = userOptional.get();
+			
+			argList.add("--uuid");
+			argList.add(user.uuid());
+			
+			argList.add("--username");
+			argList.add(user.name());
+			
+			argList.add("--accessToken");
+			argList.add(user.accessToken());
+			
+			argList.add("--userType");
+			argList.add(user.type());
+			
+			argList.add("--xuid");
+			argList.add(user.xuid());
+			
+			argList.add("--clientId");
+			argList.add(user.clientId());
+			
+		} else {
+			argList.add("--accessToken");
+			argList.add("0");
+		}
+		
+		argList.add("--gameDir");
+		argList.add(".");
+		
+		argList.add("--version");
+		argList.add("1.18.1");
+		
+		argList.add("--server");
+		argList.add("localhost");
+		
+		Main.LOGGER.atInfo().log("Run headless minecraft");
+		
+		net.hycrafthd.headless_minecraft.Main.main(argList.toArray(String[]::new));
 	}
 	
 }

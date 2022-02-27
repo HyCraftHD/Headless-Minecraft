@@ -20,6 +20,8 @@ import net.hycrafthd.simple_minecraft_authenticator.util.SimpleAuthenticationFil
 public class MinecraftAuthenticator {
 	
 	public static Optional<User> authenticate(AuthenticationMethodCreator authMethod, Path authFile, boolean authHeadless) {
+		Main.LOGGER.atInfo().log("Run minecraft account authentication");
+		
 		if (authMethod == null && authFile == null) {
 			Main.LOGGER.atInfo().log("Skip authentication. Launch in offline mode");
 			return Optional.empty();
