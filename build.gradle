@@ -30,9 +30,9 @@ ext {
 	MAPPING_VERSION = "2022.01.23-1.18.1"
 	MC_VERSION = "1.18.1"
 	MCP_VERSION = "20211210.034407"
-	SPI_VERSION = "4.0.10"
 	
-	FART = "net.minecraftforge:ForgeAutoRenamingTool:0.1.17:all"
+	SPI = "net.minecraftforge:forgespi:4.0.11"
+	FART = "net.minecraftforge:ForgeAutoRenamingTool:0.1.21:all"
 }
 
 println(" Java: " + System.getProperty("java.version") +
@@ -56,7 +56,7 @@ project(":clean") {
 	apply plugin: "org.parchmentmc.librarian.forgegradle"
 	
 	dependencies {
-		implementation "net.minecraftforge:forgespi:" + SPI_VERSION
+		implementation SPI
 	}
 	
 	patcher {
@@ -96,7 +96,7 @@ project(":minecraft") {
 	}
 	
 	dependencies {
-		implementation "net.minecraftforge:forgespi:" + SPI_VERSION
+		implementation SPI
 	}
 	
 	patcher {
