@@ -38,6 +38,13 @@ ext {
 	
 	SPI = "net.minecraftforge:forgespi:4.0.11"
 	FART = "net.minecraftforge:ForgeAutoRenamingTool:0.1.21:all"
+	
+	AUTH = "net.hycrafthd:minecraft_authenticator:3.0.2"
+	SIMPLE_AUTH = "net.hycrafthd:simple_minecraft_authenticator:1.0.2"
+	
+	LOG4J_API = "org.apache.logging.log4j:log4j-api:2.17.1"
+	LOG4J_CORE = "org.apache.logging.log4j:log4j-core:2.17.1"
+	LOG4J_IOSTREAMS = "org.apache.logging.log4j:log4j-iostreams:2.17.1"
 }
 
 println(" Java: " + System.getProperty("java.version") +
@@ -49,8 +56,22 @@ group = "net.hycrafthd"
 archivesBaseName = "headless-minecraft"
 version = MC_VERSION + "-0.0.1"
 
+repositories {
+	maven {
+		url = "https://repo.u-team.info"
+	}
+	mavenCentral()
+}
+
 dependencies {
 	implementation project(":minecraft")
+	
+	implementation AUTH
+	implementation SIMPLE_AUTH
+	
+	implementation LOG4J_API
+	implementation LOG4J_CORE
+	implementation LOG4J_IOSTREAMS
 }
 
 task runHeadlessMinecraft(type: JavaExec) {
@@ -60,6 +81,10 @@ task runHeadlessMinecraft(type: JavaExec) {
 	}
 	
 	main "net.hycrafthd.headless_minecraft.launch.Main"
+	args "--auth-file", "auth.json"
+	systemProperties = [
+		"headless-minecraft.development": "true"
+	]
 	workingDir run
 }
 
