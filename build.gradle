@@ -14,7 +14,7 @@ buildscript {
 	}
 }
 
-subprojects {
+allprojects {
 	apply plugin: "eclipse"
 	apply plugin: "java"
 	
@@ -39,6 +39,9 @@ println(" Java: " + System.getProperty("java.version") +
 		" JVM: " + System.getProperty("java.vm.version") + "(" + System.getProperty("java.vendor") + ")" +
 		" Arch: " + System.getProperty("os.arch"))
 
+group = "net.hycrafthd"
+archivesBaseName = "headless-minecraft"
+version = MC_VERSION + "-0.0.1"
 
 project(":mcp") {
 	apply plugin: "net.minecraftforge.gradle.mcp"
@@ -76,20 +79,16 @@ project(":minecraft") {
 	apply plugin: "net.minecraftforge.gradle.patcher"
 	apply plugin: "org.parchmentmc.librarian.forgegradle"
 	
-	group = "net.hycrafthd"
-	archivesBaseName = "headless-minecraft"
-	version = MC_VERSION + "-0.0.1"
-	
 	sourceSets {
 		main {
 			java {
 				srcDirs = [
-					"$rootDir/src/main/java",
+					"$rootDir/headless-minecraft-impl/src/main/java",
 				]
 			}
 			resources {
 				srcDirs = [
-					"$rootDir/src/main/resources",
+					"$rootDir/headless-minecraft-impl/src/main/resources",
 				]
 			}
 		}
@@ -103,7 +102,7 @@ project(":minecraft") {
 		parent = project(":clean")
 		patches = file("$rootDir/patches")
 		patchedSrc = file("src/main/java")
-		accessTransformers.from file("$rootDir/src/main/resources/accesstransformer.at")
+		accessTransformers.from file("$rootDir/headless-minecraft-impl/src/main/resources/accesstransformer.at")
 		srgPatches = true
 		
 		runs.clear()
