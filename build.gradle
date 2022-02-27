@@ -14,6 +14,11 @@ buildscript {
 	}
 }
 
+plugins {
+	id "maven-publish"
+	id "com.palantir.launch-config" version "1.2.0"
+}
+
 allprojects {
 	apply plugin: "eclipse"
 	apply plugin: "java"
@@ -39,9 +44,28 @@ println(" Java: " + System.getProperty("java.version") +
 		" JVM: " + System.getProperty("java.vm.version") + "(" + System.getProperty("java.vendor") + ")" +
 		" Arch: " + System.getProperty("os.arch"))
 
+
 group = "net.hycrafthd"
 archivesBaseName = "headless-minecraft"
 version = MC_VERSION + "-0.0.1"
+
+dependencies {
+	implementation project(":minecraft")
+}
+
+task runHeadlessMinecraft(type: JavaExec) {
+	def run = file("${rootDir}/run")
+	if(!run.exists()) {
+		run.mkdirs()
+	}
+	
+	main "net.hycrafthd.headless_minecraft.launch.Main"
+	workingDir run
+}
+
+launchConfig {
+	includedTasks "runHeadlessMinecraft"
+}
 
 project(":mcp") {
 	apply plugin: "net.minecraftforge.gradle.mcp"
@@ -106,23 +130,6 @@ project(":minecraft") {
 		srgPatches = true
 		
 		runs.clear()
-		
-		runs {
-			headless_minecraft {
-				client true
-				taskName "runHeadless-Minecraft"
-				ideaModule "${rootProject.name}.${project.name}.main"
-				
-				main "net.hycrafthd.headless_minecraft.Main"
-				workingDirectory rootProject.file("run")
-				
-				args "--gameDir", "."
-				args "--version", MC_VERSION
-				args "--assetsDir", downloadAssets.output
-				args "--assetIndex", "{asset_index}"
-				args "--accessToken", "0"
-			}
-		}
 	}
 	
 	genPatches {
