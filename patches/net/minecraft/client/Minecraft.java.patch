@@ -127,7 +127,12 @@
     }
  
     private boolean m_91274_() {
-@@ -1555,9 +_,11 @@
+@@ -1551,13 +_,16 @@
+    }
+ 
+    public void m_91398_() {
++	  net.hycrafthd.headless_minecraft.event_system.EventHooks.tick();
+       if (this.f_91011_ > 0) {
           --this.f_91011_;
        }
  
