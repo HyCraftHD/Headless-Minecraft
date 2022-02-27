@@ -14,7 +14,12 @@ buildscript {
 	}
 }
 
-subprojects {
+plugins {
+	id "maven-publish"
+	id "com.palantir.launch-config" version "1.2.0"
+}
+
+allprojects {
 	apply plugin: "eclipse"
 	apply plugin: "java"
 	
@@ -30,15 +35,62 @@ ext {
 	MAPPING_VERSION = "2022.01.23-1.18.1"
 	MC_VERSION = "1.18.1"
 	MCP_VERSION = "20211210.034407"
-	SPI_VERSION = "4.0.10"
 	
-	FART = "net.minecraftforge:ForgeAutoRenamingTool:0.1.17:all"
+	SPI = "net.minecraftforge:forgespi:4.0.11"
+	FART = "net.minecraftforge:ForgeAutoRenamingTool:0.1.21:all"
+	
+	AUTH = "net.hycrafthd:minecraft_authenticator:3.0.2"
+	SIMPLE_AUTH = "net.hycrafthd:simple_minecraft_authenticator:1.0.2"
+	
+	LOG4J_API = "org.apache.logging.log4j:log4j-api:2.17.1"
+	LOG4J_CORE = "org.apache.logging.log4j:log4j-core:2.17.1"
+	LOG4J_IOSTREAMS = "org.apache.logging.log4j:log4j-iostreams:2.17.1"
 }
 
 println(" Java: " + System.getProperty("java.version") +
 		" JVM: " + System.getProperty("java.vm.version") + "(" + System.getProperty("java.vendor") + ")" +
 		" Arch: " + System.getProperty("os.arch"))
 
+
+group = "net.hycrafthd"
+archivesBaseName = "headless-minecraft"
+version = MC_VERSION + "-0.0.1"
+
+repositories {
+	maven {
+		url = "https://repo.u-team.info"
+	}
+	mavenCentral()
+}
+
+dependencies {
+	implementation project(":minecraft")
+	
+	implementation AUTH
+	implementation SIMPLE_AUTH
+	
+	implementation LOG4J_API
+	implementation LOG4J_CORE
+	implementation LOG4J_IOSTREAMS
+}
+
+task runHeadlessMinecraft(type: JavaExec) {
+	def run = file("${rootDir}/run")
+	if(!run.exists()) {
+		run.mkdirs()
+	}
+	
+	main "net.hycrafthd.headless_minecraft.launch.Main"
+	args "--auth-file", "auth.json"
+	systemProperties = [
+		"headless-minecraft.development": "true"
+	]
+	workingDir run
+}
+
+launchConfig {
+	includedTasks "runHeadlessMinecraft"
+}
 
 project(":mcp") {
 	apply plugin: "net.minecraftforge.gradle.mcp"
@@ -56,7 +108,7 @@ project(":clean") {
 	apply plugin: "org.parchmentmc.librarian.forgegradle"
 	
 	dependencies {
-		implementation "net.minecraftforge:forgespi:" + SPI_VERSION
+		implementation SPI
 	}
 	
 	patcher {
@@ -76,54 +128,33 @@ project(":minecraft") {
 	apply plugin: "net.minecraftforge.gradle.patcher"
 	apply plugin: "org.parchmentmc.librarian.forgegradle"
 	
-	group = "net.hycrafthd"
-	archivesBaseName = "headless-minecraft"
-	version = MC_VERSION + "-0.0.1"
-	
 	sourceSets {
 		main {
 			java {
 				srcDirs = [
-					"$rootDir/src/main/java",
+					"$rootDir/headless-minecraft-impl/src/main/java",
 				]
 			}
 			resources {
 				srcDirs = [
-					"$rootDir/src/main/resources",
+					"$rootDir/headless-minecraft-impl/src/main/resources",
 				]
 			}
 		}
 	}
 	
 	dependencies {
-		implementation "net.minecraftforge:forgespi:" + SPI_VERSION
+		implementation SPI
 	}
 	
 	patcher {
 		parent = project(":clean")
 		patches = file("$rootDir/patches")
 		patchedSrc = file("src/main/java")
-		accessTransformers.from file("$rootDir/src/main/resources/accesstransformer.at")
+		accessTransformers.from file("$rootDir/headless-minecraft-impl/src/main/resources/accesstransformer.at")
 		srgPatches = true
 		
 		runs.clear()
-		
-		runs {
-			headless_minecraft {
-				client true
-				taskName "runHeadless-Minecraft"
-				ideaModule "${rootProject.name}.${project.name}.main"
-				
-				main "net.hycrafthd.headless_minecraft.Main"
-				workingDirectory rootProject.file("run")
-				
-				args "--gameDir", "."
-				args "--version", MC_VERSION
-				args "--assetsDir", downloadAssets.output
-				args "--assetIndex", "{asset_index}"
-				args "--accessToken", "0"
-			}
-		}
 	}
 	
 	genPatches {
