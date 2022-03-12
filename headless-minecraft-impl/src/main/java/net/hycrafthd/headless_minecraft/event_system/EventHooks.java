@@ -1,10 +1,13 @@
 package net.hycrafthd.headless_minecraft.event_system;
 
 import net.hycrafthd.headless_minecraft.event_system.events.ChatTellEvent;
+import net.hycrafthd.headless_minecraft.event_system.events.PlayerTickEvent;
 import net.hycrafthd.headless_minecraft.event_system.events.RawServerChatMessageEvent;
+import net.hycrafthd.headless_minecraft.event_system.events.TickEvent;
 import net.minecraft.Util;
 import net.minecraft.client.multiplayer.ClientPacketListener;
 import net.minecraft.client.multiplayer.PlayerInfo;
+import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.network.protocol.game.ClientboundChatPacket;
 
 public class EventHooks {
@@ -16,18 +19,22 @@ public class EventHooks {
 	 * global tick TODO
 	 */
 	public static void tick() {
+		EventManager.executeEvents(new TickEvent());
+	}
+
+	/**
+	 * playertick
+	 * @param localPlayer 
+	 */
+	public static void preTick(LocalPlayer localPlayer) {
+		EventManager.executeEvents(new PlayerTickEvent.Pre(localPlayer));
 	}
 
 	/**
 	 * playertick
 	 */
-	public static void preTick() {
-	}
-
-	/**
-	 * playertick
-	 */
-	public static void postTick() {
+	public static void postTick(LocalPlayer localPlayer) {
+		EventManager.executeEvents(new PlayerTickEvent.Post(localPlayer));
 	}
 
 	public static void chatEvent(ClientboundChatPacket packet, ClientPacketListener clientPacketListener) {

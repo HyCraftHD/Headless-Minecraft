@@ -127,7 +127,12 @@
     }
  
     private boolean m_91274_() {
-@@ -1555,9 +_,11 @@
+@@ -1551,13 +_,16 @@
+    }
+ 
+    public void m_91398_() {
++	  net.hycrafthd.headless_minecraft.event_system.EventHooks.tick();
+       if (this.f_91011_ > 0) {
           --this.f_91011_;
        }
  
@@ -160,11 +165,22 @@
        if (this.f_91080_ != null) {
           Screen.m_96579_(() -> {
              this.f_91080_.m_96624_();
-@@ -1607,8 +_,10 @@
+@@ -1599,16 +_,21 @@
+       if (!this.f_91066_.f_92063_) {
+          this.f_91065_.m_93091_();
+       }
++      }
+ 
+       if (this.f_91081_ == null && (this.f_91080_ == null || this.f_91080_.f_96546_)) {
++    	 if(false) {
+          this.f_91026_.m_6182_("Keybindings");
+          this.m_91279_();
++    	 }
++    	 m_91386_(net.hycrafthd.headless_minecraft.Main.left_click);
+          if (this.f_91078_ > 0) {
              --this.f_91078_;
           }
        }
-+      }
  
        if (this.f_91073_ != null) {
 +    	 if(false) {
