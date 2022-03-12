@@ -35,3 +35,8 @@ protected-f net.minecraft.client.Minecraft f_91040_
 
 protected-f net.minecraft.client.renderer.GameRenderer f_109063_
 protected-f net.minecraft.client.renderer.GameRenderer f_109074_
+
+#Allow access to interact methods
+public net.minecraft.client.Minecraft m_91386_(Z)V # continueAttack
+public net.minecraft.client.Minecraft m_91276_()V # startAttack
+public net.minecraft.client.Minecraft m_91277_()V # startUseItem
