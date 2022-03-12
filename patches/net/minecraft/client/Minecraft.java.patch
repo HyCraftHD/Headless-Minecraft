@@ -165,7 +165,7 @@
        if (this.f_91080_ != null) {
           Screen.m_96579_(() -> {
              this.f_91080_.m_96624_();
-@@ -1599,16 +_,20 @@
+@@ -1599,16 +_,21 @@
        if (!this.f_91066_.f_92063_) {
           this.f_91065_.m_93091_();
        }
@@ -176,6 +176,7 @@
           this.f_91026_.m_6182_("Keybindings");
           this.m_91279_();
 +    	 }
++    	 m_91386_(net.hycrafthd.headless_minecraft.Main.left_click);
           if (this.f_91078_ > 0) {
              --this.f_91078_;
           }
