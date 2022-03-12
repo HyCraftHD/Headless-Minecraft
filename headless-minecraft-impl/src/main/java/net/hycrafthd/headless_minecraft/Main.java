@@ -1,8 +1,10 @@
 package net.hycrafthd.headless_minecraft;
 
 import net.hycrafthd.headless_minecraft.event_system.EventHandler;
+import net.hycrafthd.headless_minecraft.event_system.EventHooks;
 import net.hycrafthd.headless_minecraft.event_system.EventManager;
 import net.hycrafthd.headless_minecraft.event_system.commands.CommandExecution;
+import net.hycrafthd.headless_minecraft.event_system.commands.CommandRegistry;
 import net.hycrafthd.headless_minecraft.event_system.events.PlayerTickEvent;
 import net.hycrafthd.headless_minecraft.event_system.events.TickEvent;
 import net.minecraft.client.Minecraft;
@@ -21,6 +23,13 @@ public class Main {
 	
 	public Main() {
 		EventManager.registerListener(this);
+		
+		CommandRegistry.registerCommand("break", (command, args, sender) -> {
+			Minecraft.getInstance().startAttack();
+			EventHooks.LEFT_CLICK = true;
+			System.out.println("Break");
+		});
+		
 	}
 	
 	@EventHandler
@@ -32,10 +41,10 @@ public class Main {
 	public void playerTick(PlayerTickEvent.Pre event) {
 		//System.out.println("PlayerTickPre");
 		if(Minecraft.getInstance().hitResult instanceof BlockHitResult result) {
-			System.out.println(event.getPlayer().getLevel().getBlockState(result.getBlockPos()));
+			//System.out.println(event.getPlayer().getLevel().getBlockState(result.getBlockPos()));
 			
 		} else if(Minecraft.getInstance().hitResult instanceof EntityHitResult result) {
-			System.out.println(result.getEntity());
+			//System.out.println(result.getEntity());
 		}
 	}
 	

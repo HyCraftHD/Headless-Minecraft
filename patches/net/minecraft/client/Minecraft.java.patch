@@ -127,6 +127,33 @@
     }
  
     private boolean m_91274_() {
+@@ -1420,7 +_,7 @@
+       }
+    }
+ 
+-   private void m_91386_(boolean p_91387_) {
++   public void m_91386_(boolean p_91387_) {
+       if (!p_91387_) {
+          this.f_91078_ = 0;
+       }
+@@ -1432,7 +_,7 @@
+             if (!this.f_91073_.m_8055_(blockpos).m_60795_()) {
+                Direction direction = blockhitresult.m_82434_();
+                if (this.f_91072_.m_105283_(blockpos, direction)) {
+-                  this.f_91061_.m_107367_(blockpos, direction);
++                  //this.particleEngine.crack(blockpos, direction); TODO
+                   this.f_91074_.m_6674_(InteractionHand.MAIN_HAND);
+                }
+             }
+@@ -1443,7 +_,7 @@
+       }
+    }
+ 
+-   private void m_91276_() {
++   public void m_91276_() {
+       if (this.f_91078_ <= 0) {
+          if (this.f_91077_ == null) {
+             f_90982_.error("Null returned as 'hitResult', this shouldn't happen!");
 @@ -1551,13 +_,16 @@
     }
  
@@ -165,12 +192,20 @@
        if (this.f_91080_ != null) {
           Screen.m_96579_(() -> {
              this.f_91080_.m_96624_();
-@@ -1607,8 +_,10 @@
+@@ -1607,8 +_,17 @@
              --this.f_91078_;
           }
        }
+-
 +      }
- 
++      
++      if(this.f_91080_ == null) {
++    	  this.m_91386_(net.hycrafthd.headless_minecraft.event_system.EventHooks.LEFT_CLICK);
++    	  if (this.f_91078_ > 0) {
++              --this.f_91078_;
++           }
++      }
++      
        if (this.f_91073_ != null) {
 +    	 if(false) {
           this.f_91026_.m_6182_("gameRenderer");

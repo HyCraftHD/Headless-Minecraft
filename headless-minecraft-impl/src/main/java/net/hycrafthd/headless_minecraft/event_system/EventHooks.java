@@ -11,6 +11,8 @@ import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.network.protocol.game.ClientboundChatPacket;
 
 public class EventHooks {
+	
+	public static boolean LEFT_CLICK = false;
 
 	private EventHooks() {
 	}
