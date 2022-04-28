@@ -34,7 +34,7 @@ public class Main {
 				System.out.println("Misstime: " + field.get(Minecraft.getInstance()));
 			} catch (Exception e) {
 			}
-			Minecraft.getInstance().startAttack();
+			//Minecraft.getInstance().startAttack();
 			left_click = true;
 			System.out.println("Break");
 		});

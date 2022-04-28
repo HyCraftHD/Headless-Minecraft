@@ -1,6 +1,6 @@
 --- a/net/minecraft/client/player/LocalPlayer.java
 +++ b/net/minecraft/client/player/LocalPlayer.java
-@@ -184,6 +_,7 @@
+@@ -179,6 +_,7 @@
  
     public void m_8119_() {
        if (this.f_19853_.m_151577_(this.m_146903_(), this.m_146907_())) {
@@ -8,7 +8,7 @@
           super.m_8119_();
           if (this.m_20159_()) {
              this.f_108617_.m_104955_(new ServerboundMovePlayerPacket.Rot(this.m_146908_(), this.m_146909_(), this.f_19861_));
-@@ -200,6 +_,7 @@
+@@ -195,6 +_,7 @@
              ambientsoundhandler.m_7551_();
           }
  

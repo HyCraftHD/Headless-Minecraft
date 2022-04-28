@@ -1,15 +1,15 @@
 --- a/net/minecraft/client/multiplayer/ClientPacketListener.java
 +++ b/net/minecraft/client/multiplayer/ClientPacketListener.java
-@@ -345,7 +_,7 @@
+@@ -348,7 +_,7 @@
        boolean flag1 = p_105030_.f_132374_();
        ClientLevel.ClientLevelData clientlevel$clientleveldata = new ClientLevel.ClientLevelData(Difficulty.NORMAL, p_105030_.f_132362_(), flag1);
        this.f_104890_ = clientlevel$clientleveldata;
--      this.f_104889_ = new ClientLevel(this, clientlevel$clientleveldata, resourcekey, dimensiontype, this.f_104897_, this.f_194190_, this.f_104888_::m_91307_, this.f_104888_.f_91060_, flag, p_105030_.f_132361_());
-+      this.f_104889_ = new net.hycrafthd.headless_minecraft.patch_helper.HeadlessClientLevel(this, clientlevel$clientleveldata, resourcekey, dimensiontype, this.f_104897_, this.f_194190_, this.f_104888_::m_91307_, this.f_104888_.f_91060_, flag, p_105030_.f_132361_());
+-      this.f_104889_ = new ClientLevel(this, clientlevel$clientleveldata, resourcekey, holder, this.f_104897_, this.f_194190_, this.f_104888_::m_91307_, this.f_104888_.f_91060_, flag, p_105030_.f_132361_());
++      this.f_104889_ = new net.hycrafthd.headless_minecraft.patch_helper.HeadlessClientLevel(this, clientlevel$clientleveldata, resourcekey, holder, this.f_104897_, this.f_194190_, this.f_104888_::m_91307_, this.f_104888_.f_91060_, flag, p_105030_.f_132361_());
        this.f_104888_.m_91156_(this.f_104889_);
        if (this.f_104888_.f_91074_ == null) {
           this.f_104888_.f_91074_ = this.f_104888_.f_91072_.m_105246_(this.f_104889_, new StatsCounter(), new ClientRecipeBook());
-@@ -355,6 +_,7 @@
+@@ -358,6 +_,7 @@
           }
        }
  
@@ -17,7 +17,7 @@
        this.f_104888_.f_91064_.m_113434_();
        this.f_104888_.f_91074_.m_172530_();
        int i = p_105030_.f_132360_();
-@@ -698,6 +_,7 @@
+@@ -695,6 +_,7 @@
              this.f_104889_.m_7785_(entity.m_20185_(), entity.m_20186_(), entity.m_20189_(), SoundEvents.f_12019_, SoundSource.PLAYERS, 0.2F, (this.f_104898_.nextFloat() - this.f_104898_.nextFloat()) * 1.4F + 2.0F, false);
           }
  
@@ -25,7 +25,7 @@
           this.f_104888_.f_91061_.m_107344_(new ItemPickupParticle(this.f_104888_.m_91290_(), this.f_104888_.m_91269_(), this.f_104889_, entity, livingentity));
           if (entity instanceof ItemEntity) {
              ItemEntity itementity = (ItemEntity)entity;
-@@ -715,6 +_,8 @@
+@@ -712,6 +_,8 @@
  
     public void m_5784_(ClientboundChatPacket p_104986_) {
        PacketUtils.m_131363_(p_104986_, this, this.f_104888_);
@@ -34,7 +34,7 @@
        this.f_104888_.f_91065_.m_93051_(p_104986_.m_131840_(), p_104986_.m_131836_(), p_104986_.m_131841_());
     }
  
-@@ -734,8 +_,10 @@
+@@ -731,8 +_,10 @@
              Player player = (Player)entity;
              player.m_6145_(false, false);
           } else if (p_104968_.m_131627_() == 4) {
@@ -45,15 +45,15 @@
              this.f_104888_.f_91061_.m_107329_(entity, ParticleTypes.f_123808_);
           }
  
-@@ -790,6 +_,7 @@
-             if (entity1 != null) {
-                entity1.m_7998_(entity, true);
-                if (entity1 == this.f_104888_.f_91074_ && !flag) {
-+            	  if(false)
+@@ -799,6 +_,7 @@
+                      this.f_104888_.f_91074_.m_5616_(entity.m_146908_());
+                   }
+ 
++                  if(false)
                    this.f_104888_.f_91065_.m_93063_(new TranslatableComponent("mount.onboard", this.f_104888_.f_91066_.f_92090_.m_90863_()), false);
                 }
              }
-@@ -825,12 +_,14 @@
+@@ -834,12 +_,14 @@
           if (p_105010_.m_132102_() == 21) {
              this.f_104888_.m_91106_().m_120367_(new GuardianAttackSoundInstance((Guardian)entity));
           } else if (p_105010_.m_132102_() == 35) {
@@ -68,16 +68,16 @@
           } else {
              entity.m_7822_(p_105010_.m_132102_());
           }
-@@ -864,7 +_,7 @@
+@@ -872,7 +_,7 @@
           boolean flag1 = p_105066_.m_132960_();
           ClientLevel.ClientLevelData clientlevel$clientleveldata = new ClientLevel.ClientLevelData(this.f_104890_.m_5472_(), this.f_104890_.m_5466_(), flag1);
           this.f_104890_ = clientlevel$clientleveldata;
--         this.f_104889_ = new ClientLevel(this, clientlevel$clientleveldata, resourcekey, dimensiontype, this.f_104897_, this.f_194190_, this.f_104888_::m_91307_, this.f_104888_.f_91060_, flag, p_105066_.m_132956_());
-+         this.f_104889_ = new net.hycrafthd.headless_minecraft.patch_helper.HeadlessClientLevel(this, clientlevel$clientleveldata, resourcekey, dimensiontype, this.f_104897_, this.f_194190_, this.f_104888_::m_91307_, this.f_104888_.f_91060_, flag, p_105066_.m_132956_());
+-         this.f_104889_ = new ClientLevel(this, clientlevel$clientleveldata, resourcekey, holder, this.f_104897_, this.f_194190_, this.f_104888_::m_91307_, this.f_104888_.f_91060_, flag, p_105066_.m_132956_());
++         this.f_104889_ = new net.hycrafthd.headless_minecraft.patch_helper.HeadlessClientLevel(this, clientlevel$clientleveldata, resourcekey, holder, this.f_104897_, this.f_194190_, this.f_104888_::m_91307_, this.f_104888_.f_91060_, flag, p_105066_.m_132956_());
           this.f_104889_.m_104669_(scoreboard);
           this.f_104889_.m_171672_(map);
           this.f_104888_.m_91156_(this.f_104889_);
-@@ -1067,12 +_,16 @@
+@@ -1075,12 +_,16 @@
           if (f == 0.0F) {
              this.f_104888_.m_91152_(new DemoIntroScreen());
           } else if (f == 101.0F) {
@@ -94,7 +94,7 @@
              this.f_104888_.f_91065_.m_93076_().m_93785_(new TranslatableComponent("demo.day.6", options.f_92102_.m_90863_()));
           }
        } else if (clientboundgameeventpacket$type == ClientboundGameEventPacket.f_132159_) {
-@@ -1096,7 +_,9 @@
+@@ -1104,7 +_,9 @@
  
     public void m_7633_(ClientboundMapItemDataPacket p_105032_) {
        PacketUtils.m_131363_(p_105032_, this, this.f_104888_);
@@ -104,7 +104,7 @@
        int i = p_105032_.m_132445_();
        String s = MapItem.m_42848_(i);
        MapItemSavedData mapitemsaveddata = this.f_104888_.f_91073_.m_7489_(s);
-@@ -1106,7 +_,9 @@
+@@ -1114,7 +_,9 @@
        }
  
        p_105032_.m_132437_(mapitemsaveddata);
@@ -114,7 +114,7 @@
     }
  
     public void m_7704_(ClientboundLevelEventPacket p_105024_) {
-@@ -1273,7 +_,7 @@
+@@ -1285,7 +_,7 @@
        PacketUtils.m_131363_(p_171775_, this, this.f_104888_);
        Entity entity = this.f_104889_.m_6815_(p_171775_.m_179078_());
        if (entity == this.f_104888_.f_91074_) {
@@ -123,7 +123,7 @@
              this.f_104888_.m_91152_(new DeathScreen(p_171775_.m_179079_(), this.f_104889_.m_6106_().m_5466_()));
           } else {
              this.f_104888_.f_91074_.m_7583_();
-@@ -1340,37 +_,45 @@
+@@ -1352,37 +_,45 @@
  
     public void m_142766_(ClientboundClearTitlesPacket p_171765_) {
        PacketUtils.m_131363_(p_171765_, this, this.f_104888_);
@@ -169,7 +169,7 @@
     }
  
     public void m_6476_(ClientboundRemoveMobEffectPacket p_105062_) {
-@@ -1552,6 +_,7 @@
+@@ -1564,6 +_,7 @@
  
     public void m_7685_(ClientboundBossEventPacket p_104982_) {
        PacketUtils.m_131363_(p_104982_, this, this.f_104888_);

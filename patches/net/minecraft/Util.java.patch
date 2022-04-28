@@ -1,6 +1,6 @@
 --- a/net/minecraft/Util.java
 +++ b/net/minecraft/Util.java
-@@ -157,6 +_,9 @@
+@@ -154,6 +_,9 @@
  
        return 255;
     }

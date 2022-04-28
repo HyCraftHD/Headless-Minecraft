@@ -8,6 +8,7 @@ import net.minecraft.client.multiplayer.ClientPacketListener;
 import net.minecraft.client.renderer.LevelRenderer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockPos.MutableBlockPos;
+import net.minecraft.core.Holder;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceKey;
@@ -23,7 +24,7 @@ import net.minecraft.world.level.dimension.DimensionType;
 
 public class HeadlessClientLevel extends ClientLevel {
 	
-	public HeadlessClientLevel(ClientPacketListener connection, ClientLevelData levelData, ResourceKey<Level> dimension, DimensionType dimensionType, int viewDistance, int simulationDistance, Supplier<ProfilerFiller> profiler, LevelRenderer levelRenderer, boolean debug, long biomeZoomSeed) {
+	public HeadlessClientLevel(ClientPacketListener connection, ClientLevelData levelData, ResourceKey<Level> dimension, Holder<DimensionType> dimensionType, int viewDistance, int simulationDistance, Supplier<ProfilerFiller> profiler, LevelRenderer levelRenderer, boolean debug, long biomeZoomSeed) {
 		super(connection, levelData, dimension, dimensionType, viewDistance, simulationDistance, profiler, levelRenderer, debug, biomeZoomSeed);
 	}
 	

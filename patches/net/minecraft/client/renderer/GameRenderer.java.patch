@@ -1,6 +1,6 @@
 --- a/net/minecraft/client/renderer/GameRenderer.java
 +++ b/net/minecraft/client/renderer/GameRenderer.java
-@@ -94,7 +_,7 @@
+@@ -96,7 +_,7 @@
     private boolean f_182638_;
     private long f_109073_ = Util.m_137550_();
     protected LightTexture f_109074_;
@@ -9,7 +9,7 @@
     private boolean f_109076_;
     private float f_109077_ = 1.0F;
     private float f_109078_;
-@@ -227,8 +_,10 @@
+@@ -229,8 +_,10 @@
        this.f_109059_ = p_109083_;
        this.f_109060_ = p_109084_;
        this.f_109055_ = p_109083_.m_91292_();

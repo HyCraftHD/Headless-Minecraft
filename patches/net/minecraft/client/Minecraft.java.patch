@@ -24,7 +24,7 @@
        this.f_91042_.m_83931_(0.0F, 0.0F, 0.0F, 0.0F);
        this.f_91042_.m_83954_(f_91002_);
 +      }
-       this.f_91036_ = new SimpleReloadableResourceManager(PackType.CLIENT_RESOURCES);
+       this.f_91036_ = new ReloadableResourceManager(PackType.CLIENT_RESOURCES);
        this.f_91038_.m_10506_();
        this.f_91066_.m_92145_(this.f_91038_);
        this.f_91039_ = new LanguageManager(this.f_91066_.f_92075_);
@@ -55,7 +55,7 @@
        this.f_91061_ = new ParticleEngine(this.f_91073_, this.f_90987_);
        this.f_91036_.m_7217_(this.f_91061_);
        this.f_91053_ = new PaintingTextureManager(this.f_90987_);
-@@ -546,6 +_,7 @@
+@@ -547,6 +_,7 @@
              this.f_167847_.m_168556_();
           });
        }, false));
@@ -63,7 +63,7 @@
        if (s != null) {
           ConnectScreen.m_169267_(new TitleScreen(), this, new ServerAddress(s, i), (ServerData)null);
        } else {
-@@ -892,6 +_,7 @@
+@@ -894,6 +_,7 @@
        }
  
        this.f_91080_ = p_91153_;
@@ -71,7 +71,7 @@
        BufferUploader.m_166835_();
        if (p_91153_ != null) {
           this.f_91067_.m_91602_();
-@@ -904,6 +_,7 @@
+@@ -906,6 +_,7 @@
        }
  
        this.m_91341_();
@@ -79,7 +79,11 @@
     }
  
     public void m_91150_(@Nullable Overlay p_91151_) {
-@@ -968,8 +_,10 @@
+@@ -967,15 +_,17 @@
+          this.f_90989_.close();
+          this.f_90990_.close();
+       }
+-
     }
  
     private void m_91383_(boolean p_91384_) {
@@ -90,15 +94,11 @@
        if (this.f_90990_.m_85411_()) {
           this.m_91395_();
        }
-@@ -982,6 +_,7 @@
-          });
-       }
- 
 +      }
-       Runnable runnable;
-       while((runnable = this.f_91023_.poll()) != null) {
-          runnable.run();
-@@ -1002,6 +_,7 @@
+ 
+       if (this.f_91024_ != null && !(this.f_91081_ instanceof LoadingOverlay)) {
+          CompletableFuture<Void> completablefuture = this.f_91024_;
+@@ -1005,6 +_,7 @@
           this.f_91026_.m_7238_();
        }
  
@@ -106,7 +106,7 @@
        this.f_91067_.m_91523_();
        this.f_90990_.m_85403_("Render");
        this.f_91026_.m_6180_("sound");
-@@ -1047,9 +_,11 @@
+@@ -1050,9 +_,11 @@
           RenderSystem.m_69830_(i1);
        }
  
@@ -118,7 +118,7 @@
        this.f_90990_.m_85403_("Post render");
        ++this.f_91016_;
        boolean flag = this.m_91091_() && (this.f_91080_ != null && this.f_91080_.m_7043_() || this.f_91081_ != null && this.f_91081_.m_7859_()) && !this.f_91007_.m_6992_();
-@@ -1076,6 +_,8 @@
+@@ -1079,6 +_,8 @@
        }
  
        this.f_91026_.m_7238_();
@@ -127,7 +127,7 @@
     }
  
     private boolean m_91274_() {
-@@ -1551,13 +_,16 @@
+@@ -1562,13 +_,16 @@
     }
  
     public void m_91398_() {
@@ -144,7 +144,7 @@
        this.f_91063_.m_109087_(1.0F);
        this.f_91005_.m_120578_(this.f_91073_, this.f_91077_);
        this.f_91026_.m_6180_("gameMode");
-@@ -1565,10 +_,12 @@
+@@ -1576,10 +_,12 @@
           this.f_91072_.m_105287_();
        }
  
@@ -157,7 +157,7 @@
  
        if (this.f_91080_ == null && this.f_91074_ != null) {
           if (this.f_91074_.m_21224_() && !(this.f_91080_ instanceof DeathScreen)) {
-@@ -1590,6 +_,7 @@
+@@ -1601,6 +_,7 @@
           this.f_91078_ = 10000;
        }
  
@@ -165,7 +165,7 @@
        if (this.f_91080_ != null) {
           Screen.m_96579_(() -> {
              this.f_91080_.m_96624_();
-@@ -1599,16 +_,21 @@
+@@ -1610,16 +_,21 @@
        if (!this.f_91066_.f_92063_) {
           this.f_91065_.m_93091_();
        }
@@ -187,7 +187,7 @@
           this.f_91026_.m_6182_("gameRenderer");
           if (!this.f_91012_) {
              this.f_91063_.m_109148_();
-@@ -1618,6 +_,7 @@
+@@ -1629,6 +_,7 @@
           if (!this.f_91012_) {
              this.f_91060_.m_109823_();
           }
@@ -195,7 +195,7 @@
  
           this.f_91026_.m_6182_("level");
           if (!this.f_91012_) {
-@@ -1627,15 +_,17 @@
+@@ -1638,15 +_,17 @@
  
              this.f_91073_.m_104804_();
           }
@@ -214,7 +214,7 @@
        if (this.f_91073_ != null) {
           if (!this.f_91012_) {
              if (!this.f_91066_.f_92031_ && this.m_91278_()) {
-@@ -1666,6 +_,7 @@
+@@ -1677,6 +_,7 @@
              }
           }
  
@@ -222,7 +222,7 @@
           this.f_91026_.m_6182_("animateTick");
           if (!this.f_91012_ && this.f_91073_ != null) {
              this.f_91073_.m_104784_(this.f_91074_.m_146903_(), this.f_91074_.m_146904_(), this.f_91074_.m_146907_());
-@@ -1675,14 +_,17 @@
+@@ -1686,14 +_,17 @@
           if (!this.f_91012_) {
              this.f_91061_.m_107388_();
           }
@@ -240,7 +240,7 @@
     }
  
     private boolean m_91278_() {
-@@ -2025,6 +_,7 @@
+@@ -2030,6 +_,7 @@
        progressscreen.m_6309_(new TranslatableComponent("connect.joining"));
        this.m_91362_(progressscreen);
        this.f_91073_ = p_91157_;
@@ -248,7 +248,7 @@
        this.m_91324_(p_91157_);
        if (!this.f_91010_) {
           AuthenticationService authenticationservice = new YggdrasilAuthenticationService(this.f_91030_);
-@@ -2052,6 +_,7 @@
+@@ -2057,6 +_,7 @@
        this.f_91006_.m_194060_();
        IntegratedServer integratedserver = this.f_91007_;
        this.f_91007_ = null;
@@ -256,7 +256,7 @@
        this.f_91063_.m_109150_();
        this.f_91072_ = null;
        NarratorChatListener.f_93311_.m_93328_();
-@@ -2068,6 +_,7 @@
+@@ -2073,6 +_,7 @@
           }
  
           this.f_91037_.m_118586_();
@@ -264,7 +264,7 @@
           this.f_91065_.m_93089_();
           this.f_91008_ = null;
           this.f_91010_ = false;
-@@ -2075,6 +_,7 @@
+@@ -2080,6 +_,7 @@
        }
  
        this.f_91073_ = null;
@@ -272,7 +272,7 @@
        this.m_91324_((ClientLevel)null);
        this.f_91074_ = null;
        SkullBlockEntity.m_196704_();
-@@ -2082,6 +_,7 @@
+@@ -2087,6 +_,7 @@
  
     private void m_91362_(Screen p_91363_) {
        this.f_91026_.m_6180_("forcedTick");
@@ -280,7 +280,7 @@
        this.f_91043_.m_120405_();
        this.f_91075_ = null;
        this.f_91009_ = null;
-@@ -2261,6 +_,7 @@
+@@ -2266,6 +_,7 @@
        p_167851_.m_143522_("Launched Version", () -> {
           return p_167854_;
        });
@@ -288,7 +288,7 @@
        p_167851_.m_143522_("Backend library", RenderSystem::m_69517_);
        p_167851_.m_143522_("Backend API", RenderSystem::m_69516_);
        p_167851_.m_143522_("Window size", () -> {
-@@ -2311,6 +_,7 @@
+@@ -2316,6 +_,7 @@
        }
  
        p_167851_.m_143522_("CPU", GlUtil::m_84819_);

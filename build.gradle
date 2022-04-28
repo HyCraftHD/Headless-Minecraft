@@ -34,7 +34,7 @@ ext {
 	MAPPING_CHANNEL = "parchment"
 	MAPPING_VERSION = "2022.03.13-1.18.2"
 	MC_VERSION = "1.18.2"
-	MCP_VERSION = "1.18.2-20220404.173914"
+	MCP_VERSION = "20220404.173914"
 	
 	SPI = "net.minecraftforge:forgespi:5.0.0"
 	FART = "net.minecraftforge:ForgeAutoRenamingTool:0.1.22:all"
