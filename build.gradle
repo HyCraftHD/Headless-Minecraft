@@ -32,19 +32,19 @@ allprojects {
 
 ext {
 	MAPPING_CHANNEL = "parchment"
-	MAPPING_VERSION = "2022.01.23-1.18.1"
-	MC_VERSION = "1.18.1"
-	MCP_VERSION = "20211210.034407"
+	MAPPING_VERSION = "2022.03.13-1.18.2"
+	MC_VERSION = "1.18.2"
+	MCP_VERSION = "1.18.2-20220404.173914"
 	
-	SPI = "net.minecraftforge:forgespi:4.0.11"
-	FART = "net.minecraftforge:ForgeAutoRenamingTool:0.1.21:all"
+	SPI = "net.minecraftforge:forgespi:5.0.0"
+	FART = "net.minecraftforge:ForgeAutoRenamingTool:0.1.22:all"
 	
 	AUTH = "net.hycrafthd:minecraft_authenticator:3.0.2"
 	SIMPLE_AUTH = "net.hycrafthd:simple_minecraft_authenticator:1.0.2"
 	
-	LOG4J_API = "org.apache.logging.log4j:log4j-api:2.17.1"
-	LOG4J_CORE = "org.apache.logging.log4j:log4j-core:2.17.1"
-	LOG4J_IOSTREAMS = "org.apache.logging.log4j:log4j-iostreams:2.17.1"
+	LOG4J_API = "org.apache.logging.log4j:log4j-api:2.17.2"
+	LOG4J_CORE = "org.apache.logging.log4j:log4j-core:2.17.2"
+	LOG4J_IOSTREAMS = "org.apache.logging.log4j:log4j-iostreams:2.17.2"
 }
 
 println(" Java: " + System.getProperty("java.version") +
